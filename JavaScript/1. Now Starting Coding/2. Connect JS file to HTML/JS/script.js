@@ -1,0 +1,1 @@
+document.write('js file now connected');
