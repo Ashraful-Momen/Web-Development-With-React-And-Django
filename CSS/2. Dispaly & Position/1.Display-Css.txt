@@ -1,0 +1,13 @@
+*{
+dispaly:block/inline/inline-block/none;
+
+1.block: get full with and get height according to ___px;
+
+2.inline: height/width not working;
+
+3.inline-block: Use -> height+width (use mean i have to give the value);
+
+4.none: hide the element form the dispaly;
+
+
+}

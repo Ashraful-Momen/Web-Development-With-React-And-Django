@@ -1,0 +1,26 @@
+{
+
+
+
+
+statics:no-change the place by default;
+fixed:fix the place (scroll-up/down);
+
+=>relative: parent <div> according to body.
+=>absolute: child <div> according to parent<div>.
+=>sticy: fix postion (top/right/left/bottom-> value) ;
+
+
+
+
+
+***postion: relative/absolute/static/fixed/sticky;
+
+float: left/right/none; [inline-start/inline-end]
+clear:none/right/left/both;
+
+top:__px;
+right:___px;
+left:__px;
+bottom:__px;
+}
