@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        /* class will be multiple but id have to be unique */
+        /* body{
+            background: cornflowerblue;
+        }
+        div{
+            background: red;
+        }
+        span{
+            background:yellow;
+        }
+        li{
+            background: green;
+        }
+
+        /*class element
+
+        .white ,.text-color{
+            background: wheat;
+            color: rgb(226, 24, 192);
+        }
+        #root1{
+            background: rgb(15, 170, 218);
+        } */
+        /* span,li{
+            background-color: aqua;
+        } */
+        /* span,li.white{
+            background:red;
+        } */
+        
+        /* nested element select : derict select and step by step select:*/
+        /* div b{
+            background: red;
+        } */
+
+        /* div>li>b{
+            background:red;
+        } */
+
+        /* after element select by ~ */
+        /* li.red ~ li{
+            background: red;
+        } */
+
+        /* li.nextElement+li{
+            background: red;
+        } */
+
+
+        /* psudo-class -------------------------------------------------------*/
+        /* li:hover{
+            background: red;
+        } */
+        /* input:focus{
+            background-color: red;
+        } */
+        /* input:required{
+            /* required => must be fullup the input 
+            background-color: red;
+        } */
+        /* input:checked{
+            margin: 50px;
+        } */
+        /* input:disabled{
+
+        } */
+
+        /* nth- child-------------------------------------*/
+        /* li:first-child{
+            background: greenyellow;
+        } */
+
+        /* li:nth-child(2n){
+            background: yellowgreen;
+        } */
+        /* li:nth-child(3n){
+            background: yellowgreen;
+        } */
+        /* li:nth-child(2n+1){
+            background: yellowgreen;
+        } */
+        /* li:last-child{
+            background: yellowgreen;
+        } */
+        /* span :only-child{
+            background: red;
+        } */
+        /* span :first-of-type{
+            background: red;
+        } */
+        /* li:last-of-type{
+            background: red;
+        } */
+        /* li:not(#root1){
+            background: greenyellow;
+        } */
+
+        /* ::before , :: after */
+
+        /* div.red::before{
+            content: "before";
+            background: red;
+        } */
+        /* div.red::after{
+            content: "after";
+            background: red;
+        } */
+
+        /* attribute : [data-red , ^=> means "start with" and $=> means end with , and * => anything start/end with select------------------------- */
+
+        /* [data-red]{
+            background: red;
+        } */
+
+         /* [data-red= "ture"]{
+            background: red;
+        } */
+         /* [data-red= "true"]{
+            background: red;
+        } */
+        /* [data-red="12"]{
+            background:red;
+        } */
+        /* [data-red^="12"]{
+            background:red;
+        } */
+        /* [data-red$="23"]{
+            background:red;
+        } */
+        /* [data-red*="23"]{
+            background:red;
+        } */
+
+
+
+    </style>
+</head>
+<body>
+    <div data-red = "true" >
+        data-red = "ture /false."
+        This is div part
+    </div>
+    <div data-red = "1234" >
+        data-red = "ture /false."
+        This is div part
+    </div>
+    <span>
+        this is span tag
+    </span>
+    <ul>
+        <li>item 1</li>
+        <li id="root1">item 2- ID => selector</li>
+        <li class="white text-color">item  = > another class selector</li>
+        <li>item 4</li>
+        <div class="white">
+            item div3- Class => selector
+        </div>
+    </ul>
+    <div>
+        <li>
+            <b>I am nested b-tag element</b>
+        </li>
+    </div>
+    <ul>
+        <li class="nextElement">1</li>
+        <li >2 - only + selector working this item</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    <input type="text">
+    <br>
+    <input type="checkbox">
+    <span>
+        <p>span- child: I love my country</p>
+    </span>
+    <span>
+        <p>another span child</p>
+    </span>
+
+    <div class="red">
+        this is the before content div
+    </div>
+    <div class="red">
+        this is the after content div
+    </div>
+
+    <div style="background: red;">
+        hello everyone
+    </div>
+</body>
+</html>
