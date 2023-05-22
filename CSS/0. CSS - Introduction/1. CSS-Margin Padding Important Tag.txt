@@ -1,0 +1,33 @@
+==================================================Box:Element===================================================
+<section></section>
+<main></main>
+<header></header>
+<footer></footer>
+<div></div>
+<nav></nav>
+*** those all are box element.
+=====================================================Margin & Padding=======================================
+Margin : 0 0 0 0 ; top , right/end, bottom, start/left = > work as clock's ways. Margin workign with body/ or parent element cz margin is child element;
+
+padding : 0 0 0 0; t, r/e, b, s/l => working inside the box for element;
+
+*** Width: 100% = > right/left or width use =>  percentage %
+***height: 5px => top/bottom use =>px / rem
+
+margin-right/top/bottom/left:2px;
+padding-right/top/bottom/left:2px;
+
+===========================================Important:CSS tags========================
+box-sizing:boder-box;
+border:1 px solid black;
+height: 100vh ; according to screen;
+width: 80%;
+filter: blur(5);
+opacity: 50%;
+------------
+dispaly : flex;
+content: " " ; /space
+clear: both; / righ+left for flex remove;
+list-style: remove;
+text-decoration: none;
+--------------------------------------------------------------------------------------
