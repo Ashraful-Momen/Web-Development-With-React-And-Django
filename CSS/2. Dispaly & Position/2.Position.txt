@@ -18,6 +18,8 @@ fixed:fix the place (scroll-up/down);
 
 float: left/right/none; [inline-start/inline-end]
 clear:none/right/left/both;
+z-index:1,2,3,....(-1) => more z-index value 1<2<3 ---> uppder posion;
+z-index:-1; //user for background image;
 
 top:__px;
 right:___px;
