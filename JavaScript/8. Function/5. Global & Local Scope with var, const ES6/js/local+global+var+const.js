@@ -1,4 +1,4 @@
-// var variableName: var can declear multiple same variable , but let can't. var Variable value change in if()/for() scope if variable reassign but for function ()socpe .
+// var variableName: var can declear multiple same variable , but let can't. var Variable value change in if()/for() scope if variable reassign but not for function ()socpe .
 
 // const: value fix, can't reassign value for second time.
 
