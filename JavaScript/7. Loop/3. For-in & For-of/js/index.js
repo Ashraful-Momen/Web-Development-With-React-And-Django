@@ -1,6 +1,5 @@
-// for-in : [working with -> index ] => String / Array / Object
-// for-of : [working with -> item/property ] => String / Array.
-
+// for-in : [working with -> item/properdy , index, full-array ] => String / Array / Object
+// for-of : [working with -> item/property, index ] => String / Array.
 
 var name = "My name is Md.Ashraful Momen Shuvo";
 
