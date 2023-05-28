@@ -1,0 +1,20 @@
+{
+    "person" : [
+        {
+            "name": "shuvo",
+            "age" : 27,
+            "married": true
+        },
+        {
+            "name": "Ashraful",
+            "age" : 27,
+            "married": true
+        },
+        {
+            "name": "Momen",
+            "age" : 27,
+            "married": true
+        }
+    ]
+
+}
