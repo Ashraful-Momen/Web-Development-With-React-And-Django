@@ -1,7 +1,7 @@
 //-------------------------1. MetaCharacter: '^hello' start with 'hello',---------------------------------------------
-//------------------------- '$hello' end with , 
+//------------------------- 'hello$' end with , 
 //-------------------------'h.llo' must be replace with any one character and blank not allow.
-//-------------------------- 'h*llo' this pattern 'h('*** here will be anything****)llo'. And may be exit with any character('anything') on (*) or blank/null / nonexit any character here,
+//-------------------------- 'h*llo' this pattern 'h('*** here will be anything****)llo'. And may be exit with any character('anything') on (*) or blank/null /allow  any character here,
 //---------------------------- 'ha?e?llo' here 'a'/'e' -> optional but can't be replace other character----------------------
 //------------------------------if we want to pattern '?' then we have to use '\?' // and '\' also known as escape;
 
@@ -22,7 +22,7 @@ let re = 'hello'; // CaseSetive
 
     //-----------------------------character set : bracket []----------------------------------------------------
 
-    re = /[e]llo/ //Must be matched with only one of  'e/s' inside the bracket (can't contain both at a time 'e/s') . blank not allow.
+    re = /[e/s]llo/ //Must be matched with only one of  'e/s' inside the bracket (can't contain both at a time 'e/s') . blank not allow.
     re = /h[^ae]llo/; //must allow all char except "a/e" ; blank is not allow but space is allow ;
     re = /^h[ae]llo/; // must start with  "a/e" ; blank/space  is not allow ;
     re = /^[ae]llo/; // must start with  "a/e" ; blank/space  is not allow ;
@@ -40,14 +40,14 @@ let re = 'hello'; // CaseSetive
 
      //-----------------------------Querly Braces :{} Quentifier----------------------------------------------------
 
-    re = /hel{2}o/ ; //'latter'{2} = any latter 2 times; this 'hello' word must be 2 'l'. sapce/blank is not allow;
-    re = /hel{3}o/ ; //'latter'{3} = any latter 3 times; this 'hello' word must be 2 'l'. sapce/blank is not allow;
+    re = /hel{2}o/ ; //'latter'{2} = any_latter-2 times; this 'hello' word must be 2 'l'. sapce/blank is not allow;
+    re = /hel{3}o/ ; //'latter'{3} = any_latter-3 times; this 'hello' word must be 3 'l'. sapce/blank is not allow;
     //range : *{2-times, 5-times} 
-    re = /hel{3,5}o/ ; //'latter'{3,5} = any latter 3 times; this 'hello' word must be 2 'l'. sapce/blank is not allow;
-    re = /hel{2,}o/ ; //'latter'{2,} = any latter started at least 2 times to infinity; this 'hello' word must be 2 'l'. sapce/blank is not allow;
+    re = /hel{3,5}o/ ; //'latter'{3,5} = any latter 3 times; this 'hello' word must be at least 3 'l' not more than 5 'l'. sapce/blank is not allow;
+    re = /hel{2,}o/ ; //'latter'{2,} = any latter started at least 2 times to infinity; this 'hello' word at least  2 'l'  to infinity. sapce/blank is not allow;
     
     //-----------------------------Grouping () paranthesis: (expression){how many times need ex: 2} 
-    re =/^([0-9]){5}/; // start with ^([digit : 0-9]){need at least  digit: 5}
+    re =/^([0-9]){5}/; // start with ^([digit : 0-9]){need at lest  digit: 5}
 
     //Bangladesh Phone number : ------------------------
 
