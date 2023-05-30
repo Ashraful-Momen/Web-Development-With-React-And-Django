@@ -1,4 +1,4 @@
-// Object {}: delete object.name, Read/Update/Create=> object.name or obejct["name"]; Access Property=> Object.property/key
+// Object {}: delete object.name, Read/Update/Create=> object.name or obejct["name"]; Access Property => Object.property/key
 
 // console.log : code 
 
