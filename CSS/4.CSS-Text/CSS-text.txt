@@ -1,0 +1,16 @@
+Text:
+-------
+
+text-decoration:none/line-through;
+
+text-align:right/left/center/justify-content-(right/left/center/auto);
+
+text-transform:UpperCase/LowerCase/Capitalized;
+
+text-indent: 50px;
+
+word-space: __px;
+
+text-shadow: (X,Y,Z)-> (2px,3px,green);
+
+box-shadow:(x,y,z)->(2px,3px,blue);
