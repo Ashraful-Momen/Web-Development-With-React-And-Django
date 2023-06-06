@@ -195,7 +195,7 @@ function removeTaskLS(rmElement){
         if(li.textContent.trim() === task){
             
             
-            tasks.splice(index,1); // delete those item from local storage ... array ... 
+            tasks.splice(index,1); // delete those item from local storage ... array ... splice(starting_index,0->not delete or '1/2'->delete '1/2' element, 'add more item', 'add more item');
            
         }
     })
