@@ -1,0 +1,51 @@
+/* @keyframes slider-animation{
+
+    0%{
+        background-repeat: no-repeat;
+        background-image: url(../../media/img/1.jpg);
+    }
+    25%{
+        background-repeat: no-repeat;
+        background-image: url(../../media/img/2.jpg);
+    }
+    50%{
+        background-repeat: no-repeat;
+        background-image: url(../../media/img/3.jpg);
+    }
+ 
+
+}  */
+
+
+ /* color animation */
+
+@keyframes color-animation{
+    0%{
+        background: green;
+    }
+    25%{
+        background:yellow;
+    }
+    50%{
+        background:rgb(224, 72, 72);
+    }
+    75%{
+        background:rgb(30, 109, 212);
+    }
+    100%{
+        background:rgb(35, 155, 24);
+    }
+
+}
+
+
+
+
+.slider{ 
+    height: 600px;
+    /* background-image:url(../../media/img/1.jpg) ; */
+    /* background-repeat: no-repeat; */
+    animation:color-animation 4s infinite forwards;
+    /* animation-duration:10s;
+    animation-iteration-count:infinite; */
+}
