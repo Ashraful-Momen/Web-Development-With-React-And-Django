@@ -1,25 +1,33 @@
-/* @keyframes slider-animation{
+@keyframes slider-animation{
 
     0%{
         background-repeat: no-repeat;
-        background-image: url(../../media/img/1.jpg);
+        background-image: url(https://images.unsplash.com/photo-1671601065280-215ca5072af9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8NnNNVmpUTFNrZVF8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60);
     }
     25%{
         background-repeat: no-repeat;
-        background-image: url(../../media/img/2.jpg);
+        background-image: url(https://images.unsplash.com/photo-1671600940888-74bdddbffcce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8NnNNVmpUTFNrZVF8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60);
     }
     50%{
         background-repeat: no-repeat;
-        background-image: url(../../media/img/3.jpg);
+        background-image: url(https://images.unsplash.com/photo-1686050197750-f82a8e3b5715?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEwfDZzTVZqVExTa2VRfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60%3D%3D&auto=format&fit=crop&w=500&q=60);
+    }
+    75%{
+        background-repeat: no-repeat;
+        background-image: url(https://images.unsplash.com/photo-1671601065280-215ca5072af9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8NnNNVmpUTFNrZVF8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60);
+    }
+    100%{
+        background-repeat: no-repeat;
+        background-image: url(https://images.unsplash.com/photo-1671600940888-74bdddbffcce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8NnNNVmpUTFNrZVF8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60);
     }
  
 
-}  */
+} 
 
 
  /* color animation */
 
-@keyframes color-animation{
+/* @keyframes color-animation{
     0%{
         background: green;
     }
@@ -36,7 +44,7 @@
         background:rgb(35, 155, 24);
     }
 
-}
+} */
 
 
 
@@ -45,7 +53,9 @@
     height: 600px;
     /* background-image:url(../../media/img/1.jpg) ; */
     /* background-repeat: no-repeat; */
-    animation:color-animation 4s infinite forwards;
+    background-position: center;
+    /* background-size: cover; */
+    animation:slider-animation 10s infinite ;
     /* animation-duration:10s;
     animation-iteration-count:infinite; */
 }
