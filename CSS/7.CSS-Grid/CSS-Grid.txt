@@ -1,0 +1,70 @@
+{
+display:grid;
+background-color:green;
+justify-content:center/start/end;
+
+***total grid-coloumn: 1-7.
+
+
+
+***grid-template-coloumn: 1st, 2nd , 3rd , 4th .... coloumn....
+grid-template-coloumn: auto auto auto ;// take 3 coloumn with auto width. *** px , rem ... working for width in coloumn.
+grid-template-coloumn: 100px auto auto // first coloumn 100px ... 
+grid-coloumn-gap: 10px; 
+
+
+***grid-template-row: 1st , 2nd , 3rd, .... row....
+grid-template-row: 100px ; // row __px working for height... 
+grid-row-gap:10px; 
+
+***grid-gap: row , colomun (10px , 10px);
+
+***select div with class for single div=> grid coloumn will start first coloumn wich is one.------------------
+
+grid-coloumn-start:1;
+grid-coloumn-end:3;
+
+or
+gird-coloumn:1/3 (1st div will be 1-3 coloumn):
+grid-coloumn:1/span3(start 1st coloumn +3 more coloumn = 4 coloumn.
+---------------------------------------
+***for single div=> grid row will start first coloumn wich is one.------------------
+
+grid-row-start:1;
+grid-rowend:3;
+
+or
+gird-row:1/3 (1st div will be 1-3 row):
+grid-row:1/span3(start 1st row+3 more row= 4 coloumn.
+
+-------------------------------Grid : area-------------------------
+***html tag name by grid:=>
+.className{grid-area:header;}
+.className{grid-area:main;}
+.className{grid-area:footer;}
+
+{
+	display:grid;
+	grid-template-area:'
+			header header header header header header
+			menu main asid asid asid asid
+			menu footer footer footer footer footer	';
+
+}
+--------------------------------------------------------------------
+
+grid-coloumn-start=1
+grid-coloumn-end=3
+---------------------or we can use => grid-coloumn:1/3 or => grid-coloumn:1/span2 =>grid-area : rowstart colstart rowend colend;
+
+
+*** want 4 coloumn with equal:
+
+grid-template-coloumn: repeat(4, 25%) ; , get 4 coloumn with equal all.------------or =>
+grid-template-coloumn: 1fr 1fr 1fr 1fr;
+
+***auto-fill : coloumn take auto space, 
+***minmax(200px => 'div' can't shrink if size 200px when screen minimize or maximize.
+***repeat(use it for all coloumn/row)
+grid-template-coloumn:repeat(auto-fill, minmax(200px, 1fr))
+
