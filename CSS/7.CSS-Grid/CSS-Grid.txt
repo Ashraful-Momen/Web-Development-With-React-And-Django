@@ -3,7 +3,7 @@ display:grid;
 background-color:green;
 justify-content:center/start/end;
 
-***total grid-coloumn: 1-7.
+***total grid-coloumn: 1-7. //but we can change according to our need
 
 
 
