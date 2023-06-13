@@ -1,0 +1,49 @@
+1.goto nodejs official website and download node ... now we can run JS in our desktop by the node ... if not possible , 
+then we have to setup the environment variable in windows path.... 
+
+>>> cmd >>> type 'node'>>> now 'implement code in JS'
+
+to run file.js => type->
+
+>>> node file.js
+--------------------------------------------------------------------------------------
+install js package (according to linux package is the combination of file , whick define as software...) we have to use npm , as like python for pip and php for composar
+--------------------------------------------------------------------------------------
+
+suppose , we want to install bootstrap and date-formate package by npm(node package manager):
+
+npm install `package-name`;
+
+---------------------------------------------
+before package install we want to setup anyfolder as js app / as like laravel :
+
+>>>> npm init   ( initialized...)
+>>>>then setup (json file...)
+>>>>then package.json will be created.
+----------------------------------------
+now we are ready to install package : 
+
+>>> npm install date-format --save (--save <= wirte '--save' for this package autometically save the package in Jsonfile...With dependencies)
+>>>npm install bootstrap
+------------------------------------------
+
+all the package file (date-format, bootstarp) will be saved in node_moduls file.
+-------------------------------------------------------
+#unintall package : npm uninstall 'packageName' --save
+-------------------------------------------------------
+if we want to this project to other just send Json file and send index.js ....
+>>> for the install all package in those project file just type
+>>>npm install
+then all package will be autometically install.
+
+for update any package >>>npm update 'packageName'
+------------------------------------------------------
+their are two type of dependency : 1. Dev dependency( Development purpose and install in single folder) 2. Global dependancy(this project install in my pc as environment variable)...
+
+1>>>> npm install live-server --save-dev
+for uninstall >>> npm uninstall live-server.
+2>>> npm install typescript -g (globlally install)
+for uninstall >> npm uninstall typescript -g
+
+>>>npm root (show the global directory folder)
+>>>npm root -g (show the environment varibal folder)
