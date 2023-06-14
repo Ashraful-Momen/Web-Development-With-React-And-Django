@@ -1,6 +1,6 @@
 #Version Control tool: 
 -------------------------
-Software tools that manage change source code overtime. It keep track to change of every Modification....
+Software tools that manage changing of source code overtime. It keep track to change of every Modification....
 
 ex: git, svn , cvs.
 ----------------------------------
