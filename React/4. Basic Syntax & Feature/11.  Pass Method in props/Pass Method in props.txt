@@ -1,0 +1,97 @@
+*** we can send root component App class 'event function' to other component class/function as parameter.
+*** sendFunction={this.changeStateContent.bind(this,"parameter")}. here , this.eventFunction.bind(this->means class, 'pass function argument');
+*** alter native way of this.eventFunction.bind() => use arrow function or closer function => 
+----------------------------------
+ <Book bookName={this.state.books[2].bookName}
+       writer={this.state.books[2].writer} 
+       sendFunction={ () => this.changeStateContent('bind-change Book name in Last line')}/>
+       -----------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------
+
+goto file >>> src >>> App.js:
+---------------------------------------------------------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import Book from './Component/Book'
+
+
+class App extends Component{
+
+  state={
+    books:[
+      {bookName:"1980", writer:"I don't know"},
+      {bookName:"Algorithm", writer:"ALkhirmi"},
+      {bookName:"DSA", writer:"don't Know"},
+    ],
+    otherProps: "I am other property"
+  }
+  //function for the button:
+   changeStateContent = (changeBookName) =>{
+      //for changing state content use => this.setState({copy state content and edit here });
+      this.setState({
+        books:[
+          {bookName:changeBookName, writer:"changed-I don't know"},
+          {bookName:"Algorithm-changed", writer:"ALkhirmi-changed"},
+          {bookName:"DSA-changed", writer:"Changed-don't Know"},
+        ]
+      });
+   }
+  
+  render(){
+      console.log(this.state);
+      return (
+        
+    <div className="App">
+      <h2>Book List</h2>
+      <hr/>
+      <button onClick={this.changeStateContent.bind(this,'bind-change Book name in first line')}>Click for Change State content</button>
+      <Book bookName={this.state.books[0].bookName}
+       writer={this.state.books[0].writer} />
+      <Book bookName={this.state.books[1].bookName}
+       writer={this.state.books[1].writer} />
+       <Book bookName={this.state.books[2].bookName}
+       writer={this.state.books[2].writer} 
+       sendFunction={ () => this.changeStateContent('bind-change Book name in Last line')}/>
+     
+      <p>other property : {this.state.otherProps}</p>
+    </div>
+
+  );
+    };
+}
+
+
+
+export default App;
+
+---------------------------------------------------------------------------------------------------
+
+goto file >>> src >>> component>>> Book.jsx:
+---------------------------------------------------------------------------------------------------
+import React from 'react';
+
+const Book = (props) => {
+
+    // console.log(props.bookName, props.writer);
+
+    return (
+        <div>
+            
+            <h3 onClick={props.sendFunction}>BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+            <div>
+                Another property: {props.otherProps}
+            </div>
+        </div>
+    );
+
+}
+
+
+export default Book;
+
+
+
+---------------------------------------------------------------------------------------------------
