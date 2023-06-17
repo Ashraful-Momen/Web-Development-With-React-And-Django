@@ -1,0 +1,74 @@
+***State : in class base component's variable is  state. only ClassBase component has state . Functional component can't use state.
+*** props is the property object of component class in React.
+*** in Main root component class has props object + state .
+
+goto file >>>src >>> App.js:---------------------------------
+--------------------------------------------------------------
+
+import React, { Component } from 'react';
+import './App.css';
+import Book from './Component/Book'
+
+
+class App extends Component{
+
+  state={
+    books:[
+      {bookName:"1980", writer:"I don't know"},
+      {bookName:"Algorithm", writer:"ALkhirmi"},
+    ],
+    otherProps: "I am other property"
+  }
+  
+  render(){
+   
+      return (
+    <div className="App">
+      <h2>Book List</h2>
+      <hr/>
+      <Book bookName={this.state.books[0].bookName} writer={this.state.books[0].writer} />
+      <Book bookName={this.state.books[1].bookName} writer={this.state.books[1].writer} />
+     
+      <p>other property : {this.state.otherProps}</p>
+    </div>
+
+  );
+    };
+}
+
+
+
+export default App;
+
+
+--------------------------------------------------------------
+
+
+goto file >>>src >>>component>>> App.js:---------------------
+--------------------------------------------------------------
+import React from 'react';
+
+const Book = (props) => {
+
+    // console.log(props.bookName, props.writer);
+
+    return (
+        <div>
+            
+            <h3>BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+            <div>
+                Another property: {props.otherProps}
+            </div>
+        </div>
+    );
+
+}
+
+
+export default Book;
+
+
+
+
+--------------------------------------------------------------
