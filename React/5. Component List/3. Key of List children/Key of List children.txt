@@ -1,0 +1,106 @@
+*** Every state element need a unique number => it could be id/ key ... etc....
+
+in state we just delcear : >>> src >>> App.js :
+---------------------------------------------
+ state = {
+    books: [
+      { id:1, bookName: "1980", writer: "I don't know" },
+      { id:2, bookName: "Algorithm", writer: "ALkhirmi" },
+      { id:3, bookName: "DSA", writer: "don't Know" },
+    ],}
+-----------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import Book from './Component/Book'
+
+
+class App extends Component {
+
+  state = {
+    books: [
+      { id:1, bookName: "1980", writer: "I don't know" },
+      { id:2, bookName: "Algorithm", writer: "ALkhirmi" },
+      { id:3, bookName: "DSA", writer: "don't Know" },
+    ],
+
+    otherProps: "I am other property"
+  }
+
+
+  //event function , change state with input: 
+
+  changeStatewithInput = (event) => {
+    this.setState({
+      books: [
+        { bookName: event.target.value, writer: "changed-I don't know" },
+        { bookName: "Algorithm-changed", writer: "ALkhirmi-changed" },
+        { bookName: "DSA-changed", writer: "Changed-don't Know" },
+      ]
+    });
+  }
+
+    //CRUD=> Delete = > -------------------------------------------------
+     deleteIndexBook = (index) => {
+      //copy Array : 
+      //  const book = this.state.books.map((item)=> item)
+      //  const book = this.state.books.slice();
+       const books = [...this.state.books]; // this is the best way
+
+      // const books = this.state.books;
+      books.splice(index,1);
+      this.setState({
+        books:books
+      })
+    };
+
+
+  render() {
+
+    // console.log(this.state);
+    //add internal CSS in React App:
+    const style = {
+      width: "80%",
+      color: "white",
+      background: "black",
+      padding: "5px",
+      margin: "5px auto",
+      border: "1px solid red",
+      borderRadius: "10px",
+
+    }
+
+
+    //CRUD=> Read=> Dynamically show state data by array.map() => iterations:-----------------------
+
+
+    // console.log(this.state.books);
+    
+    const showBooks = this.state.books.map((book,index) => {
+
+      return (<Book
+                bookName={book.bookName}
+                writer={book.writer}
+                delete={()=>this.deleteIndexBook(index)} //this index pass into the deleteBook function() // don't use bind() method if deleteBooks use Arrow function 
+                key ={book.key}
+                />);
+    });
+
+   
+    return (
+
+      <div className="App">
+        <h2 style={style}>Book List</h2>
+        <hr />
+        {/* here pass the showBook variable  */}
+        {showBooks}
+
+
+      </div>
+
+    );
+  };
+}
+
+
+
+export default App;
