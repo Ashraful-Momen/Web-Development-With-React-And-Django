@@ -1,0 +1,98 @@
+*** Show dynamic Components CRUD => Read operation's :
+
+1. use map function to show data from state . and write all function inside render();
+
+---------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------
+goto folder >>> src >>> App.js:
+---------------------------------------------------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import Book from './Component/Book'
+
+
+class App extends Component{
+
+  state={
+    books:[
+      {bookName:"1980", writer:"I don't know"},
+      {bookName:"Algorithm", writer:"ALkhirmi"},
+      {bookName:"DSA", writer:"don't Know"},
+    ],
+    otherProps: "I am other property"
+  }
+  //function for the button:
+   changeStateContent = (changeBookName) =>{
+      //for changing state content use => this.setState({copy state content and edit here });
+      this.setState({
+        books:[
+          {bookName:changeBookName, writer:"changed-I don't know"},
+          {bookName:"Algorithm-changed", writer:"ALkhirmi-changed"},
+          {bookName:"DSA-changed", writer:"Changed-don't Know"},
+        ]
+      });
+   }
+
+   //event function , change state with input: 
+
+   changeStatewithInput = (event) =>{
+    this.setState({
+      books:[
+        {bookName:event.target.value, writer:"changed-I don't know"},
+        {bookName:"Algorithm-changed", writer:"ALkhirmi-changed"},
+        {bookName:"DSA-changed", writer:"Changed-don't Know"},
+      ]
+    });
+   }
+  
+  render(){
+
+      // console.log(this.state);
+      //add internal CSS in React App:
+      const style ={
+          width:"80%",
+          color:"white",
+          background:"black",
+          padding:"5px",
+          margin:"5px auto",
+          border:"1px solid red",
+          borderRadius:"10px",
+          
+      }
+      //Dynamically show state data by array.map() => iterations:-----------------------
+
+      // console.log(this.state.books);
+      const showBooks = this.state.books.map((book)=>{
+       
+        return ( <Book bookName={book.bookName} writer={book.writer}/>);
+      });
+
+
+
+
+
+
+      
+      return (
+        
+    <div className="App">
+      <h2 style={style}>Book List</h2>
+      <hr/>
+      
+      <button onClick={this.changeStateContent.bind(this,'bind-change Book name in first line')}>Click for Change State content</button>
+      <input type="text" onChange={this.changeStatewithInput}></input>
+      {showBooks}
+     
+    </div>
+
+  );
+    };
+}
+
+
+
+export default App;
+
+---------------------------------------------------------------------------------------------
+
