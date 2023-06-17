@@ -1,4 +1,5 @@
 *** Every state element need a unique number => it could be id/ key ... etc....
+***this key is react internal variable and it's not accesible by code then getting error.
 
 in state we just delcear : >>> src >>> App.js :
 ---------------------------------------------
