@@ -1,0 +1,65 @@
+*** root component class refer other componet class then no need constructor, cz 'props' object auto refer from root class to other component 
+***It's better for using functional component rather than class component.
+-----------------------------------------------------------
+goto to folder src=> App.js:
+------------------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import Book from './Component/Book'
+
+
+class App extends Component{
+
+  
+  
+  render(){
+   
+      return (
+    <div className="App">
+      <h2>Book List</h2>
+      <hr/>
+      <Book bookName="1980" writer="I don't know" />
+      <Book bookName="Alchemi" writer="Alkhrizmi"/>
+      
+    </div>
+
+  );
+    };
+}
+
+
+
+export default App;
+
+------------------------------------------------------------
+
+
+
+
+
+
+----------------------------------------------------------
+goto to folder src=> Component => Book.jsx:
+------------------------------------------------------------
+import React from 'react';
+
+const Book = (props) => {
+
+    //console.log(props.bookName, props.writer);
+
+    return (
+        <div>
+            
+            <h3>BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+        </div>
+    );
+
+}
+
+
+export default Book;
+
+
+
+------------------------------------------------------------
