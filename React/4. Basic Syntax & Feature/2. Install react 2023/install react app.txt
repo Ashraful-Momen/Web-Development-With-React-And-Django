@@ -1,0 +1,24 @@
+1. >>> npx create-react-app app-name
+2. >>> cd first-app
+3. >>> npm start - start the development server
+4. >>> npm run build - Bundles the app into static files for productions
+5. >>> npm test - start the test runner.
+6. >>> npm run eject - removes this tool and copies build dependencies, configration files and scripts into the app directory . If you do this you can't go back!
+---------------------------------------------------------
+for globally install react app 
+>>>npx create-react-app app-name -g
+>>> npm root (get folder location)
+>>> npm root -g (environment variable path/location find)
+
+---------------------------------------------------------------
+
+1. node_modules : all important package is install for react 
+
+2. public : index.html : <div id="root"></div> <= all code added here ....
+
+3. src : App.js main app folder , and all the code export ....
+
+4. src : index.js : render all code to <div id="root"></div> .....index.html file....
+---------------------------------------------------------------------------
+
+*** in public folder : index.html <- if we add the link of css then not need import css in >src > App.css file .
