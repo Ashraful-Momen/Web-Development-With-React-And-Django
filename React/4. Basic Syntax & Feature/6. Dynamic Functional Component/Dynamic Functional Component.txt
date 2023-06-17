@@ -1,0 +1,55 @@
+*** props is the short form of property of class / function : 
+--------------------------------------------------------------
+*** inside component function we can pass another component function with parameter as jsx format => <Person name="Ashraful"/>
+
+---------------------------------
+1. goto src folder => App.js
+-----------------------------
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Component/Person.js';
+
+
+class App extends Component{
+  
+  render(){
+      return (
+    <div className="App">
+      <h1>React Basic Component</h1>
+      {/* we call the component function as jsx formate : <Person/> is a component function and we can pass parameter <Person name="Asharful" /> */}
+   
+      <Person name= "Ashraful"> I am children Element</Person>
+      <Person name="Momen"> I am another children Element</Person>
+      
+    </div>
+
+  );
+    };
+}
+
+
+
+export default App;
+-------------------------------------------
+
+2. goto >>src folder >> Component>> Person.js =>
+------------------------------------------------------
+import React from 'react';
+
+
+//functional component: --------------------------
+function Person(props) {
+  // console.log(props);
+  // props is typeof -> Object
+
+    return (
+      <div>
+        <h4>Name : {props.name} , ChilderElement: {props.children}</h4>
+      </div>
+    );
+    
+  }
+
+  
+  export default Person;
+--------------------------------------------------------
