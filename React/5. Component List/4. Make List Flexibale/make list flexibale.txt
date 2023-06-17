@@ -1,0 +1,146 @@
+**** Edit Book Name with input field = > 
+
+
+>>> src >>> App.js: 
+---------------------------------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import Book from './Component/Book'
+
+
+class App extends Component {
+
+  state = {
+    books: [
+      { id:1, bookName: "1980", writer: "I don't know" , age: 1},
+      { id:2, bookName: "Algorithm", writer: "ALkhirmi", age :2 },
+      { id:3, bookName: "DSA", writer: "don't Know", age: 3 },
+    ]
+  }
+
+
+  //Crud: Update=> event function , change state with input:------------------------------ 
+
+  
+  //chatGPT:------------------------
+  changeStatewithInput = (event, index) => {
+    const updatedBooks = [...this.state.books];
+    updatedBooks[index].bookName = event.target.value;
+  
+    this.setState({
+      books: updatedBooks
+    });
+  };
+
+  // changeStatewithInput = (event,index) => {
+  //  const book = {
+  //   ...this.state.books[index]
+  //  }
+  //   book.bookName = event.target.value; 
+
+  //   const books = [...this.state.books];
+  //   books[index]= book;
+
+  //   this.setState({
+  //     books: books
+  //   })
+
+  // }
+  // ------------------------------------
+
+    //CRUD=> Delete = > -------------------------------------------------
+     deleteIndexBook = (index) => {
+      //copy Array : 
+      //  const book = this.state.books.map((item)=> item)
+      //  const book = this.state.books.slice();
+       const books = [...this.state.books]; // this is the best way
+
+      // const books = this.state.books;
+      books.splice(index,1);
+      this.setState({
+        books:books
+      })
+    };
+
+
+  render() {
+
+    // console.log(this.state);
+    //add internal CSS in React App:
+    const style = {
+      width: "80%",
+      color: "white",
+      background: "black",
+      padding: "5px",
+      margin: "5px auto",
+      border: "1px solid red",
+      borderRadius: "10px",
+
+    }
+
+
+    //CRUD=> Read=> Dynamically show state data by array.map() => iterations:-----------------------
+
+
+    // console.log(this.state.books);
+    
+    const showBooks = this.state.books.map((book,index) => {
+
+      return (<Book
+                bookName={book.bookName}
+                writer={book.writer}
+                key={book.id}
+                delete={()=>this.deleteIndexBook(index)} //this index pass into the deleteBook function() // don't use bind() method if deleteBooks use Arrow function 
+                inputName = {(event)=> this.changeStatewithInput(event,index)}
+                />);
+    });
+
+   
+    return (
+
+      <div className="App">
+        <h2 style={style}>Book List</h2>
+        <hr />
+        {/* here pass the showBook variable  */}
+        {showBooks}
+
+
+      </div>
+
+    );
+  };
+}
+
+
+
+export default App;
+
+---------------------------------------------------------------------------
+
+goto file >>> src >>> Component >>> Book.jsx: 
+-------------------------------------------------------------------------------------------------------------
+import React from 'react';
+import '../StyleSheet/Book.css';
+
+const Book = (props) => {
+
+    console.log(props);
+
+    return (
+        <div className="Books">
+            
+            <h3 onClick={props.delete}>BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+            <input type="text" onChange={props.inputName} value={props.bookName}></input>
+           
+        </div>
+    );
+
+}
+
+
+export default Book;
+
+
+
+-------------------------------------------------------------------------------------------------------------
