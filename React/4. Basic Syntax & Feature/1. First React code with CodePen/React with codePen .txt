@@ -1,0 +1,116 @@
+goto to the code pen 
+1. Log in with code pen .
+
+click setting => select js => type 'react' 'react-dom' and add .
+                            => select 'bubel' for js preprocessor.
+
+
+1.react : help to write code for JSX and 
+2.reat-dom: help JSX to index.html inject those code . ex: ReactDOM.render(<jsx- function/class />, getElementById('#idName'))
+3. bable: help JSX to html coversion.
+
+
+---------------------------------1.Html:----------------------------------
+<div id="p">
+  
+</div>
+---------------------------------2.css:----------------------------------
+.card{
+  border:1px solid black;
+  margin: 20px;
+  padding:10px;
+  display:inline-block;
+}
+----------------------------------3.js:1---------------------------------
+
+function person(){
+
+  return (
+<div className="person">
+
+  <h3>person</h3>
+
+  <p>Age: 27</p>
+
+</div>
+
+  );
+
+}
+
+
+​
+
+ReactDOM.render(<card/>,document.querySelector('#p'))
+-----------------------------------------js2-----------------------
+function person(props){
+console.log(props); //here 'props' is the object.
+  return (
+<div className="person">
+
+  <h3>person</h3>
+
+  <p>Age: 27</p>
+
+</div>
+
+  );
+
+}
+
+
+​
+
+ReactDOM.render(<card/>,document.querySelector('#p'))
+---------------------------------------js3------------------------------
+
+function Person(props){
+  console.log(props);
+  return (
+<div class='card'>
+  <h3>{props.name}</h3>
+  <p>Age: {props.age}</p>
+</div>
+  );
+}
+
+ReactDOM.render(<Person name="rahim" age="20"/>, document.querySelector('#p'));
+ReactDOM.render(<Person name="karim" age="10"/>, document.querySelector('#p2'))
+================================================================================
+
+
+
+
+--------------------------------------html:----------------------------------
+<div id="p"> </div>
+
+----------------------------------------css:---------------------------------
+
+.card{
+  border:1px solid black;
+  margin: 20px;
+  padding:10px;
+  display:inline-block;
+}
+---------------------------------------javascript:---------------------------
+function Person(props){
+  console.log(props);
+  return (
+<div class='card'>
+  <h3>{props.name}</h3>
+  <p>Age: {props.age}</p>
+</div>
+  );
+}
+
+//creating multiple Person: component
+
+let persons =(
+  <div>
+    <Person name="rahim" age="20"/>
+    <Person name="karim" age="30"/>
+     <Person name="zarim" age="40"/>
+  </div>
+);
+
+ReactDOM.render( persons ,document.querySelector('#app'));
