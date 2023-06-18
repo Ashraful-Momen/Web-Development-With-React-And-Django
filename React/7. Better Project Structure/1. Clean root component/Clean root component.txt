@@ -1,0 +1,188 @@
+1. clean root component and put all component/code in >>>src >>> component >>> MainComponent.jsx
+
+>>> src >>> App.js:
+----------------------------------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import MainComponent from './Component/MainComponen';
+
+
+const  App = () =>{
+  return <MainComponent/>
+}
+
+
+
+export default App;
+----------------------------------------------------------------------------
+
+>>> src >>> Component >>> MainComponen.jsx:
+----------------------------------------------------------------------------
+import React ,{Component} from 'react';
+import '../StyleSheet/Book.css';
+import Book from './Book'
+
+class MainComponent extends Component{
+    state = {
+        books: [
+          { id:1, bookName: "1980", writer: "I don't know" , age: 1},
+          { id:2, bookName: "Algorithm", writer: "ALkhirmi", age :2 },
+          { id:3, bookName: "DSA", writer: "don't Know", age: 3 },
+        ],
+        showBooks: true
+      }
+    
+    
+      //Crud: Update=> event function , change state with input:------------------------------ 
+      //chatGPT:------------------------
+      changeStatewithInput = (event, index) => {
+        const updatedBooks = [...this.state.books];
+        updatedBooks[index].bookName = event.target.value;
+      
+        this.setState({
+          books: updatedBooks
+        });
+      };
+    
+      // changeStatewithInput = (event,index) => {
+      //  const book = {
+      //   ...this.state.books[index]
+      //  }
+      //   book.bookName = event.target.value; 
+    
+      //   const books = [...this.state.books];
+      //   books[index]= book;
+    
+      //   this.setState({
+      //     books: books
+      //   })
+    
+      // }
+      // ------------------------------------
+    
+        //CRUD=> Delete = > -------------------------------------------------
+         deleteIndexBook = (index) => {
+          //copy Array : 
+          //  const book = this.state.books.map((item)=> item)
+          //  const book = this.state.books.slice();
+           const books = [...this.state.books]; // this is the best way
+    
+          // const books = this.state.books;
+          books.splice(index,1);
+          this.setState({
+            books:books
+          })
+        };
+    
+        //show books by toggle :
+        toggleBooks = () =>{
+            this.setState({ showBooks: !this.state.showBooks})
+        }
+    
+    
+      render() {
+    
+        // console.log(this.state);
+        //add internal CSS in React App:
+        const style = {
+          width: "80%",
+          color: "white",
+          background: "black",
+          padding: "5px",
+          margin: "5px auto",
+          border: "1px solid red",
+          borderRadius: "10px",
+    
+        }
+    
+    
+        //CRUD=> Read=> Dynamically show state data by array.map() => iterations:-----------------------
+    
+    
+        // console.log(this.state.books);
+    
+        let showBookToogle = null 
+        if(this.state.showBooks){
+    
+          showBookToogle = this.state.books.map((book,index) => {  
+    
+          return (<Book
+                    bookName={book.bookName}
+                    writer={book.writer}
+                    key={book.id} // react internal property , which is not accessble...
+                    delete={()=>this.deleteIndexBook(index)} //this index pass into the deleteBook function() // don't use bind() method if deleteBooks use Arrow function 
+                    inputName = {(event)=> this.changeStatewithInput(event,index)}
+                    />);
+        });
+    
+        };
+        
+        // const showBooks = this.state.books.map((book,index) => {  
+    
+        //   return (<Book
+        //             bookName={book.bookName}
+        //             writer={book.writer}
+        //             key={book.id} // react internal property , which is not accessble...
+        //             delete={()=>this.deleteIndexBook(index)} //this index pass into the deleteBook function() // don't use bind() method if deleteBooks use Arrow function 
+        //             inputName = {(event)=> this.changeStatewithInput(event,index)}
+        //             />);
+        // });
+    
+       
+        return (
+    
+          <div className="App">
+            <h2 style={style}>Book List</h2>
+            <hr />
+    
+            <button onClick={this.toggleBooks}>Toggle Books</button>
+            {/* the "showBooks" variable is const variable : which call Book component function =  const showBooks = this.state.books.map((book,index) =>  */}
+            
+            {/* {this.state.showBooks ? showBooks : null}   */}
+    
+            {/* here pass the showBook variable  */}
+            {showBookToogle}
+            
+    
+    
+          </div>
+    
+        );
+      };
+}
+
+export default MainComponent;
+-------------------------------------------------------------------------------------------------
+>>> src >>> Component >>> Book.jsx:
+-------------------------------------------------------------------------------------------------
+import React from 'react';
+import '../StyleSheet/Book.css';
+
+const Book = (props) => {
+
+    console.log(props);
+
+    return (
+        <div className="Books">
+            
+            <h3 onClick={props.delete}>BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+            <input type="text" onChange={props.inputName} value={props.bookName}></input>
+           
+        </div>
+    );
+
+}
+
+
+export default Book;
+--------------------------------------------------------------------------------------------
+src >>> StyleSheet >>> Book.css:
+--------------------------------------------------------------------------------------------
+.Books{
+    width: 200px;
+    border:1px solid black;
+    border-radius: 10px;
+    margin:20px auto;
+    padding :10px;
+}
