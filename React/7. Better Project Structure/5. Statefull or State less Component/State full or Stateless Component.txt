@@ -1,0 +1,5 @@
+statefull / Container Component  (state+props): class component where use state . Apply all CRUD logic... render data from other file / server
+
+state less / Presentational Component(***Best Practise: try to use more stateless) (props): functional component or state less class component.
+
+Hooks: functional component use state .... new features! 
