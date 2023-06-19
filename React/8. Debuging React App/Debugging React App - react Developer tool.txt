@@ -1,0 +1,19 @@
+Install : react-developer tool in chrome extension.
+
+we can see : component tree , all props ....
+we can debug error with react app easyly.... !!!
+
+--------------------------Part 2: Debug with VS code--------------------------
+
+1. click run and debug button.
+2. click run and debug tab.
+3. select chrome.
+4. opne-> launch.json file >>> change the url: localhost:3000 (this localhost run by react app ) save it and close it.
+5. left side top position>>> launch with chorme - click it >>>
+6. select a file in vscode for debug and also select a break point "red color button- line number left side position" ... if click the red position:  then select the break point
+7. now click restart "anti clock ways button" : now reload the app and stop it in break point.
+8. first load content in break point if we hover then , we can see the value : of varible or property (props) - we can see in left side... local. 
+9. now local postion we can see the varibale and select , add to watch list.
+10. if we want to go net iteration , or next loaded of app then click F5, or play button.
+
+11. if we want to stop the debuging option , simply click the stop button, remove item from watch list , and remove the break point.
