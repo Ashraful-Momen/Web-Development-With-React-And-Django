@@ -1,0 +1,298 @@
+// when a component call : each of every portion (function how call )
+
+when create a component : it's call constructor(props) function.
+then call (component will mount- function: it's a build in function)
+then call (render()-function>>> render nested or child component)
+then call (componentDidMount())
+
+>>> component()->constructor(props) --> componentWillMount()-->render()--->componentDidMount().
+
+After call this 5 function build a  creation life cycle.
+
+if we want to change any state in component , then change in those function --->componentDidMount() -> render(), -> .
+
+serial of call function in component life cycle => constructor(props) --> componentWillMount() - means : component will render --->componentDidMount() - means render already called.-->render().
+--------------------------------------------------------------------------------------------------------------------------------
+src >>> Component >>> MainComponent.jsx: => 
+--------------------------------------------------------------------------------------------------------------------------------
+
+import React ,{Component} from 'react';
+import Books from '../assets/Books'; //state data
+import BookList from './lists/BookList' //representation mapping component
+
+class MainComponent extends Component{
+
+  constructor(props){
+    super(props);
+    this.state={
+      books:Books,
+        showBooks: true
+    }
+    console.log("MainComponent constructor");
+  }
+  // constructor inside state and without constructor state is working same:
+    // state = {
+    //     books:Books,
+    //     showBooks: true
+    //   }
+    // -------------------------------------------------
+    
+    
+      //Crud: Update=> event function , change state with input:------------------------------ 
+      //chatGPT:------------------------
+      changeStatewithInput = (event, index) => {
+        const updatedBooks = [...this.state.books];
+        updatedBooks[index].bookName = event.target.value;
+      
+        this.setState({
+          books: updatedBooks
+        });
+      };
+    
+      // changeStatewithInput = (event,index) => {
+      //  const book = {
+      //   ...this.state.books[index]
+      //  }
+      //   book.bookName = event.target.value; 
+    
+      //   const books = [...this.state.books];
+      //   books[index]= book;
+    
+      //   this.setState({
+      //     books: books
+      //   })
+    
+      // }
+      // ------------------------------------
+    
+        //CRUD=> Delete = > -------------------------------------------------
+         deleteIndexBook = (index) => {
+          //copy Array : 
+          //  const book = this.state.books.map((item)=> item)
+          //  const book = this.state.books.slice();
+           const books = [...this.state.books]; // this is the best way
+    
+          // const books = this.state.books;
+          books.splice(index,1);
+          this.setState({
+            books:books
+          })
+        };
+    
+        //show books by toggle :
+        toggleBooks = () =>{
+            this.setState({ showBooks: !this.state.showBooks})
+        }
+
+        componentWillUnmount(){
+          console.log("Main componentWillMount - can damage state & unsafe - this function work before render()")
+        }
+        componentDidMount(){
+          console.log("Main componentDidMount - can damage state & unsafe - this function work after render() , complete all task with child componet also")
+        }
+    
+    
+      render() {
+
+        console.log("MainComponent render()")
+    
+        // console.log(this.state);
+        //add internal CSS in React App:
+        const style = {
+          width: "80%",
+          color: "white",
+          background: "black",
+          padding: "5px",
+          margin: "5px auto",
+          border: "1px solid red",
+          borderRadius: "10px",
+    
+        }
+    
+    
+        //CRUD=> Read=> Dynamically show state data by array.map() => iterations:-----------------------
+    
+    
+        // console.log(this.state.books);
+    
+        let showBookToogle = null 
+        if(this.state.showBooks){
+    
+          showBookToogle = <BookList books={this.state.books}
+          //I got error here: when we send MainComponent all property in BookList component 
+          // Must be send those function or state variable /date to BookList , which call from Book List ....
+          deleteIndexBook={this.deleteIndexBook}
+          changeStatewithInput={this.changeStatewithInput}
+          />
+
+    
+        };
+        
+        // const showBooks = this.state.books.map((book,index) => {  
+    
+        //   return (<Book
+        //             bookName={book.bookName}
+        //             writer={book.writer}
+        //             key={book.id} // react internal property , which is not accessble...
+        //             delete={()=>this.deleteIndexBook(index)} //this index pass into the deleteBook function() // don't use bind() method if deleteBooks use Arrow function 
+        //             inputName = {(event)=> this.changeStatewithInput(event,index)}
+        //             />);
+        // });
+        
+    
+       
+        return (
+    
+          <div className="App">
+            <h2 style={style}>Book List</h2>
+            <hr />
+    
+            <button onClick={this.toggleBooks}>Toggle Books</button>
+            {/* the "showBooks" variable is const variable : which call Book component function =  const showBooks = this.state.books.map((book,index) =>  */}
+            
+            {/* {this.state.showBooks ? showBooks : null}   */}
+    
+            {/* here pass the showBook variable  */}
+            {showBookToogle}
+            
+    
+    
+          </div>
+    
+        );
+      };
+}
+
+export default MainComponent;
+// -------------------------------------------------------------------------------------------
+// import React, { Component } from 'react';
+// import Books from '../assets/Books';
+// import BookList from './lists/BookList';
+
+// class MainComponent extends Component {
+//   state = {
+//     books: Books,
+//     showBooks: true
+//   };
+
+//   changeStatewithInput = (event, index) => {
+//     const updatedBooks = [...this.state.books];
+//     updatedBooks[index].bookName = event.target.value;
+
+//     this.setState({
+//       books: updatedBooks
+//     });
+//   };
+
+//   deleteIndexBook = (index) => {
+//     const books = [...this.state.books];
+//     books.splice(index, 1);
+//     this.setState({
+//       books: books
+//     });
+//   };
+
+//   toggleBooks = () => {
+//     this.setState({ showBooks: !this.state.showBooks });
+//   };
+
+//   render() {
+//     const style = {
+//       width: "80%",
+//       color: "white",
+//       background: "black",
+//       padding: "5px",
+//       margin: "5px auto",
+//       border: "1px solid red",
+//       borderRadius: "10px"
+//     };
+
+//     let showBookToggle = null;
+//     if (this.state.showBooks) {
+//       showBookToggle = <BookList
+//         books={this.state.books}
+//         deleteIndexBook={this.deleteIndexBook}
+//         changeStatewithInput={this.changeStatewithInput}
+//       />;
+//     }
+
+//     return (
+//       <div className="App">
+//         <h2 style={style}>Book List</h2>
+//         <hr />
+
+//         <button onClick={this.toggleBooks}>Toggle Books</button>
+//         {showBookToggle}
+//       </div>
+//     );
+//   }
+// }
+
+// export default MainComponent;
+
+// -------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+src >>> Component >>> lists >>> BookList.jsx: => 
+--------------------------------------------------------------------------------------------------------------------------------
+// //call representational function to show data on display as Book component ...
+import React ,{Component}from 'react';
+import Book from '../representational/Book';
+
+// const BookList = (props) => {
+ 
+// };
+
+class BookList extends Component{
+  constructor(props){
+    super(props);
+    console.log("I am from BookList Component");
+
+  }
+
+  componentWillUnmount(){
+    console.log("BookList componentWillMount - can damage state & unsafe - this function work before render()")
+  }
+  componentDidMount(){
+    console.log("BookList componentDidMount - can damage state & unsafe - this function work after render() , complete all task with child componet also")
+  }
+  render(){
+    console.log("BookListComponent render()")
+    return (this.props.books.map((book, index) => (
+      <Book
+        bookName={book.bookName}
+        writer={book.writer}
+        key={book.id}
+        delete={() => this.props.deleteIndexBook(index)} //got error here , we have to use props.deleteIndexBook / not use this.deleteIndexBook cz we pass this function from MainComponent that's not use this. use props....
+        inputName={(event) => this.props.changeStatewithInput(event, index)} // same error getting here ....
+      />
+    )))
+  }
+
+}
+
+export default BookList;
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+src >>> Component >>> representational>>> Book.jsx => 
+--------------------------------------------------------------------------------------------------------------------------------
+import React from 'react';
+import '../../StyleSheet/Book.css';
+
+const Book = (props) => {
+
+
+    return (
+        <div className="Books">
+            
+            <h3 onClick={props.delete}>BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+            <input type="text" onChange={props.inputName} value={props.bookName}></input>
+           
+        </div>
+    );
+
+}
+
+
+export default Book;

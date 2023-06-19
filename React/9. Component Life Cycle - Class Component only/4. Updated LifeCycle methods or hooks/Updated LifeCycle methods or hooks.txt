@@ -1,0 +1,366 @@
+****unsafe function replace by 2 function: static getDerivedStateFromProps(){ return unchangeVariable}, getSnapshotBeforeUpdate(){}
+---------------------------------------------------------------------------------------------------------------------------------
+
+MainComponent ("State") ->State Basically pass as props into  BookList("Props") - Component.
+
+if component update then call a function auto =>  (**** For State only)
+
+then call => shouldComponentUpdate(nextProps,nextState -> automatically receive update props and State) { we can return true-> for update , and false->for not update}
+
+then call => componentWillUpdate(nextProps,nextState) -> this is a signal , Now the component will be Update.
+
+then call => render(){ UpDate nested/child Component} ->
+
+finally call => componentDidUpdate(){}
+
+------------------------------------------------------------
+if get any warning , then use **** Unsafe_addFunctionHere()
+------------------------------------------------------------
+if update any render data then: 
+--------------------------------
+MainComponent render()
+BookList.jsx:28 BookList-> Update Props and State- shouldComponentUpdate {books: Array(2), deleteIndexBook: ƒ, changeStatewithInput: ƒ} null
+BookList.jsx:32 BookList-> Update Props and State- componentWillUpdate {books: Array(2), deleteIndexBook: ƒ, changeStatewithInput: ƒ} null
+BookList.jsx:40 BookListComponent render()
+BookList.jsx:36 BookList-> Update Props and State- componentDidUpdate {books: Array(3), deleteIndexBook: ƒ, changeStatewithInput: ƒ} null
+--------------------------------------------------------------------------------------------------------------------------------------
+
+src>>> component >>> MainComponent.jsx => 
+------------------------------------------------------------------------------------------------------------------------------
+
+
+import React ,{Component} from 'react';
+import Books from '../assets/Books'; //state data
+import BookList from './lists/BookList' //representation mapping component
+
+class MainComponent extends Component{
+
+  constructor(props){
+    super(props);
+    this.state={
+      books:Books,
+        showBooks: true
+    }
+    console.log("MainComponent constructor");
+  }
+  // constructor inside state and without constructor state is working same:
+    // state = {
+    //     books:Books,
+    //     showBooks: true
+    //   }
+    // -------------------------------------------------
+    
+    
+      //Crud: Update=> event function , change state with input:------------------------------ 
+      //chatGPT:------------------------
+      changeStatewithInput = (event, index) => {
+        const updatedBooks = [...this.state.books];
+        updatedBooks[index].bookName = event.target.value;
+      
+        this.setState({
+          books: updatedBooks
+        });
+      };
+    
+      // changeStatewithInput = (event,index) => {
+      //  const book = {
+      //   ...this.state.books[index]
+      //  }
+      //   book.bookName = event.target.value; 
+    
+      //   const books = [...this.state.books];
+      //   books[index]= book;
+    
+      //   this.setState({
+      //     books: books
+      //   })
+    
+      // }
+      // ------------------------------------
+    
+        //CRUD=> Delete = > -------------------------------------------------
+         deleteIndexBook = (index) => {
+          //copy Array : 
+          //  const book = this.state.books.map((item)=> item)
+          //  const book = this.state.books.slice();
+           const books = [...this.state.books]; // this is the best way
+    
+          // const books = this.state.books;
+          books.splice(index,1);
+          this.setState({
+            books:books
+          })
+        };
+    
+        //show books by toggle :
+        toggleBooks = () =>{
+            this.setState({ showBooks: !this.state.showBooks})
+        }
+
+        // UNSAFE_componentWillMount(){
+        //   console.log("Main componentWillMount - can damage state & unsafe - this function work before render()")
+        // }
+        componentDidMount(){
+          console.log("Main componentDidMount - can damage state & unsafe - this function work after render() , complete all task with child componet also")
+        }
+
+        //if the sate update then call the function: ---------------------------------
+        shouldComponentUpdate(nextProps, nextState ){
+          console.log("MainComponent-> Update Props and State- shouldComponentUpdate",nextProps,nextState);
+          return true; // if return false - component not update; and for state change this function call first .... (**** Best for update Version : Handy Method and also very needy..!)
+        }
+        // UNSAFE_componentWillUpdate(nextProps,nextState){
+        //   console.log("MainComponent-> Update Props and State- componentWillUpdate",nextProps,nextState);
+    
+        // }
+        componentDidUpdate(nextProps,nextState){
+          console.log("MainComponent-> Update Props and State- componentDidUpdate",nextProps,nextState);
+        }
+        //updated LifeCycle methods or Hooks:-----------------------------in React New Version: (this method use as alternative UNSAFE_function(Monut,willUpdate))
+        //this function static + return something.
+        static getDerivedStateFromProps(nextProps, prevState){
+          console.log("MainComponent -created/updated LifeCycle methods or hooks => getDerivedStateFromProps()",nextProps,prevState) ; // in component creation+updated time this function will be called.
+          return prevState; // Cz of I'm not change state that why return it
+        }
+        getSnapshotBeforeUpdate(){
+          console.log("MainComponent -> getSnapshotBeforeUpdate()");
+        }
+
+    
+    
+      render() {
+
+        console.log("MainComponent render()")
+    
+        // console.log(this.state);
+        //add internal CSS in React App:
+        const style = {
+          width: "80%",
+          color: "white",
+          background: "black",
+          padding: "5px",
+          margin: "5px auto",
+          border: "1px solid red",
+          borderRadius: "10px",
+    
+        }
+    
+    
+        //CRUD=> Read=> Dynamically show state data by array.map() => iterations:-----------------------
+    
+    
+        // console.log(this.state.books);
+    
+        let showBookToogle = null 
+        if(this.state.showBooks){
+    
+          showBookToogle = <BookList books={this.state.books}
+          //I got error here: when we send MainComponent all property in BookList component 
+          // Must be send those function or state variable /date to BookList , which call from Book List ....
+          deleteIndexBook={this.deleteIndexBook}
+          changeStatewithInput={this.changeStatewithInput}
+          />
+
+    
+        };
+        
+        // const showBooks = this.state.books.map((book,index) => {  
+    
+        //   return (<Book
+        //             bookName={book.bookName}
+        //             writer={book.writer}
+        //             key={book.id} // react internal property , which is not accessble...
+        //             delete={()=>this.deleteIndexBook(index)} //this index pass into the deleteBook function() // don't use bind() method if deleteBooks use Arrow function 
+        //             inputName = {(event)=> this.changeStatewithInput(event,index)}
+        //             />);
+        // });
+        
+    
+       
+        return (
+    
+          <div className="App">
+            <h2 style={style}>Book List</h2>
+            <hr />
+    
+            <button onClick={this.toggleBooks}>Toggle Books</button>
+            {/* the "showBooks" variable is const variable : which call Book component function =  const showBooks = this.state.books.map((book,index) =>  */}
+            
+            {/* {this.state.showBooks ? showBooks : null}   */}
+    
+            {/* here pass the showBook variable  */}
+            {showBookToogle}
+            
+    
+    
+          </div>
+    
+        );
+      };
+}
+
+export default MainComponent;
+// -------------------------------------------------------------------------------------------
+// import React, { Component } from 'react';
+// import Books from '../assets/Books';
+// import BookList from './lists/BookList';
+
+// class MainComponent extends Component {
+//   state = {
+//     books: Books,
+//     showBooks: true
+//   };
+
+//   changeStatewithInput = (event, index) => {
+//     const updatedBooks = [...this.state.books];
+//     updatedBooks[index].bookName = event.target.value;
+
+//     this.setState({
+//       books: updatedBooks
+//     });
+//   };
+
+//   deleteIndexBook = (index) => {
+//     const books = [...this.state.books];
+//     books.splice(index, 1);
+//     this.setState({
+//       books: books
+//     });
+//   };
+
+//   toggleBooks = () => {
+//     this.setState({ showBooks: !this.state.showBooks });
+//   };
+
+//   render() {
+//     const style = {
+//       width: "80%",
+//       color: "white",
+//       background: "black",
+//       padding: "5px",
+//       margin: "5px auto",
+//       border: "1px solid red",
+//       borderRadius: "10px"
+//     };
+
+//     let showBookToggle = null;
+//     if (this.state.showBooks) {
+//       showBookToggle = <BookList
+//         books={this.state.books}
+//         deleteIndexBook={this.deleteIndexBook}
+//         changeStatewithInput={this.changeStatewithInput}
+//       />;
+//     }
+
+//     return (
+//       <div className="App">
+//         <h2 style={style}>Book List</h2>
+//         <hr />
+
+//         <button onClick={this.toggleBooks}>Toggle Books</button>
+//         {showBookToggle}
+//       </div>
+//     );
+//   }
+// }
+
+// export default MainComponent;
+
+// -------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+src>>> component >>> lists>>> BookList.jsx => 
+-------------------------------------------------------------------------------------------------------------------------------------
+// //call representational function to show data on display as Book component ...
+import React ,{Component}from 'react';
+import Book from '../representational/Book';
+
+// const BookList = (props) => {
+ 
+// };
+
+class BookList extends Component{
+  constructor(props){
+    super(props);
+    console.log("I am from BookList Component");
+
+  }
+
+  // UNSAFE_componentWillMount(){
+  //   console.log("BookList componentWillMount - can damage state & unsafe - this function work before render()")
+  // }
+  componentDidMount(){
+    console.log("BookList componentDidMount - can damage state & unsafe - this function work after render() , complete all task with child componet also")
+  }
+
+  //update life cycle functions: ----------------------------------------------
+    // UNSAFE_componentWillReceiveProps(nextProps ){
+    //   console.log("BookList-> Update Props- componentWillReceiveProps",nextProps);
+    // }
+    shouldComponentUpdate(nextProps, nextState ){
+      console.log("BookList-> Update Props and State- shouldComponentUpdate",nextProps,nextState);
+      return true; // if return false - component not update; and for state change this function call first .... (**** Best for update Version : Handy Method and also very needy..!)
+    }
+    // UNSAFE_componentWillUpdate(nextProps,nextState){
+    //   console.log("BookList-> Update Props and State- componentWillUpdate",nextProps,nextState);
+
+    // }
+    componentDidUpdate(nextProps,nextState){
+      console.log("BookList-> Update Props and State- componentDidUpdate",nextProps,nextState);
+    }
+    //updated LifeCycle methods or Hooks:-----------------------------in React New Version: (this method use as alternative UNSAFE_function(Monut,willUpdate))
+    //this function static + return something.
+    static getDerivedStateFromProps(nextProps, prevState){
+      console.log("BookList -updated/created LifeCycle methods or hooks => getDerivedStateFromProps()",nextProps,prevState) ; // in component creation+updated time this function will be called.
+      return prevState; // Cz of I'm not change state that why return it
+    }
+    getSnapshotBeforeUpdate(){
+      console.log("BookList -> getSnapshotBeforeUpdate()");
+    }
+
+  render(){
+    console.log("BookListComponent render()")
+    return (this.props.books.map((book, index) => (
+      <Book
+        bookName={book.bookName}
+        writer={book.writer}
+        key={book.id}
+        delete={() => this.props.deleteIndexBook(index)} //got error here , we have to use props.deleteIndexBook / not use this.deleteIndexBook cz we pass this function from MainComponent that's not use this. use props....
+        inputName={(event) => this.props.changeStatewithInput(event, index)} // same error getting here ....
+      />
+    )))
+  }
+
+}
+
+export default BookList;
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+src>>> component >>> representational >>> Book =>
+------------------------------------------------------------------------------------------------------------------------------
+import React from 'react';
+import '../../StyleSheet/Book.css';
+
+const Book = (props) => {
+
+
+    return (
+        <div className="Books">
+            
+            <h3 onClick={props.delete}>BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+            <input type="text" onChange={props.inputName} value={props.bookName}></input>
+           
+        </div>
+    );
+
+}
+
+
+export default Book;
+
