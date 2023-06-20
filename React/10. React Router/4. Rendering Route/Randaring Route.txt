@@ -2,8 +2,8 @@ add react router -> npm install react-router-dom (autometically install latest v
 ------------------------------------------------------------------------------------------------------------------
 <BrowserRoute>
     <Routs>
-        <Rout path='/' element={<h2>Home</h2>}>
-            Home // we can pass here element also
+        <Rout path='/' element={<h2>Home</h2>}> //inside element={pass component here...}
+            Home 
         </Rout>
          <Rout path='/' element={<h2>New Book</h2>}>
             New Book
