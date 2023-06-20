@@ -11,9 +11,7 @@ add react router -> npm install react-router-dom (autometically install latest v
     </Routs>
 </BrowserRoute>
 ------------------------------------------------------------------------------------------------------------------
-src >> App.js >> 
-------------------------------------------------------------------------------------------------------------------
-Add  src>>> App.css => import BrowserRoute from react-router-dom=> work for whole Apps.
+src >>> App.css >> this import in App.js
 ------------------------------------------------------------------------------------------------------------------
 import React, { Component } from 'react';
 import './App.css';
@@ -29,8 +27,9 @@ const  App = () =>{
 
 export default App;
 
+
 ------------------------------------------------------------------------------------------------------------------
-src >>> App.css >> this import in App.js
+Add  src>>> App.css => import BrowserRoute from react-router-dom=> work for whole Apps.
 ------------------------------------------------------------------------------------------------------------------
 .App {
   text-align: center;
