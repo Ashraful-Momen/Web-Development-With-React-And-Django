@@ -1,0 +1,208 @@
+
+------------------------------------------------------------------------------------------------------------------
+src >>> App.css >> this import in App.js
+------------------------------------------------------------------------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import MainComponent from './Component/MainComponen';
+import { BrowserRouter } from 'react-router-dom';
+
+
+const  App = () =>{
+  return (<BrowserRouter> 
+              <MainComponent/> 
+          </BrowserRouter>);
+}
+
+export default App;
+
+
+------------------------------------------------------------------------------------------------------------------
+Add  src>>> App.css => import BrowserRoute from react-router-dom=> work for whole Apps.
+------------------------------------------------------------------------------------------------------------------
+.App {
+  text-align: center;
+}
+
+.nav-bar ul{
+  list-style: none;
+  padding:0px;
+  margin:0px;
+}
+.nav-bar li{
+  display:inline-block;
+  margin:20px;
+}
+.nav-bar a{
+  text-decoration: none;
+  color:black;
+}
+
+.nav-bar:hover, .nav-bar > ul> li >a.active {
+  color:orange;
+}
+
+-------------------------------------------------------------------------------------------------------------------
+src > Component >>> MainComponent.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React, { Component } from 'react';
+import Books from '../assets/Books'; //state data
+import BookList from './lists/BookList' //representation mapping component
+import { Routes, Route, NavLink } from 'react-router-dom';
+
+import { BookDetail } from './representational/BookDetail';
+
+class MainComponent extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: Books, //state variable books 
+      selectedBook: null,
+    }
+
+//     Uncaught runtime errors:----------------------------------------------------------
+// 
+// ERROR
+// Cannot read properties of undefined (reading 'state')
+// TypeError: Cannot read properties of undefined (reading 'state')
+//     at selectedBookHandeler 
+    
+
+
+    // *****if use any normal function in react and pass into other array function then getting error ....*** The main cause is => we bin() with the arrow function not normal function...  best option use the arrow function every were .... 
+    //*****if we use normal handeler function and next compoent use arrow function for passing data then we have to use : // this.selectedBookHandeler = this.selectedBookHandeler.bind(this);
+  }
+ 
+    selectedBookHandeler =(bookId)=>{
+    // console.log(bookId);
+    const book = this.state.books.filter((book)=>book.id ===bookId)[0]; // if book.id match with bookId then return a array in index [0].
+    this.setState({
+      selectedBook:book,
+    });
+
+  }
+
+
+
+
+  render() {
+
+    let showBook = <BookList 
+                            books={this.state.books}
+                            selectedBookHandeler={this.selectedBookHandeler} />;
+                         
+    return (
+
+      <div className="App">
+        <nav className="nav-bar">
+          <ul>
+            <li>
+              <NavLink to="/books">Books</NavLink>
+            </li>
+            <li>
+              <NavLink to="/new-book">New Book</NavLink>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          
+          <Route path="/books" element={showBook}>
+                Books
+              </Route>
+              <Route path="/new-book" element={<h3>New Book</h3>}>
+                New Book
+              </Route>
+        </Routes>
+        
+        <BookDetail book={this.state.selectedBook}/>
+
+      </div>
+
+    );
+  };
+}
+
+export default MainComponent;
+-------------------------------------------------------------------------------------------------------------------
+
+src > Component >>> lists >>> BookList:
+-------------------------------------------------------------------------------------------------------------------
+// //call representational function to show data on display as Book component ...
+import React ,{Component}from 'react';
+import Book from '../representational/Book';
+
+class BookList extends Component{
+  render(){
+    
+    return (this.props.books.map((book) => (
+      <Book
+        book={book}
+        key={book.id}
+        selectedBookHandeler={this.props.selectedBookHandeler}
+      />
+    )))
+  }
+
+}
+
+export default BookList;
+
+-------------------------------------------------------------------------------------------------------------------
+
+src > Component >>> representational>>> Book.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React from 'react';
+import '../../StyleSheet/Book.css';
+
+function Book ({book,selectedBookHandeler}) {  // destructing book from props ... 
+
+ 
+    return book && (
+        // here the onClick () function but the params but can't assing to MainComponent veryWell.
+        <div className="Books" onClick={()=>selectedBookHandeler(book.id)}> 
+            
+            <h3 >BookName: {book.bookName}</h3>
+            <b>Writer: {book.writer}</b>
+            
+           
+        </div>
+    );
+
+}
+
+
+export default Book;
+
+-------------------------------------------------------------------------------------------------------------------
+src > Component >>> representational>>> NewBook.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React from "react";
+
+const NewBook=()=>{
+    return <h4>New Book Component</h4>
+}
+
+export default NewBook;
+
+-------------------------------------------------------------------------------------------------------------------
+src > Component >>> representational>>> BookDetail.jsx:
+-------------------------------------------------------------------------------------------------------------------
+// The error you are encountering in the BookDetail component is due to accessing properties on a null object.
+//  Specifically, the error message indicates that book is null when trying to access the bookName property.
+
+
+import React from 'react';
+
+export const BookDetail = ({ book }) => {
+  return (
+    <div>
+      {book && (
+        <div>
+          <h3>{book.bookName}</h3>
+          <p>Writer: {book.writer}</p>
+        </div>
+      )}
+    </div>
+  );
+};

@@ -1,0 +1,227 @@
+*****if you use <NavLink> page not reload in React </NavLink>
+------------------------------------------------------------------------------------------------------------------
+<nav className="nav-bar">
+          <ul>
+            <li>
+              <NavLink to="/"></NavLink>
+            </li>
+            <li>
+              <NavLink to="/new-book">New Book</NavLink>
+            </li>
+          </ul>
+        </nav>
+------------------------------------------------------------------------------------------------------------------
+
+
+
+
+add react router -> npm install react-router-dom (autometically install latest version) => 
+------------------------------------------------------------------------------------------------------------------
+<BrowserRoute>
+    <Routs>
+        <Rout path='/' element={<h2>Home</h2>}>
+            Home // we can pass here element also
+        </Rout>
+         <Rout path='/' element={<h2>New Book</h2>}>
+            New Book
+        </Rout>
+    </Routs>
+</BrowserRoute>
+------------------------------------------------------------------------------------------------------------------
+src >>> App.css >> this import in App.js
+------------------------------------------------------------------------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import MainComponent from './Component/MainComponen';
+import { BrowserRouter } from 'react-router-dom';
+
+
+const  App = () =>{
+  return (<BrowserRouter> 
+              <MainComponent/> 
+          </BrowserRouter>);
+}
+
+export default App;
+
+
+------------------------------------------------------------------------------------------------------------------
+Add  src>>> App.css => import BrowserRoute from react-router-dom=> work for whole Apps.
+------------------------------------------------------------------------------------------------------------------
+.App {
+  text-align: center;
+}
+
+.nav-bar ul{
+  list-style: none;
+  padding:0px;
+  margin:0px;
+}
+.nav-bar li{
+  display:inline-block;
+  margin:20px;
+}
+.nav-bar a{
+  text-decoration: none;
+  color:black;
+}
+
+.nav-bar:hover, .nav-bar > ul> li >a.active {
+  color:orange;
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+
+src > Component >>> MainComponent.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React, { Component } from 'react';
+import Books from '../assets/Books'; //state data
+import BookList from './lists/BookList' //representation mapping component
+import NewBook from './representational/NewBook';
+import { Routes,Route, NavLink } from 'react-router-dom';
+
+class MainComponent extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: Books
+    }
+
+  }
+
+
+  //Crud: Update=> event function , change state with input:------------------------------ 
+  //chatGPT:------------------------
+  changeStatewithInput = (event, index) => {
+    const updatedBooks = [...this.state.books];
+    updatedBooks[index].bookName = event.target.value;
+
+    this.setState({
+      books: updatedBooks
+    });
+  };
+
+
+
+  //CRUD=> Delete = > -------------------------------------------------
+  deleteIndexBook = (index) => {
+    //copy Array : 
+    //  const book = this.state.books.map((item)=> item)
+    //  const book = this.state.books.slice();
+    const books = [...this.state.books]; // this is the best way
+
+    // const books = this.state.books;
+    books.splice(index, 1);
+    this.setState({
+      books: books
+    })
+  };
+
+
+
+
+  render() {
+
+    let showBook= <BookList books={this.state.books} 
+                                   deleteIndexBook={this.deleteIndexBook}
+                                   changeStatewithInput={this.changeStatewithInput}/>
+
+
+
+
+    return (
+
+      <div className="App">
+        <nav className="nav-bar">
+          <ul>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/new-book">New Book</NavLink>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+           <Route path="/" element={<h3>Home</h3>}>
+                Home
+           </Route>
+           <Route path="/new-book" element={<h3>New Book</h3>}>
+                New Book
+           </Route>
+        </Routes>
+
+      </div>
+
+    );
+  };
+}
+
+export default MainComponent;
+-------------------------------------------------------------------------------------------------------------------
+
+src > Component >>> lists >>> BookList:
+-------------------------------------------------------------------------------------------------------------------
+// //call representational function to show data on display as Book component ...
+import React ,{Component}from 'react';
+import Book from '../representational/Book';
+
+class BookList extends Component{
+  render(){
+    
+    return (this.props.books.map((book, index) => (
+      <Book
+        bookName={book.bookName}
+        writer={book.writer}
+        key={book.id}
+        delete={() => this.props.deleteIndexBook(index)} //got error here , we have to use props.deleteIndexBook / not use this.deleteIndexBook cz we pass this function from MainComponent that's not use this. use props....
+        inputName={(event) => this.props.changeStatewithInput(event, index)} // same error getting here ....
+      />
+    )))
+  }
+
+}
+
+export default BookList;
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+src > Component >>> representational>>> Book.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React from 'react';
+import '../../StyleSheet/Book.css';
+
+const Book = (props) => {
+
+
+    return (
+        <div className="Books">
+            
+            <h3 onClick={props.delete}> BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+            <input type="text" onChange={props.inputName} value={props.bookName}></input>
+           
+        </div>
+    );
+
+}
+
+
+export default Book;
+
+-------------------------------------------------------------------------------------------------------------------
+
+src > Component >>> representational>>> NewBook.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React from "react";
+
+const NewBook=()=>{
+    return <h4>New Book Component</h4>
+}
+
+export default NewBook;
+
+-------------------------------------------------------------------------------------------------------------------
