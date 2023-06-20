@@ -1,0 +1,227 @@
+add react router -> npm install react-router-dom (autometically install latest version) =>
+------------------------------------------------------------------------------------------------------------------
+src >> App.js >> 
+------------------------------------------------------------------------------------------------------------------
+Add navbar and add some CSS. src>>> App.css => import BrowserRoute from react-router-dom=> 
+------------------------------------------------------------------------------------------------------------------
+import React, { Component } from 'react';
+import './App.css';
+import MainComponent from './Component/MainComponen';
+import { BrowserRouter } from 'react-router-dom';
+
+
+const  App = () =>{
+  return (<BrowserRouter> 
+              <MainComponent/> 
+          </BrowserRouter>);
+}
+
+export default App;
+
+------------------------------------------------------------------------------------------------------------------
+.App {
+  text-align: center;
+}
+
+.nav-bar ul{
+  list-style: none;
+  padding:0px;
+  margin:0px;
+}
+.nav-bar li{
+  display:inline-block;
+  margin:20px;
+}
+.nav-bar a{
+  text-decoration: none;
+  color:black;
+}
+------------------------------------------------------------------------------------------------------------------
+
+
+src > Component >>> MainComponent.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React ,{Component} from 'react';
+import Books from '../assets/Books'; //state data
+import BookList from './lists/BookList' //representation mapping component
+import NewBook from './representational/NewBook';
+
+class MainComponent extends Component{
+
+  constructor(props){
+    super(props);
+    this.state={
+      books:Books,
+        showBooks: true
+    }
+    
+  }
+ 
+    
+      //Crud: Update=> event function , change state with input:------------------------------ 
+      //chatGPT:------------------------
+      changeStatewithInput = (event, index) => {
+        const updatedBooks = [...this.state.books];
+        updatedBooks[index].bookName = event.target.value;
+      
+        this.setState({
+          books: updatedBooks
+        });
+      };
+    
+      
+    
+        //CRUD=> Delete = > -------------------------------------------------
+         deleteIndexBook = (index) => {
+          //copy Array : 
+          //  const book = this.state.books.map((item)=> item)
+          //  const book = this.state.books.slice();
+           const books = [...this.state.books]; // this is the best way
+    
+          // const books = this.state.books;
+          books.splice(index,1);
+          this.setState({
+            books:books
+          })
+        };
+    
+        //show books by toggle :
+        toggleBooks = () =>{
+            this.setState({ showBooks: !this.state.showBooks})
+        }
+
+
+    
+      render() {
+
+      
+    
+        // console.log(this.state);
+        //add internal CSS in React App:
+        const style = {
+          width: "80%",
+          color: "white",
+          background: "black",
+          padding: "5px",
+          margin: "5px auto",
+          border: "1px solid red",
+          borderRadius: "10px",
+    
+        }
+    
+    
+        //CRUD=> Read=> Dynamically show state data by array.map() => iterations:-----------------------
+    
+    
+        // console.log(this.state.books);
+    
+        let showBookToogle = null 
+        if(this.state.showBooks){
+    
+          showBookToogle = <BookList books={this.state.books}
+          //I got error here: when we send MainComponent all property in BookList component 
+          // Must be send those function or state variable /date to BookList , which call from Book List ....
+          deleteIndexBook={this.deleteIndexBook}
+          changeStatewithInput={this.changeStatewithInput}
+          />
+
+    
+        };
+        
+    
+       
+        return (
+    
+          <div className="App">
+            <div className="nav-bar">
+              <ul>
+                <li>
+                  <a href="/">Home</a>
+                </li>
+                <li>
+                  <a href="/new-book">New Book</a>
+                </li>
+              </ul>
+
+            </div>
+            <h2 style={style}>Book List</h2>
+            <hr />
+            <button onClick={this.toggleBooks}>Toggle Books</button>
+            {showBookToogle}
+            <NewBook/>
+            
+    
+    
+          </div>
+    
+        );
+      };
+}
+
+export default MainComponent;
+
+-------------------------------------------------------------------------------------------------------------------
+
+src > Component >>> lists >>> BookList:
+-------------------------------------------------------------------------------------------------------------------
+// //call representational function to show data on display as Book component ...
+import React ,{Component}from 'react';
+import Book from '../representational/Book';
+
+class BookList extends Component{
+  render(){
+    
+    return (this.props.books.map((book, index) => (
+      <Book
+        bookName={book.bookName}
+        writer={book.writer}
+        key={book.id}
+        delete={() => this.props.deleteIndexBook(index)} //got error here , we have to use props.deleteIndexBook / not use this.deleteIndexBook cz we pass this function from MainComponent that's not use this. use props....
+        inputName={(event) => this.props.changeStatewithInput(event, index)} // same error getting here ....
+      />
+    )))
+  }
+
+}
+
+export default BookList;
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+src > Component >>> representational>>> Book.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React from 'react';
+import '../../StyleSheet/Book.css';
+
+const Book = (props) => {
+
+
+    return (
+        <div className="Books">
+            
+            <h3 onClick={props.delete}> BookName: {props.bookName}</h3>
+            <b>Writer: {props.writer}</b>
+            <input type="text" onChange={props.inputName} value={props.bookName}></input>
+           
+        </div>
+    );
+
+}
+
+
+export default Book;
+
+-------------------------------------------------------------------------------------------------------------------
+
+src > Component >>> representational>>> NewBook.jsx:
+-------------------------------------------------------------------------------------------------------------------
+import React from "react";
+
+const NewBook=()=>{
+    return <h4>New Book Component</h4>
+}
+
+export default NewBook;
+
+-------------------------------------------------------------------------------------------------------------------
