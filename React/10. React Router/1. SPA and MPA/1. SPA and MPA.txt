@@ -1,0 +1,6 @@
+1. MPA : Multiple Page Application. ex: index.html, contact.html, about.html
+
+2. SPA : Single Page Application. ex: index.html-> about.section , contact.section.
+
+        in Single page : for render the component use react rout....
+
