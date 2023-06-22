@@ -1,0 +1,31 @@
+install react-route-dom;
+
+>>> npm install react-route-dom;
+---------------------------------------------------------
+>>>index.js>>>  add <BrowserRouter> <App></App></BrowserRouter>
+----------------------------------------------------------
+Remove <menu></menu> from >>> bodyComponent.jsx and add NavMenu ....
+--------------------------------------------------------- 
+*** NavToggler : const [isNavOpen, setIsNavOpen] = useState(false)
+
+		const navToggle = () =>{
+			setIsNavOpen(!isNavOpen);
+		}
+
+	<Navbar
+				onClick={navToggle}
+				className="my-0"
+				color="secondary"
+				dark
+				expand="sm"
+			>
+
+<Collapse isOpen={isNavOpen} navbar>
+----------------------------------------------------------------
+>>> Add route in bodyComponent.jsx=>
+---------------------------------
+>>> It's not a good practise for use "useState()" in class component. in Function we can use 'useComponent';
+---------------------------------------------------------------------------------------------------------
+>>> convert Menu.js component into class component.... :
+--------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
