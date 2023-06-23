@@ -1,0 +1,300 @@
+*** Update the contact page Component:
+---------------------------------------
+
+
+import React, { Component } from "react";
+import { Form, FormGroup, Button, Col, Input, Label } from "reactstrap";
+
+class Contact extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			firstname: "",
+			lastname: "",
+			telnum: "",
+			email: "",
+			agree: false, // for the checkbox.
+			contactType: "Tel.",
+			message: "",
+		};
+
+    this.handelInputChange = this.handelInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+  handelInputChange = (event) => {
+      const value = event.target.type === 'checkbox'? event.target.checked : event.target.value;
+      const name = event.target.name;
+      this.setState({
+        [name]: value,
+      })
+  }
+
+  handleSubmit = (event)=>{
+    event.preventDefault();
+    console.log(this.state);
+  }
+
+	render() {
+		return (
+			<div className="Container">
+				<div className="row row-content" style={{paddingLeft:"20px", textAlign:"left"}}>
+					<div className="col-12">
+						<h3>Send US your FeedBack!</h3>
+					</div>
+					<div className="col-12 col-md-7">
+						<Form onSubmit={this.handleSubmit}>
+							<FormGroup row>
+								<Label htmlFor="firstname" md={2}>
+									First Name
+								</Label>
+								<Col md={10}>
+									<Input
+										type="text"
+										name="firstname"
+										value={this.state.firstname}
+										placeholder="First Name"
+                    onChange={this.handelInputChange}
+
+									/>
+								</Col>
+							</FormGroup>
+							<FormGroup row>
+								<Label htmlFor="lastname" md={2}>
+									Last Name
+								</Label>
+								<Col md={10}>
+									<Input
+										type="text"
+										name="lastname"
+										value={this.state.lastname}
+										placeholder="Last Name"
+                    onChange={this.handelInputChange}
+									/>
+								</Col>
+							</FormGroup>
+							<FormGroup row>
+								<Label htmlFor="telnum" md={2}>
+									Contact Tel.
+								</Label>
+								<Col md={10}>
+									<Input
+										type="tel"
+										name="telnum"
+										value={this.state.telnum}
+										placeholder="Telephone Number"
+                    onChange={this.handelInputChange}
+									/>
+								</Col>
+							</FormGroup>
+							<FormGroup row>
+								<Label htmlFor="email" md={2}>
+									Email
+								</Label>
+								<Col md={10}>
+									<Input
+										type="email"
+										name="email"
+										value={this.state.email}
+										placeholder="Email"
+                    onChange={this.handelInputChange}
+									/>
+								</Col>
+							</FormGroup>
+							<FormGroup row>
+								<Col md={{ size: 6, offset: 2 }}>
+									<FormGroup check>
+										<Label check>
+											<Input
+												type="checkbox"
+												name="agree"
+												checked={this.state.agree}
+												// onChange={(e) =>
+												// 	this.setState({ agree: e.target.checked })
+												// }
+                        onChange={this.handelInputChange}
+											/>
+											May We Contact You?
+										</Label>
+									</FormGroup>
+								</Col>
+								<Col md={{ size: 3, offset: 1 }}>
+									<Input
+										type="select"
+										name="contactType"
+										value={this.state.contactType}
+										// onChange={(e) =>
+										// 	this.setState({ contactType: e.target.value })
+										// }
+                    onChange={this.handelInputChange}
+									>
+										<option>Tel.</option>
+										<option>Email</option>
+									</Input>
+								</Col>
+							</FormGroup>
+							<FormGroup row>
+								<Label htmlFor="message" md={2}>
+									Your Feedback
+								</Label>
+								<Col md={10}>
+									<Input
+										type="textarea"
+										name="message"
+										value={this.state.message}
+										rows="12"
+										// onChange={(e) => this.setState({ message: e.target.value })}
+                    onChange={this.handelInputChange}
+									/>
+								</Col>
+							</FormGroup>
+							<FormGroup row>
+								<Col md={{ size: 10, offset: 2 }}>
+									<Button type="submit" color="primary">
+										Send
+									</Button>
+								</Col>
+							</FormGroup>
+						</Form>
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
+
+export default Contact;
+
+
+------------------------------------------------------------------------------------------------------------------------------
+src>>> MainComponent >>> body >>> footer >>> FooterComponent.jsx=>
+------------------------------------------------------------------------------------------------------------------------------
+import React from "react";
+
+function FooterComponent() {
+	return (
+		<div className="footer">
+			<div className="Container">
+				<div className="row ">
+					<div >
+						<p >KFC ResTaurant &#169; CopyRight</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export default FooterComponent;
+------------------------------------------------------------------------------------------------------------
+src >>> data >>> comment.js =>
+------------------------------------------------------------------------------------------------------------
+const comments = [
+
+     [
+        {
+            dishesId:0,
+            id: 0,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+
+        {
+            dishesId:0,
+            id: 1,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+        {
+            dishesId:0,
+            id: 2,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+        {
+            dishesId:1,
+            id: 3,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+
+        {
+            dishesId:1,
+            id: 4,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+        {
+            dishesId:1,
+            id: 4,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+        {
+            dishesId:2,
+            id: 6,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+
+        {
+            dishesId:2,
+            id: 7,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+        {
+            dishesId:2,
+            id: 8,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+        {
+            dishesId:3,
+            id: 9,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+
+        {
+            dishesId:3,
+            id: 10,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+        {
+            dishesId:3,
+            id: 11,
+            rating: 5,
+            comment: "ajdoifjaoksfj asdjfakd sf",
+            author: "Shuvo",
+            date: "2023-10-16",
+        },
+
+    ],
+]
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
