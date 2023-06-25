@@ -1,0 +1,10 @@
+redux has central (store- as javaScript object):
+-----------------------------------------------
+1. work as independent not depend on react component.
+2. We can access store by react-component ->dispatch->
+                         ->Action(dispatch/send: type,payload(send data))(can  CRUD by reducer)->
+                         -> reducer receive(currentState,Action)&(js pure function is receive Action function-***can access store and update also)
+                         ->when update store ->autometically trigger a subscription()->
+                         ->subscription function()-> update currentState as props -> React component
+
+if we receive any state from store , then we receive this store state as props ...

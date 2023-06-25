@@ -1,0 +1,32 @@
+const redux = require("redux");  // import redex.
+// console.log(redux); 
+// --------------------------------------------------
+// check redux properties
+// {
+//     __DO_NOT_USE__ActionTypes: {
+//       INIT: '@@redux/INIT4.4.f.a.0.b',
+//       REPLACE: '@@redux/REPLACE6.l.g.j.v.u',
+//       PROBE_UNKNOWN_ACTION: [Function: PROBE_UNKNOWN_ACTION]
+//     },
+//     applyMiddleware: [Function: applyMiddleware],
+//     bindActionCreators: [Function: bindActionCreators],     
+//     combineReducers: [Function: combineReducers],
+//     compose: [Function: compose],
+//     createStore: [Function: createStore],
+//     legacy_createStore: [Function: createStore]
+//   }
+// ---------------------------------------------------
+
+//state:
+const initState = {
+	name: "Ashraful",
+};
+
+//reducer:(Currentstate, action-> define CRUD ) : return state( crud/not crud );
+const rootReducer = (state = initState, action) => {
+	return state;
+};
+//store:
+const store = redux.createStore(rootReducer);
+// console.log(store); return object with some function.
+console.log(store.getState());
