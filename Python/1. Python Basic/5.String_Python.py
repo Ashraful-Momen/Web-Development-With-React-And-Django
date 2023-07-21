@@ -68,3 +68,4 @@ id = 50038
 greeting = " \"Welcome \" "+" "+firstName+" "+lastName+ "! And your ID: "+str(id) #or
 # greeting = "Welcome "+" "+firstName+" "+lastName+ " ",id
 print(greeting)
+print(greeting[::-1]) #Reverse of string
