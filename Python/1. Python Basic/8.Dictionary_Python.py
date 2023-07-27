@@ -41,3 +41,21 @@
 # # get()	Returns the value of the specified key.
 
 # print(info.get('name'))
+-----------------------------------------------------------------
+course = {
+    1:{
+        "name":"A",
+        "id":101
+    },
+    2:{
+        "name":"B",
+        "id":102
+    }
+}
+
+print(course)
+
+print(course[1]["name"])
+
+course[1]["id"]=105
+print(course[1]["id"])
