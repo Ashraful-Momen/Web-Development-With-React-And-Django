@@ -1,0 +1,4 @@
+' w' write in write mode and previous content will be vinish
+ this is the txt1
+ this is the text 2 
+ this is the text 3
