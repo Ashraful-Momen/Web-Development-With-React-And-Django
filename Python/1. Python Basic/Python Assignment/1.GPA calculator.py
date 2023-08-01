@@ -44,7 +44,7 @@ def main():
             if grade < 0 or grade > 100:
                 print("Invalid grade. Grade should be between 0 and 100.")
                 return
-            grades[subject] = grade
+            grades[subject] = grade #dictionary import value key->value
             
         except ValueError:
             print("Invalid input. Please enter a valid number.")
