@@ -4,10 +4,15 @@ def count_words(file_path):
 
     with open(file_path, 'r') as file:
         words = file.read().split()
+        
+        # print(words)
 
         for word in words:
             word = word.lower()  # Convert to lowercase for case-insensitive comparison
-            word_counts[word] = word_counts.get(word, 0) + 1
+            # print(word)
+            word_counts[word] = word_counts.get(word, 0) + 1 #*** word_count[Word]= word_count.get(thisWord,0)+1 , if get the same word then ++, either return 0.
+            print(word_counts[word])
+            # print(word_counts)
             if word not in words_list:
                 words_list.append(word)
 
