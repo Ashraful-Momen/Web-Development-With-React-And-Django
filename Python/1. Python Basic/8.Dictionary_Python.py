@@ -59,3 +59,5 @@ print(course[1]["name"])
 
 course[1]["id"]=105
 print(course[1]["id"])
+
+varible = dict(zip(['key'],['value'])) #declear Dictionary.
