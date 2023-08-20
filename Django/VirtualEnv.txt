@@ -1,0 +1,28 @@
+# Virtual Environment is a different plateform as like vmware .... If our system so many of python package ... VirtualEnv (create another platefrom for Developing Development Project with different virsion)
+
+
+1.>>> pip install virtualenv (install virtualenv package)
+2.>>> python -m venv myvirtualenv (create env)
+3.>>> cd myvirtualenv (folder name)
+
+
+#Active: venv (folder for development) =>
+4.>>> cd scripts
+5.>>> activate
+
+#DeActive: venv (folder for development) =>
+4.>>> cd scripts
+5.>>> deactivate
+
+#check the venv pip package>>> pip list
+
+#after active venv : can install package...
+
+>>>pip install django==4.2.4
+
+------------------------------------------------
+We can install many package together . 
+
+>> cd MainEnv folder 
+>> create file >>> requirments.txt >>> inside the file write package name with version >>> pillown 6.2.1
+>>> pip install -r requirments.txt 
