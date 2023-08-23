@@ -24,5 +24,11 @@
 We can install many package together . 
 
 >> cd MainEnv folder 
->> create file >>> requirments.txt >>> inside the file write package name with version >>> pillown 6.2.1
+>> create file >>> requirments.txt >>> inside the file write package name with version >>>
+Django==4.2.4
+django-autoslug==1.9.9
+django-cleanup==8.0.0
+django-crispy-forms==2.0
+Pillow==10.0.0
+>>> and Save it with requirments.txt
 >>> pip install -r requirments.txt 
