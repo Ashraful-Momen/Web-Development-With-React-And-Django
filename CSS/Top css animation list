@@ -35,3 +35,317 @@ Jelly: Elements slightly overshoot their final size before settling, resembling 
 Wiggle: Elements move in a wiggling pattern, simulating a playful effect.
 Flicker: Elements briefly change opacity, giving a flickering effect.
 Blur: Elements become blurry and gradually return to focus.
+-----------------------------------------------------------------
+/* Fade In */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fade Out */
+.fade-out {
+  opacity: 1;
+  animation: fadeOut 1s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Slide In */
+.slide-in {
+  transform: translateX(-100%);
+  animation: slideIn 1s ease-in-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Slide Out */
+.slide-out {
+  transform: translateX(0);
+  animation: slideOut 1s ease-in-out forwards;
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Bounce */
+.bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Rotate */
+.rotate {
+  opacity: 0;
+  transform-origin: center;
+  animation: rotate 1s ease-in-out forwards;
+}
+
+@keyframes rotate {
+  from {
+    opacity: 0;
+    transform: rotate(-180deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0);
+  }
+}
+
+/* Zoom In */
+.zoom-in {
+  transform: scale(0);
+  animation: zoomIn 1s ease-in-out forwards;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Zoom Out */
+.zoom-out {
+  transform: scale(1);
+  animation: zoomOut 1s ease-in-out forwards;
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+/* Pulse */
+.pulse {
+  transform: scale(1);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Shake */
+.shake {
+  animation: shake 1s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+/* Flip */
+.flip {
+  transform: rotateY(0);
+  animation: flip 1s ease-in-out forwards;
+}
+
+@keyframes flip {
+  from {
+    transform: rotateY(180deg);
+  }
+  to {
+    transform: rotateY(0);
+  }
+}
+
+/* Swing */
+.swing {
+  transform-origin: top center;
+  animation: swing 1s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0%, 100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+/* Spin */
+.spin {
+  transform-origin: center;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0%, 100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+}
+
+/* Grow */
+.grow {
+  transform: scale(1);
+  animation: grow 1s ease-in-out forwards;
+}
+
+@keyframes grow {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.5);
+  }
+}
+
+/* Shrink */
+.shrink {
+  transform: scale(1.5);
+  animation: shrink 1s ease-in-out forwards;
+}
+
+@keyframes shrink {
+  from {
+    transform: scale(1.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Skew */
+.skew {
+  transform: skewX(20deg);
+  animation: skew 1s ease-in-out forwards;
+}
+
+@keyframes skew {
+  from {
+    transform: skewX(20deg);
+  }
+  to {
+    transform: skewX(0);
+  }
+}
+
+/* Jelly */
+.jelly {
+  transform: scale(1);
+  animation: jelly 1s ease-in-out forwards;
+}
+
+@keyframes jelly {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+/* Wiggle */
+.wiggle {
+  transform: translateX(0);
+  animation: wiggle 1s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
+
+/* Flicker */
+.flicker {
+  opacity: 1;
+  animation: flicker 1s ease-in-out infinite;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Blur */
+.blur {
+  filter: blur(5px);
+  animation: blur 1s ease-in-out forwards;
+}
+
+@keyframes blur {
+  from {
+    filter: blur(5px);
+  }
+  to {
+    filter: blur(0);
+  }
+}
+
