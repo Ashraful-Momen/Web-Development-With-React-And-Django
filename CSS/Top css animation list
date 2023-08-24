@@ -14,3 +14,24 @@ Flip
 Reveal 
 Slide in 
  
+---------------------------------------
+Fade In: Elements gradually appear by changing their opacity.
+Fade Out: Elements gradually disappear by changing their opacity.
+Slide In: Elements enter the screen by sliding from a certain direction.
+Slide Out: Elements exit the screen by sliding in a certain direction.
+Bounce: Elements appear to bounce when they become visible.
+Rotate: Elements rotate as they appear on the screen.
+Zoom In: Elements start small and gradually grow to their full size.
+Zoom Out: Elements start large and gradually shrink in size.
+Pulse: Elements subtly scale up and down to create a pulsing effect.
+Shake: Elements move back and forth quickly to create a shaking effect.
+Flip: Elements flip horizontally or vertically to reveal content on the other side.
+Swing: Elements sway from side to side, mimicking a pendulum motion.
+Spin: Elements rotate in place, creating a spinning effect.
+Grow: Elements gradually increase in size while maintaining proportions.
+Shrink: Elements gradually decrease in size while maintaining proportions.
+Skew: Elements distort diagonally, creating a skewed appearance.
+Jelly: Elements slightly overshoot their final size before settling, resembling a jelly-like motion.
+Wiggle: Elements move in a wiggling pattern, simulating a playful effect.
+Flicker: Elements briefly change opacity, giving a flickering effect.
+Blur: Elements become blurry and gradually return to focus.
