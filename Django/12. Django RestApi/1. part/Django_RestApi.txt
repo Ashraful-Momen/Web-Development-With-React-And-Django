@@ -1,0 +1,715 @@
+#Useing Serializer to convert models data to JSON formate... 
+
+>>> python -m venv myenv
+>>> cd myenv\Script\activate
+>>> pip list 
+>>> pip install django
+>>> django-admin startproject rest_api
+>>> cd rest_api 
+>>> python manage.py migrate
+>>> python manage.py createsuperuser
+>>> python manage.py runserver
+
+# goto Django official website and install rest_api freamwork... then add on django settings file on install apps... media, template, static dir...
+
+
+>>> pip freeze > requirments.txt # create a file with install app versions...
+>>> pip install -r requirments.text # install all requirments packages...
+--------------------------------------------------------------------------
+
+>>> python manage.py startapp status
+
+>>> add on setting install ['status']
+--------------------------------------------------------------------------
+
+>>> pip install pillow 
+>>> pip freeze > requirments.text # update the installed packages lists. 
+
+--------------------------------------------------------------------------
+status::models.py=> 
+-----------------------
+-----------------------
+from django.db import models
+from django.contrib.auth.models import User
+
+# Create your models here.
+
+class Status(models.Model):
+    users = models.ForeignKey(User,on_delete=models.CASCADE)
+    text = models.CharField(max_length=200, default='default_text')
+    image_link = models.ImageField(upload_to='user_upload/', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+-----------------------
+-----------------------
+status::admin.py=>
+-----------------------
+-----------------------
+from django.contrib import admin
+from status.models import Status
+
+# Register your models here.
+
+class StatusAdmin(admin.ModelAdmin): 
+    list_display = ('text', 'users', 'created_at') #use this fileds to shows in admin panel...
+    
+admin.site.register(Status,StatusAdmin)
+-----------------------
+-----------------------
+status::serializers.py=> convet data to JSON formate ...
+-----------------------
+-----------------------
+from rest_framework import serializers
+from status.models import Status
+
+class StatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Status
+        fields = ['id', 'text','users', 'created_at']
+-----------------------
+-----------------------
+(myenv) PS K:\Bohubrihi\6.Django\12. Django RestApi Project\rest_api> python manage.py shell
+Python 3.11.4 (tags/v3.11.4:d2340ef, Jun  7 2023, 05:45:37) [MSC v.1934 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from status.models import Status
+>>> from status.serializers import StatusSerializer
+>>> all_status = Status.objects.all()
+>>> print(all_status)
+<QuerySet [<Status: Status object (1)>]>
+>>> serializer = StatusSerializer(all_status,many=True)
+>>> print(serializer.data)
+[OrderedDict([('id', 1), ('text', 'This is a Simple Text'), ('users', 1), ('created_at', '2023-09-03T06:32:52.578157Z')])]
+>>>
+-----------------------
+-----------------------
+status::urls.py=> 
+-----------------------
+-----------------------
+from django.urls import path,include
+from status import views
+
+app_name='status'
+
+urlpatterns=[
+    path('all/',views.StatusViewer.as_view(),name='status_view'),
+]
+-----------------------
+-----------------------
+status::views.py=>
+-----------------------
+-----------------------
+from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from status.models import Status
+from status.serializers import StatusSerializer 
+
+# Create your views here.
+
+class StatusViewer(APIView):
+    def get(self, request):
+        all_status = Status.objects.all()
+        serializer = StatusSerializer(all_status,many=True) # many=True => means multiple data can handle
+        return Response(serializer.data)
+
+-----------------------
+>>> http://127.0.0.1:8000/status/all/
+-----------------------
+--------------------------------------------------------------------------------------------------------------------
+---------------------------------------------List, Create API View (Part 1)-----------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+Install VSCODE extension of  for API exprimentals=>  thunder client as like postman packages...
+---------------------------------------------------------------------------------------------------
+>>> py manage.py startapp api 
+>>> setting.py add install_app ['api']
+---------------------------------------------------------------------------------------------------
+-----------------------
+-----------------------
+status::serializer.py=>
+-----------------------
+-----------------------
+from rest_framework import serializers
+from status.models import Status
+from django.contrib.auth.models import User
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ['id','username','email'] 
+
+
+class StatusSerializer(serializers.ModelSerializer):
+    users = UserSerializer(many=False)
+    class Meta:
+        model = Status
+        fields = ['id', 'text','users', 'created_at']
+-----------------------
+-----------------------
+open thunder=> check the api link ...
+---------------------------------------
+---------------------------------------
+rest_api::urls.py=>
+-----------------------
+-----------------------
+from django.contrib import admin
+from django.urls import path,include
+from status import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('status/',include('status.urls',namespace='status')),
+    path('api/',include('api.urls',namespace='api')),
+    
+]
+-----------------------
+-----------------------
+api::urls.py=> 
+-----------------------
+-----------------------
+from django.urls import path,include
+from status import views
+
+app_name='api'
+
+urlpatterns=[
+    path('statuses/',views.StatusList.as_view(),name='status_all'),
+    path('status/<int:id>/',views.StatusViewer.as_view(),name='status_view'),
+]
+-----------------------
+-----------------------
+status::urls.py=>
+-----------------------
+-----------------------
+from django.urls import path,include
+from status import views
+
+app_name='status'
+
+urlpatterns=[
+    path('all/',views.StatusList.as_view(),name='status_view'),
+]
+-----------------------
+-----------------------
+status::views.py=>
+-----------------------
+-----------------------
+from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from status.models import Status
+from status.serializers import StatusSerializer 
+
+# Create your views here.
+
+class StatusViewer(APIView):
+    def get(self, request, **kwargs):
+        id = kwargs.get('id')
+        status = Status.objects.get(pk=id)
+        serializer = StatusSerializer(status,many=False)
+        return Response(serializer.data)
+
+class StatusList(APIView):
+    def get(self, request):
+        all_status = Status.objects.all()
+        serializer = StatusSerializer(all_status,many=True)
+        return Response(serializer.data)
+-----------------------
+-----------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+-------------------------------------------List, Create API View (Part 2-3)-------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+status::serializer.py=> generic actually not expect nested serializer=> 
+--------------------------------------------------------------------------
+from rest_framework import serializers
+from status.models import Status
+from django.contrib.auth.models import User
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ['id','username','email'] 
+
+
+class StatusSerializer(serializers.ModelSerializer):
+    #users = UserSerializer(many=False) <- just comment this line*******************
+    class Meta:
+        model = Status
+        fields = ['id', 'text','users', 'created_at']
+--------------------------------------------------------------------------
+-----------------------
+-----------------------
+status::views.py=>
+-----------------------
+-----------------------
+from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics
+
+from status.models import Status
+from status.serializers import StatusSerializer 
+
+# Create your views here.
+
+class StatusViewer(APIView):
+    def get(self, request, **kwargs):
+        id = kwargs.get('id')
+        status = Status.objects.get(pk=id)
+        serializer = StatusSerializer(status,many=False)
+        return Response(serializer.data)
+
+# class StatusList(APIView):
+#     def get(self, request):
+#         all_status = Status.objects.all()
+#         serializer = StatusSerializer(all_status,many=True)
+#         return Response(serializer.data)
+
+class StatusList(generics.ListAPIView):
+        queryset = Status.objects.all()        #queryset, serializers_class <- buildin keyworkds
+        serializer_class = StatusSerializer
+        
+class StatusCreate(generics.CreateAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer           # use this class to create a form in template 
+-----------------------
+-----------------------
+api::urls.py=>
+-----------------------
+-----------------------
+from django.urls import path,include
+from status import views
+
+app_name='api'
+
+urlpatterns=[
+    path('statuses/',views.StatusList.as_view(),name='status_all'),
+    path('status/<int:id>/',views.StatusViewer.as_view(),name='status_view'),
+    path('status/create/',views.StatusCreate.as_view(),name='status_create'),
+]
+-----------------------
+-----------------------
+-> goto thunder client -> hit those link-> http://127.0.0.1:8000/api/status/create/ -> select 'post method' -> goto JSON -> and add=> 
+
+{
+  "text":"this is new api endpoint",
+  "users":1
+}
+
+then select 'send'.
+-----------------------
+-----------------------
+-----------------------
+-----------------------
+------------------------------------------full RestApi Crud Last Views---------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
+api::urls.py=>
+------------------------
+------------------------
+from django.urls import path,include
+from status import views
+
+app_name='api'
+
+urlpatterns=[
+    path('statuses/',views.StatusList.as_view(),name='status_all'),
+    path('status/<int:id>/',views.StatusViewer.as_view(),name='status_view'),
+    path('status/create/',views.StatusCreate.as_view(),name='status_create'),
+    path('status/<pk>/',views.StatusDetails.as_view(),name='status_details'),
+    path('status/update/<pk>/',views.StatusUpdate.as_view(),name='status_update'),
+    path('status/destroy/<pk>/',views.StatusDestroy.as_view(),name='status_destroy'),
+]
+------------------------
+------------------------
+status::views.py=>
+------------------------
+------------------------
+from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics
+
+from status.models import Status
+from status.serializers import StatusSerializer 
+
+# Create your views here.
+
+class StatusViewer(APIView):
+    def get(self, request, **kwargs):
+        id = kwargs.get('id')
+        status = Status.objects.get(pk=id)
+        serializer = StatusSerializer(status,many=False)
+        return Response(serializer.data)
+
+# class StatusList(APIView):
+#     def get(self, request):
+#         all_status = Status.objects.all()
+#         serializer = StatusSerializer(all_status,many=True)
+#         return Response(serializer.data)
+
+
+#Rest APi Crud--------------------------------------------------
+
+class StatusList(generics.ListAPIView):
+        queryset = Status.objects.all() #queryset, serializers_class <- buildin keyworkds
+        serializer_class = StatusSerializer
+        
+class StatusCreate(generics.CreateAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer 
+
+class StatusDetails(generics.RetrieveAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+
+
+class StatusUpdate(generics.UpdateAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+    
+class StatusDestroy(generics.DestroyAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+------------------------
+------------------------
+---------------------------------------------------------------------------------------------------
+------------------------------------Djnago test---------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+app::test.py=> Django Test ....
+-----------------------
+-----------------------
+from django.test import TestCase
+
+# Create your tests here.
+
+def add(a,b):
+    return a+b  
+
+class TestAddTwoValue(TestCase):
+    def test_add(self):
+        sum = add(3,2)
+        print(sum)
+        self.assertEqual(sum, 5) #compare the value (sum-> functino == 5), if True , return ok , else False.
+-----------------------
+-------------------------------------------------------------------------------------------------------
+api::urls.py=>
+-----------------------
+-----------------------
+from django.urls import path,include
+from status import views
+from django.urls import reverse
+
+
+app_name='api'
+
+urlpatterns=[
+    # path('statuses/',views.StatusList.as_view(),name='status_all'),
+    path('statuses/', views.StatusList.as_view(), name='status_all'),
+    path('status/<int:id>/',views.StatusViewer.as_view(),name='status_view'),
+    path('status/create/',views.StatusCreate.as_view(),name='status_create'),
+    path('status/<pk>/',views.StatusDetails.as_view(),name='status_details'),
+    path('status/update/<pk>/',views.StatusUpdate.as_view(),name='status_update'),
+    path('status/destroy/<pk>/',views.StatusDestroy.as_view(),name='status_destroy'),
+]
+-----------------------
+-----------------------
+status::views.py=>
+-----------------------
+-----------------------
+from django.shortcuts import render
+from django.urls import reverse
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics
+
+from status.models import Status
+from status.serializers import StatusSerializer 
+
+# Create your views here.
+
+class StatusViewer(APIView):
+    def get(self, request, **kwargs):
+        id = kwargs.get('id')
+        status = Status.objects.get(pk=id)
+        serializer = StatusSerializer(status,many=False)
+        return Response(serializer.data)
+
+# class StatusList(APIView):
+#     def get(self, request):
+#         all_status = Status.objects.all()
+#         serializer = StatusSerializer(all_status,many=True)
+#         return Response(serializer.data)
+
+
+#Rest APi Crud--------------------------------------------------
+
+class StatusList(generics.ListAPIView):
+        queryset = Status.objects.all() #queryset, serializers_class <- buildin keyworkds
+        serializer_class = StatusSerializer
+        
+class StatusCreate(generics.CreateAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer 
+
+class StatusDetails(generics.RetrieveAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+
+
+class StatusUpdate(generics.UpdateAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+    
+class StatusDestroy(generics.DestroyAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+-----------------------
+-----------------------
+api::test.py=>
+-----------------------
+-----------------------
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
+from status.models import Status
+from django.contrib.auth.models import User
+
+class StatusTests(APITestCase):
+    def setUp(self):
+        new_user = User(username='Momen', password='786')
+        new_user.save()
+        status = Status(text="test api", users=new_user)
+        status.save()
+        status2 = Status(text="test api", users=new_user)
+        status2.save()
+        
+    def test_create_account(self):
+        url = reverse('api:status_all')
+        response = self.client.get(url, format='json')
+        
+        # Check that the response status code is HTTP_200_OK
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        # Check that the response data is a list with one item
+        # self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data), 2)
+
+
+-----------------------
+-----------------------
+>>> python manage.py test 
+-----------------------
+-----------------------
+
+---------------------------------------------------------------------------------------------------
+-----------------------------------Mixins (Part 1-2)----------------------------------------------------------------
+-----------------------
+-----------------------
+---------------------------------------------------------------------------------------------------
+----------------------------------Handling File Uploads Part 1-2 + Mixins (Part 1-2)-----------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+status::views.py=> 
+-----------------------
+-----------------------
+from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics, mixins , parsers
+
+from status.models import Status
+from status.serializers import StatusSerializer 
+
+# Create your views here.
+
+#Rest APi Crud with Buildin class with Mixins Shortcuts------------------------------------------------------------
+
+class StatusListCreateApiView(generics.ListCreateAPIView): #create & views
+    
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser] #for => upload data and img into DB
+    
+    
+
+class StatusDetailsDeleteUpdateView(generics.RetrieveUpdateDestroyAPIView): #Details , Update , Destory
+    
+     queryset = Status.objects.all()
+     serializer_class = StatusSerializer
+     parser_classes = [parsers.FormParser, parsers.MultiPartParser] #for => upload data and img into DB
+     
+
+
+
+
+
+
+#Rest APi Crud with Buildin class with Mixins------------------------------------------------------------
+
+# class StatusListCreateApiView(generics.ListAPIView, mixins.CreateModelMixin):
+#     #for get request: 
+    
+#     queryset = Status.objects.all()
+#     serializer_class = StatusSerializer
+    
+#     #for create request:
+#     def post(self,reqeust, *args, **kwargs):
+#         return self.create(reqeust, *args, **kwargs)
+    
+
+# class StatusDetailsDeleteUpdateView(generics.RetrieveAPIView, mixins.DestroyModelMixin,mixins.UpdateModelMixin):
+#      queryset = Status.objects.all()
+#      serializer_class = StatusSerializer
+     
+#      #delete request:
+     
+#      def delete(self,request, *args, **kwargs):
+#          return self.destroy(request, *args, **kwargs)
+     
+#      #update request:
+      
+#      def put(self, request, *args, **kwargs):
+#         return self.partial_update(request, *args, **kwargs)
+
+
+
+
+# custom class use for Rest APi Crud--------------------------------------------------
+# class StatusViewer(APIView):
+#     def get(self, request, **kwargs):
+#         id = kwargs.get('id')
+#         status = Status.objects.get(pk=id)
+#         serializer = StatusSerializer(status,many=False)
+#         return Response(serializer.data)
+
+# class StatusList(APIView):
+#     def get(self, request):
+#         all_status = Status.objects.all()
+#         serializer = StatusSerializer(all_status,many=True)
+#         return Response(serializer.data)
+
+
+#Rest APi Crud--------------------------------------------------
+
+# class StatusList(generics.ListAPIView):
+#         queryset = Status.objects.all() #queryset, serializers_class <- buildin keyworkds
+#         serializer_class = StatusSerializer
+        
+# class StatusCreate(generics.CreateAPIView):
+#     queryset = Status.objects.all()
+#     serializer_class = StatusSerializer 
+
+# class StatusDetails(generics.RetrieveAPIView):
+#     queryset = Status.objects.all()
+#     serializer_class = StatusSerializer
+
+
+# class StatusUpdate(generics.UpdateAPIView):
+#     queryset = Status.objects.all()
+#     serializer_class = StatusSerializer
+    
+# class StatusDestroy(generics.DestroyAPIView):
+#     queryset = Status.objects.all()
+#     serializer_class = StatusSerializer
+-----------------------
+-----------------------
+api.urls.py=>
+-----------------------
+-----------------------
+from django.urls import path
+from status import views
+
+
+
+app_name='api'
+
+urlpatterns=[
+    #mixins use for rest api url=>
+    #---------------------------------------------------------------------
+    path('status/',views.StatusListCreateApiView.as_view(),name='list&create'),
+    path('status/<pk>',views.StatusDetailsDeleteUpdateView.as_view(),name='details&delete&update'),
+    
+    
+    
+    #---------------------------------------------------------------------
+    #class base restapi url=>
+    # path('statuses/', views.StatusList.as_view(), name='status_all'),
+    # path('status/<int:id>/',views.StatusViewer.as_view(),name='status_view'),
+    # path('status/create/',views.StatusCreate.as_view(),name='status_create'),
+    # path('status/<pk>/',views.StatusDetails.as_view(),name='status_details'),
+    # path('status/update/<pk>/',views.StatusUpdate.as_view(),name='status_update'),
+    # path('status/destroy/<pk>/',views.StatusDestroy.as_view(),name='status_destroy'),
+]
+-----------------------
+-----------------------
+status::serializer.py=>
+-----------------------
+-----------------------
+from rest_framework import serializers
+from status.models import Status
+from django.contrib.auth.models import User
+
+
+#*** serializer mainly convert data to Json format...
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ['id','username','email'] 
+
+
+class StatusSerializer(serializers.ModelSerializer):
+    # users = UserSerializer(many=False)
+    class Meta:
+        model = Status
+        fields = ['id', 'text','users', 'image_link', 'created_at']
+-----------------------
+-----------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------Using ViewSets and Router------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+status::views.py=>
+-----------------------
+-----------------------
+from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics, mixins , parsers
+from rest_framework import viewsets   #import class
+
+from status.models import Status
+from status.serializers import StatusSerializer 
+
+# Create your views here.
+
+#Rest APi Crud with Buildin class with Viewset (less code for CRUD)------------------------------------------------------------
+
+class StatusViewset(viewsets.ModelViewSet):
+
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser] #for => upload data and img into DB
+    
+
+-----------------------
+-----------------------
+api::urls.py=>
+-----------------------
+-----------------------
+from django.urls import path
+from status import views
+
+from rest_framework import routers
+
+app_name='api'
+
+router = routers.SimpleRouter()
+router.register(r'status', views.StatusViewset) #router.register(r'app__name', view_function/class)
+urlpatterns = [] + router.urls
+
+
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
