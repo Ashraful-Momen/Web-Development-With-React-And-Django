@@ -1,0 +1,6 @@
+wirte something for commit
+
+
+if we switch child (feature) branch to parent(master) branch then previous task will remove ... 
+
+more change , and make a distance from master branch 

@@ -1,0 +1,113 @@
+# For Web App's Virsion control we use git ... In linux we use snpashot for goto many stage after change in our sytem
+
+
+>>> commit => after change code  we use commit (with command -whatever change) for save. 1 commit 1 stage will be created as snapshot ...
+
+>>> checkpoint => after change code inside our apps we can go/back => previous/next virsion ... after commit create a new check point
+
+
+-------------------------install the Git-----------------------
+
+>>> download and install with default settings
+
+------------------------initialize with folder---------------
+>>> git init 
+------------------------git status---------------------------
+
+>>> git status [check all info about the git folder - status, commit, branch, stage...etc]
+
+------------------------git add file/folder-----------------------
+
+>>> git add fileName/FolderName
+>>> git add . [all file/folder in current folder will be add in git add(tracked)]
+
+*** after git add we can commit 
+
+-----------------------git remove/untracked file/folder---------------------
+
+>>> git rm --cached gitText.txt [file/folder Name]
+
+------------------------git commit (create snapshot/stage)------------------------------------------
+# for commit firt -> 
+----------------------------
+>>>git config --global user.email "you@example.com"
+>>>git config --global user.name "Your Name"
+----------------------------
+//single line commit=> 
+-----------------------
+>>> git commit -m 'first commit '  [-m means (msg)]
+
+multi line commit  => 
+-----------------------
+>>> git commit 
+
+----------------------git log : show the commit--------------------------------
+>>> git log [see all commit ]
+
+----------------------
+see the commit in one line (shortly)
+-----------------------
+>>> git log --oneline
+-----------------------
+commit HEAD -> master( here commit Head is a pointer last position of commit)
+-----------------------
+*** before commit -m , must be use >>> git add . >>> then commit >>> git commit -m 
+-----------------------
+
+------------------------Git graph package install in VS CODE extension-------------------------
+>>> clt+shift+p [show the git graph] 
+>>> then search =>> git graph views + click 
+>>> click on the commit | then we can able to see commit detials .... (usefull for bugs findings in app)
+-------------------------------------------------------------------------------------------
+
+---------------------------.gitignor : for untracked file/folder ------------------------------- 
+
+inside .gitignore file write fileName.txt or folderName /     <- then those file or folder ignore for->  git add . 
+
+>>> fileName.txt 
+>>> folderName / 
+--------------------------------
+>>> https://www.toptal.com/developers/gitignore/
+>>> in search box -> django / react / node / .... for ignore those file and small size <- provide all .gitignore files...
+---------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+-------------------------------------git branch::--------------------------------------------------------------------
+
+branch working as like tree ... from master branch (main ) to create sub branch ....
+>>> some of programmer working  together with branch to develop different portions of Apps [1 person develop hompage, 1 person develop contact page , 1 person deveop differents apps etc]
+
+show the branch:
+-----------------
+>>> git branch
+
+1. first commit
+2. second commit
+3. third commit 
+
+>>> second commit parent is first commit (hash_id)
+>>> third commit parent is second commit (hash_id)
+
+----------------------------------
+***create branch=> 
+-----------------------------------
+>>> git checkout -b branchAnyName  | when create new branch , previous branch will be parent branch for new branch , and new branch inherit all propertys from parent branch...
+-------------------------------------
+
+
+-------------------------------------
+***switch 1 branch to another branch ->
+-------------------------------------
+>>> git checkout branchName 
+-------------------------------------
+if we switch child (feature) branch to parent(master) branch then child(feature) previous task will remove ... 
+again if we switch 
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
