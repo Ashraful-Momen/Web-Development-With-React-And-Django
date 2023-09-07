@@ -1,0 +1,44 @@
+# For Web App's Virsion control we use git ... In linux we use snpashot for goto many stage after change in our sytem
+
+
+>>> commit => after change code  we use commit (with command -whatever change) for save. 1 commit 1 stage will be created as snapshot ...
+
+>>> checkpoint => after change code inside our apps we can go/back => previous/next virsion ... after commit create a new check point
+
+
+-------------------------install the Git-----------------------
+
+>>> download and install with default settings
+
+------------------------initialize with folder---------------
+>>> git init 
+------------------------git status---------------------------
+
+>>> git status [check all info about the git folder - status, commit, branch, stage...etc]
+
+------------------------git add file/folder-----------------------
+
+>>> git add fileName/FolderName
+>>> git add . [all file/folder in current folder will be add in git add(tracked)]
+
+*** after git add we can commit 
+
+-----------------------git remove/untracked file/folder---------------------
+
+>>> git rm --cached gitText.txt [file/folder Name]
+
+------------------------git commit (create snapshot/stage)------------------------------------------
+# for commit firt -> 
+----------------------------
+>>>git config --global user.email "you@example.com"
+>>>git config --global user.name "Your Name"
+----------------------------
+//single line commit=> 
+-----------------------
+>>> git commit -m 'first commit '  [-m means (msg)]
+
+multi line commit  => 
+-----------------------
+>>> git commit 
+
+
