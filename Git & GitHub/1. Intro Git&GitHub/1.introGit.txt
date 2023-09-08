@@ -95,7 +95,7 @@ show the branch:
 ----------------------------------
 ***create branch=> 
 -----------------------------------
->>> git checkout -b branchAnyName  | when create new branch , previous branch will be parent branch for new branch , and new branch inherit all propertys from parent branch...
+>>> git checkout -b branchAnyName  | when create new branch , previous branch will be parent branch for new branch , and new branch inherit all propertys from parent branch... after merging
 -------------------------------------
 
 
@@ -106,6 +106,47 @@ show the branch:
 -------------------------------------
 if we switch child (feature) branch to parent(master) branch then child(feature) previous task will remove ... 
 again if we switch 
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+--------------------------------------------Visualizing Merge-------------------------------------------------------------
+Fast-Forwading- Merging.=> [after master branch work , switch new featuer branch ... then complete task / commit , then switch master branch and marge with feature branch, ***in that time master branch has no more commit change . then we success fully to do merging]
+
+>>> git branch (check the branch)
+>>> git checkout master (switch)
+>>> git merge feature(child branch name)
+
+***delete branch >>> git branch -d branchName 
+>>> git branch -d feature 
+
+
+suppose we want develop App portions like login system in another branch . After complete the Login System we can add/merge/copy with main/master branch
+. after merge with main/master branch the child branch  not effect on main/master branch ... it's call => Fast-Forwading- Merging.
+after completing Login system (another Branch) , Just we merge with master/main branch , then we can delete the (Log in system develop branch -child branch)
+
+-------------------------------------
+Merging with commit => 
+------------------------
+master branch commit => 1 , 2, 3, 
+then create new branch feature branch and comit => 1, 2 . after that we again switch master branch , then commit => 4,5, ... 
+[but this master branch change of commit can't merge/add with feature branch -> that's why we can't merging feature branch with master branch ]
+
+*** to solve this issue , use Merging with commit (last commit of master branch)=> then all commit will be add together (feature+master branch commit) as last commit.
+
+
+------------------------------------
+-------------------------------------
+--------------------------------------------Delete Branch-------------------------------------------------------------
+>>> git branch -d branchName 
+
+---------------------------------------------------------------------------------------------------------
+-------------------------------------------Resolve Merge Conflicts--------------------------------------------------------------
+-------------------------------------
+if can't merge / switch branch , then use those stratigy
+1. git add . 
+2. git commit -m "commit"
+then swith branch and merge.... 
+
+-------------------------------------
 ---------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------
