@@ -5,7 +5,7 @@
 //getting element: 
 
 // let val = document.getElementById('title-id');
-let val = document.getElementById('title-id').id;
+let val = document.getElementById('title-id').id; // return the id name : title-id
 val = document.getElementById('title-id').classList;
 val = document.getElementById('title-id').className;
 
