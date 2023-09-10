@@ -3,7 +3,7 @@
 Docker=> for install a software , need dependency (library / package) for runnig . and I send those 
 -------- file to others ,they can run if they install those dependency(library/package). Docker
          mainly a containerized all file + dependency as bundle. Now we can send this bundle to 
-         anyone to runnig the software without any hassle 
+         anyone to runnig the software without any hassle . 
 -------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------
