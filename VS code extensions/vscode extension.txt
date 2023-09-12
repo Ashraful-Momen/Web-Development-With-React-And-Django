@@ -1,0 +1,23 @@
+1.Atom dark theme
+2.Auto close tage / complete tag / rename Tage 
+3. BooTstrap 5 snipeet 
+4.code runner 
+5. console Ninja 
+6. Django commands 
+7. Django snippet 
+8. Django intellisense 
+9. Docker 
+10. Git Graph 
+11. ES7 React/Redux/React-Native snippet 
+12. FiraCode Font 
+13. Highlight Matching Tag 
+14. JS es6 snippet 
+15. Live Server 
+16. Material Theme 
+17. Prettier 
+18. Python 
+19. Thunder Client 
+20. Vibrancy Continued 
+21.vscode-icone
+22. indent-rainbow  
+
