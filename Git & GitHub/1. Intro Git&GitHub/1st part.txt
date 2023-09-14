@@ -1,0 +1,92 @@
+#Version Control tool: 
+-------------------------
+Software tools that manage changing of source code overtime. It keep track to change of every Modification....
+
+ex: git, svn , cvs.
+----------------------------------
+
+#Install git in PC as default options...
+
+>>>git --version
+
+to set :
+
+>>>git config --global username "Md.Ashraful Momen"
+>>>git config --global email "amshuvo64@gmail.com"
+
+to check: 
+
+>>git config --list
+----------------------------------------------------
+#***** init -> initial git : open the project folder and run with VScode terminal =>
+
+>>> git  init 
+
+---------------------------------------------------
+#stage the folder: git foldername/fileName
+
+ByDefault : all the folder/file is 'u' -> unstage
+--------------------------------------------------
+#show the status : staging is working or not ....
+>>git status
+------------------------------------------------
+#convert stage=>
+>>>git add . 
+all file / folder will be staged.
+for single file >>> git add fileName
+
+------------------------------------------------
+make all file init + stage with git > then change commit.....(if the code change then commit will work either not)
+
+for making commit >>> git commit -m "first commit"
+
+checking all commit details >>> git log
+
+show the commit in oneline >>> git log --oneline
+-------------------------------------------------
+check the 1 commit / 2/3 commit => Basically back to the version of commit...
+
+>>>git checkout 'commitID'
+
+---------------------------------------------
+
+#*******goto the last version /latest version: 
+
+>>>git checkout -- fileName
+>>>git checkout -- folderName/fileName
+-------------------------------------------
+#*********unstage:
+
+>>>git reset 'fileName/folder'
+--------------------------------------------
+
+#for avoiding modificatin/change: use in new file => don't use those file which is already used as commite
+
+create file > .gitignor >> wirte down the name of file inside of .gitignor
+
+for folder ignoring >>>> goto .gitignore>>> /folderName 
+-------------------------------------------------------------
+----------------------------------------------2nd Part----------------------------------------------
+
+1. create a folder for JS project -> create index.js > npm init      "intialized with npm"
+2. after getting Jsonfile -> git init     "initialized with git "
+3. stage with git >>> git add .
+4> make a commit with git >>> git commit -m "initialized "
+5. downlad date-format package >>> npm install date-format
+6. create folder > .gitignore >>> write down inside >>> /node_modules
+7. >>>git add .
+8. >>> git commit -m "initial setup without node_moduels folder"
+
+
+-------------------------------------------------------------------------
+goto the 2nd part folder : and connect with github
+
+git remote add origin https://github.com/Ashraful-Momen/test-repo.git
+
+
+#upload all file to the github: 
+git branch -M main
+git push -u origin main
+---------------------------------------------------
+#after modification / changing code then commit and :
+>>>git push -u origin main
