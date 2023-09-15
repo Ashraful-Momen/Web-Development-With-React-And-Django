@@ -1,5 +1,7 @@
 *** props is the short form of property of class / function : 
 --------------------------------------------------------------
+(App.js is a component that can pass varibale to <Person/> component  )
+
 *** inside component function we can pass another component function with parameter as jsx format => <Person name="Ashraful"/>
 
 ---------------------------------
@@ -11,14 +13,15 @@ import Person from './Component/Person.js';
 
 
 class App extends Component{
+state=> varibale,method 
   
   render(){
       return (
     <div className="App">
       <h1>React Basic Component</h1>
-      {/* we call the component function as jsx formate : <Person/> is a component function and we can pass parameter <Person name="Asharful" /> */}
+      {/* we call the component function as jsx formate : <Person/> is a component function and we can pass parameter (varibale or function into Person Component)<Person name="Asharful" /> */}
    
-      <Person name= "Ashraful"> I am children Element</Person>
+      <Person name= "Ashraful"> I am children Element</Person> [App.js -> pass varibale(name) -> Persion.js(<Person/>)]
       <Person name="Momen"> I am another children Element</Person>
       
     </div>
@@ -38,14 +41,14 @@ import React from 'react';
 
 
 //functional component: --------------------------
-function Person(props) {
+function Person(props) {   // this Persion(props)->varibale can receive Apps.js passing value)
   // console.log(props);
   // props is typeof -> Object
 
     return (
-      <div>
-        <h4>Name : {props.name} , ChilderElement: {props.children}</h4>
-      </div>
+    <div>
+      <h4>Name : {props.name} , ChilderElement: {props.children}</h4> // print the varible(props.name) which comes from Apps.js component
+    </div>
     );
     
   }
