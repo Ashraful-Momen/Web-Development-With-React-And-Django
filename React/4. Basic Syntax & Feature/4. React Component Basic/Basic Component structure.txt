@@ -4,7 +4,7 @@
 3. ReactDOM.render(<App/>, document.querySelector('#root')); // <App/> is a component 
 or 
 3. const root = ReactDom.createRoot(document.querySelector('#root')) 
-    root.render(componet = <App/>)
+    root.render( <App/>)
 ------------------------------------------------------------------
 folder => src => index.js =>
 ---------------------------
