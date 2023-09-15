@@ -14,9 +14,8 @@ class App extends Component{
       return (
     <div className="App">
       <h1>React Basic Component</h1>
-      {/* we call the component function/class as in jsx formate : <Person/> is a component function and we can pass parameter <Person name="Asharful" /> */}
    
-      <Person name= "Ashraful"> I am children Element</Person>
+      <Person name= "Ashraful"> I am children Element</Person> // pass name="Ashraful" varible to Person Component.
       <Person name="Momen"> I am another children Element</Person>
       
     </div>
@@ -35,11 +34,6 @@ export default App;
 goto folder => src =>Component=> Person.js
 -------------------------------------------
 
-
-
-
-
-
 import React,{Component} from 'react';
 
 
@@ -57,7 +51,10 @@ import React,{Component} from 'react';
 //   }
 
 
+
 class Person extends Component{
+
+//*** for receiving the props form Apps.component user->construtor({ super(props)-> means-> get all value form interited Apps component})
 
   // constructor(props,name){
   //   super(props);
