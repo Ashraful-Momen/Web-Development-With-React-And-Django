@@ -1,3 +1,7 @@
+
+App.js goesto (src folder) > index.js(src folder) > index.html(public-folder)
+
+-------------------------------------------------------
 1.import React from 'react' => help to wirte html type code inside JavaScript funciton.
 2.import ReactDom from 'react-dom' => Help to render component into index.html (in public folder).
 
