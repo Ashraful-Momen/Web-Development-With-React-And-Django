@@ -1,5 +1,26 @@
 *** props is the short form of property of class / function : 
 --------------------------------------------------------------
+import fun2 from 'localtion';
+
+component1.js=> 
+------------------
+fun(){
+
+<fun2 pass variable = value />
+}
+
+
+----------------------------------------------------------
+component2.js=> 
+-------------------
+fun(receiveValue){
+props = receiveValue
+console.log(props)
+}
+--------------------------------------------------------------
+--------------------------------------------------------------
+
+
 (App.js is a component that can pass varibale to <Person/> component  )
 
 *** inside component function we can pass another component function with parameter as jsx format => <Person name="Ashraful"/>
