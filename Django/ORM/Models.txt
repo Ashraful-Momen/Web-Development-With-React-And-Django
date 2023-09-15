@@ -1,0 +1,51 @@
+--------------------------------------------- <== models==> ----------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+*** if we not define the primary key , Django will set auto primary key.
+------------------------------------------------------------------------
+
+parent Model=> Must have to uppder position  (default Django User Model)
+---------------
+child Model => Must have to lower position from Parent Model (user_Profile Model)
+---------------
+==================================================================
+Parent Model 
+------------
+   |
+   |
+   |
+   V
+Child Model .
+-------------
+*** if the parent models not oriented or not in upper positions then use => models.ForiegnKey('ParentModelsName').
+====================================================================================
+
+#one to one Relationship => Parent Model (customer) => models.OneToOneField => Child Model (Address) [Every Address model has One Customer]
+-------------------------
+#one to many Relationship => Parent Model (Cart)  => models.ForiegnKey => Child Model (Products) [***Django Create Reverse Relation auto -> ]
+-------------------------
+#many to many Relationship => Parent Model(Promotions/discount) => models.ManyToMany => Child Model(Products)
+--------------------------------------------------------------------------------------------------------
+#Collection(Parent) has multiple -> Products(child)
+
+#Customer has multiple -> Orders
+
+#Orders has multiple -> Items
+
+#Cart has multiple -> Items 
+------------------------------------on_delet = models.CaseCade,Set_Default,Set_null,Protect---------------------------------------------------------
+# on_delet=models.Protect (means => delete first child model , 
+then can able to delete Parent Model, on_delete=models.Set_Default  => 
+if delete parent class default value will be autometically set , and Set_null = for null values )
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+*** circular Dependency Error (Parent + Child class -> use ForiegnKey) => when products , collections Dependency each other 
+------------------------------ 
+                                Django created Reverse Relationship auto ... for avoiding the error we have to use Paret Mode 
+                                [(related_name ='+') ->means -> don't created the reverse Relationship] 
+    example=> class Collections(models.Model):
+    title = models.CharField(max_length=255)
+    feature_product = models.ForeignKey('Product',on_delete=models.SET_NULL, null=True, related_name='+')
+
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
