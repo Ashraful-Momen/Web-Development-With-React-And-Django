@@ -1,3 +1,8 @@
+import React from 'react' -> help to write js component .
+import React from 'react-dom' -> help to inject component to window.DOM
+babel -> compailer -> convert js code to html.
+
+
 1. >>> npx create-react-app app-name
 2. >>> cd first-app
 3. >>> npm start - start the development server
