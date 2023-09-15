@@ -38,17 +38,18 @@ import Person from './Component/Person.js';
 
 // class Component :---------------------------------
 
+import React, Component from 'react-dom';
+
 class App extends Component{
     //write code as we want: ......
   
-  render(){
+  render()
+{
       return (
     <div className="App">
       <h1>React Basic Component</h1>
       <Person />
-    </div>
-
-  );
+    </div>);
     };
 }
 
