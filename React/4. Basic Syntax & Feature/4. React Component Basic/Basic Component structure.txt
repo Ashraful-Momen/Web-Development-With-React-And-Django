@@ -1,7 +1,7 @@
 1.import React from 'react' => help to wirte html type code inside JavaScript funciton.
 2.import ReactDom from 'react-dom' => Help to render component into index.html (in public folder).
 
-3. ReactDOM.render(component <App/>, document.querySelector('#root'));
+3. ReactDOM.render(<App/>, document.querySelector('#root')); // <App/> is a component 
 or 
 3. const root = ReactDom.createRoot(document.querySelector('#root')) 
     root.render(componet = <App/>)
