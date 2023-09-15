@@ -86,7 +86,9 @@ function Person() {
 export default App;
 
 -----------------------------------------------------------------------------------------------------------------------
-return React.createElement('tagName', 'null/Attribute','textContent','Add another component/ add function like React.createElement());
+Reac.createElement('htmlTag','Attribute','text/add inside other Html element') ; it's working like dom.appendChild()
+
+return React.createElement('tagName', 'null/Attribute','textContent' or 'Add inside component/ add function like React.createElement());
 or=>
 return React.createElement('jsx tag name => div / h1 /etc', null/{className/id/Attribute/ or here we can also add => React.createElement('tagName','Attribute','textContent/React.createElement(...))},'textContent', Anothercomponent);
 
