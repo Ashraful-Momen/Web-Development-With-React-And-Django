@@ -1,0 +1,24 @@
+-------------------------------------------------sqliteDb------------------------------------------------------------------
+goto vscode extension=> sqlite >>> install >>> clt+shift+p >>> sqlite open database . 
+----------------------- >>> select the files and minimize then show > sqlite explorer.
+                        >>> we can see all those data table > after migrating and migrations.
+                        >>> select Django_migration_table >>> showtable >>> 
+                        >>> python manage.py sqlmigrate table_name  003(sql_number of migratins file)
+                        >>> python manage.py sqlmigrate store 0003
+
+                        -------------------------result-----------------------------------
+                        (myenv) I:\Django Code Practice From Mosh\1.Django First Part\1.StoreFont>python manage.py sqlmigrate store 0003
+                        BEGIN;
+                        --
+                        -- Add field slug to product
+                        --
+                        CREATE TABLE "new__store_product" ("slug" varchar(50) NOT NULL, "sku" varchar(10) NOT NULL PRIMARY KEY, "title" varchar(255) NOT NULL, "describtion" text NOT NULL, "inventory" integer NOT NULL, "last_update" datetime NOT NULL, "collections_id" bigint NOT NULL REFERENCES "store_collections" ("id") DEFERRABLE INITIALLY DEFERRED, "unit_price" decimal NOT NULL);
+                        INSERT INTO "new__store_product" ("sku", "title", "describtion", "inventory", "last_update", "collections_id", "unit_price", "slug") SELECT "sku", "title", "describtion", "inventory", "last_update", "collections_id", "unit_price", '-' FROM "store_product";
+                        DROP TABLE "store_product";
+                        ALTER TABLE "new__store_product" RENAME TO "store_product";
+                        CREATE INDEX "store_product_slug_6de8ee4b" ON "store_product" ("slug");
+                        CREATE INDEX "store_product_collections_id_dd655a77" ON "store_product" ("collections_id");
+                        COMMIT;
+
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
