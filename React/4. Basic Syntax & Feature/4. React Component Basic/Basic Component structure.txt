@@ -30,7 +30,7 @@ function App() {
   return (
     <div className="App">
       <h1>React Basic Component</h1>
-      <Person />
+      <Person />  // Person function pass here , which render with <App/>
     </div>
   );
 }
