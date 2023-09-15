@@ -38,7 +38,7 @@ import Person from './Component/Person.js';
 
 // class Component :---------------------------------
 
-import React, Component from 'react-dom';
+import React, { Component }  from 'react-dom';
 
 class App extends Component{
     //write code as we want: ......
