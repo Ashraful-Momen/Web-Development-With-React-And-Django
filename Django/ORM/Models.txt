@@ -33,13 +33,13 @@ Child Model .
 
 #Cart has multiple -> Items 
 ------------------------------------on_delet = models.CaseCade,Set_Default,Set_null,Protect---------------------------------------------------------
-# on_delet=models.Protect (means => delete first child model , 
+# on_delet=models.Protect (means => delete first ,child model , 
 then can able to delete Parent Model, on_delete=models.Set_Default  => 
 if delete parent class default value will be autometically set , and Set_null = for null values )
 -------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------
-*** circular Dependency Error (Parent + Child class -> use ForiegnKey) => when products , collections Dependency each other 
+*** circular Dependency Error (Parent + Child class -> use ForiegnKey) => when products , collections Model  Dependents each other 
 ------------------------------ 
                                 Django created Reverse Relationship auto ... for avoiding the error we have to use Paret Mode 
                                 [(related_name ='+') ->means -> don't created the reverse Relationship] 
