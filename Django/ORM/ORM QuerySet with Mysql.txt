@@ -1,4 +1,3 @@
-
 -------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------Mysql----------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------
@@ -251,5 +250,27 @@ if we want to use spaec between FirstName + space + LastName => use Value(" ")
 querySet = Customers.objects.annotate(full_name=Concate('first_name',Value(' '), 'last_name'))
 -------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------
+#find the orders of each custers
+
+querySet = Customer.objects.annotate(Count('order_set')) # Error , Customer & Order has reverse relations between them.
+so use alternative 'order_set' to order => querySet = Customer.objects.annotate(Count('order'))
 -------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------#discount price: ------------------------------------------------------------------------
+
+discount = product_price * .08(discount_value) ; get Error => decimal * Floating value 
+=> to solve import ExpressionWrapper & use out_set (constructor)
+
+---------------------------------------------
+from django.db.models import ExpressionWrapper , F , Value , Func , DecimalField
+
+
+# Create your views here.
+def productAll(request):
+    discounted_price = ExpressionWrapper(F('unit_price')*.08, output_field=DecimalField())
+    products = Product.objects.annotate(
+        discounted_price = discounted_price
+    )
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+
