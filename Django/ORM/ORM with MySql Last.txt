@@ -548,3 +548,8 @@ def productAll(request):
 
 ------------------------------------------End ORM query section ------------------------------------------------------------------------
 
+
+if django not connect with db => 
+---------------------------------
+GRANT ALL PRIVILEGES ON storefront.* TO 'storefront'@'localhost';
+FLUSH PRIVILEGES;
