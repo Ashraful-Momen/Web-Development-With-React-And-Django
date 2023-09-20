@@ -1,5 +1,5 @@
 *** we can send root component App class 'event function' to other component class/function as parameter.
-*** sendFunction={this.changeStateContent.bind(this,"parameter")}. here , this.eventFunction.bind(this->means class, 'pass function argument');
+*** sendFunctionParameters={this.changeStateContent.bind(this."parameter")}. here , this.eventFunction.bind(this->means class, 'pass function argument');
 *** alter native way of this.eventFunction.bind() => use arrow function or closer function => 
 ----------------------------------
  <Book bookName={this.state.books[2].bookName}
