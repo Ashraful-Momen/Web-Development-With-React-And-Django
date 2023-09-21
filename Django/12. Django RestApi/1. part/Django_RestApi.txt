@@ -707,7 +707,7 @@ from rest_framework import routers
 app_name='api'
 
 router = routers.SimpleRouter()
-router.register(r'status', views.StatusViewset) #router.register(r'app__name', view_function/class)
+router.register(r'status', views.StatusViewset) #router.register(r'url__name', view_function/class)
 urlpatterns = [] + router.urls
 
 
