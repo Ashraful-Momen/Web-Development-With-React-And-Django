@@ -82,7 +82,7 @@ class App extends Component {
                 bookName={book.bookName}
                 writer={book.writer}
                 delete={()=>this.deleteIndexBook(index)} //this index pass into the deleteBook function() // don't use bind() method if deleteBooks use Arrow function 
-                key ={book.key}
+                key ={book.key} //key is an unique number/id/indentifier for array elements. pass to other commponent.
                 />);
     });
 
