@@ -1,4 +1,5 @@
 **** Edit Book Name with input field = > 
+// onclick, onChange(inputFields) => when clicked then send event(value) to functions -> CRUDFunctions(event). 
 
 
 >>> src >>> App.js: 
