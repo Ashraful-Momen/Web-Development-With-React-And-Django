@@ -1,4 +1,5 @@
 ****we can toggle for state variable books show in browser by toggle:
+toggle is like a button => value => True/False . if true then show state , for false can't show state . (conditional-render).
 
 1. render(){showBook = call Book functional component by arrow function } 
 
@@ -32,7 +33,7 @@ class App extends Component {
       { id:2, bookName: "Algorithm", writer: "ALkhirmi", age :2 },
       { id:3, bookName: "DSA", writer: "don't Know", age: 3 },
     ],
-    showBooks: true
+    showBooks: true // 1.toggle variable add as showBook.
   }
 
 
@@ -77,7 +78,7 @@ class App extends Component {
       })
     };
 
-    //show books by toggle :
+    //2.show books by toggle :
     toggleBooks = () =>{
         this.setState({ showBooks: !this.state.showBooks})
     }
@@ -123,8 +124,10 @@ class App extends Component {
         <hr />
 
         <button onClick={this.toggleBooks}>Toggle Books</button>
-        {/* the "showBooks" variable is const variable : which call Book component function =  const showBooks = this.state.books.map((book,index) =>  */}
-        
+        {/* the "showBooks" variable is const variable : which call Book component function =  const showBooks =           
+          this.state.books.map((book,index) =>  */}
+
+        //3. JS Trinary operator=> showBook(true/false):stateShow(true),notShowState(False).
         {this.state.showBooks ? showBooks : null}  
 
         {/* here pass the showBook variable  */}
