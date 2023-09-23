@@ -78,7 +78,7 @@ class App extends Component {
       })
     };
 
-    //2.show books by toggle :
+    //2.show books by toggle  :
     toggleBooks = () =>{
         this.setState({ showBooks: !this.state.showBooks})
     }
@@ -123,12 +123,12 @@ class App extends Component {
         <h2 style={style}>Book List</h2>
         <hr />
 
-        <button onClick={this.toggleBooks}>Toggle Books</button>
+        <button onClick={this.toggleBooks}>Toggle Books</button> //2.toggle main button.
         {/* the "showBooks" variable is const variable : which call Book component function =  const showBooks =           
           this.state.books.map((book,index) =>  */}
 
         //3. JS Trinary operator=> showBook(true/false):stateShow(true),notShowState(False).
-        {this.state.showBooks ? showBooks : null}  
+        {this.state.showBooks ? showBooks : null}  //4.toggle.
 
         {/* here pass the showBook variable  */}
         {/* {showBooks} */}
@@ -243,30 +243,14 @@ class App extends Component {
     });
   };
 
-  // changeStatewithInput = (event,index) => {
-  //  const book = {
-  //   ...this.state.books[index]
-  //  }
-  //   book.bookName = event.target.value; 
 
-  //   const books = [...this.state.books];
-  //   books[index]= book;
-
-  //   this.setState({
-  //     books: books
-  //   })
-
-  // }
-  // ------------------------------------
 
     //CRUD=> Delete = > -------------------------------------------------
      deleteIndexBook = (index) => {
-      //copy Array : 
-      //  const book = this.state.books.map((item)=> item)
-      //  const book = this.state.books.slice();
+      
        const books = [...this.state.books]; // this is the best way
 
-      // const books = this.state.books;
+     
       books.splice(index,1);
       this.setState({
         books:books
@@ -281,7 +265,7 @@ class App extends Component {
 
   render() {
 
-    // console.log(this.state);
+    
     //add internal CSS in React App:
     const style = {
       width: "80%",
@@ -316,16 +300,7 @@ class App extends Component {
 
     };
     
-    // const showBooks = this.state.books.map((book,index) => {  
-
-    //   return (<Book
-    //             bookName={book.bookName}
-    //             writer={book.writer}
-    //             key={book.id} // react internal property , which is not accessble...
-    //             delete={()=>this.deleteIndexBook(index)} //this index pass into the deleteBook function() // don't use bind() method if deleteBooks use Arrow function 
-    //             inputName = {(event)=> this.changeStatewithInput(event,index)}
-    //             />);
-    // });
+   
 
    
     return (
