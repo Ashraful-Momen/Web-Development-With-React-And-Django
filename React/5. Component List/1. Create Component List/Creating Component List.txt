@@ -1,6 +1,6 @@
 *** Show dynamic Components CRUD => Read operation's :
 
-1. use map function to show data from state . and write all function inside render();
+1. use map function to show data from state Dynamicly . and write all function inside render() then pass to return ({mapVaribal});
 
 ---------------------------------------------------------------------------------------------
 
@@ -60,9 +60,10 @@ class App extends Component{
           borderRadius:"10px",
           
       }
-      //Dynamically show state data by array.map() => iterations:-----------------------
+//Dynamically show state data by array.map()  and pass it to the return sections all {mapVaribaleName}=> iterations:---
 
       // console.log(this.state.books);
+
       const showBooks = this.state.books.map((book)=>{
        
         return ( <Book bookName={book.bookName} writer={book.writer}/>);
@@ -82,7 +83,9 @@ class App extends Component{
       
       <button onClick={this.changeStateContent.bind(this,'bind-change Book name in first line')}>Click for Change State content</button>
       <input type="text" onChange={this.changeStatewithInput}></input>
-      {showBooks}
+
+       // this varibale pass from map functions  =>
+      {showBooks} //
      
     </div>
 
