@@ -1,3 +1,11 @@
+>>> component()->constructor(props) --> componentWillMount()-->render()--->componentDidMount().=> [4 functions ]
+
+>>> component()->constructor(props) --> componentWillMount()-->render(if have child then call [4 functions ] )--->componentDidMount().
+
+
+
+
+
 // when a component call : each of every portion (function how call )
 
 when create a component : it's call constructor(props) function.
@@ -5,9 +13,6 @@ then call (component will mount- function: it's a build in function)
 then call (render()-function>>> render nested or child component+[child.constructor(),willmount(),render(),didmount()])
 then call (componentDidMount()) from main component.
 
->>> component()->constructor(props) --> componentWillMount()-->render()--->componentDidMount().=> [4 functions ]
-
->>> component()->constructor(props) --> componentWillMount()-->render(if have child then call [4 functions ] )--->componentDidMount().
 
 After call this 5 function build a  creation life cycle.
 
