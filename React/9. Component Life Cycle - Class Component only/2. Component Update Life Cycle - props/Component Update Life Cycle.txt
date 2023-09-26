@@ -1,10 +1,14 @@
-if component update then call a function auto =>  componentWillReceiveProps("nextProps "-> automatically receive update props) ,
+---------------------------------------------Main component to child component------------------------------------
+componentWillReceiveProps("nextProps "-> {}) --->  componentWillReceiveProps("nextProps "-> {}) ---> componentWillUpdate(nextProps,nextState) ---> render(){ UpDate nested/child Component} --->componentDidUpdate(){}
+--------------------------------------------------------------------------------------------------------------------
 
-then call => shouldComponentUpdate(nextProps,nextState -> automatically receive update props and State) { we can return true-> for update , and false->for not update}
+1.if component update then call a function auto =>  componentWillReceiveProps("nextProps "-> automatically receive update props) ,
 
-then call => componentWillUpdate(nextProps,nextState) -> this is a signal , Now the component will be Update.
+2.then call => shouldComponentUpdate(nextProps,nextState -> automatically receive update props and State) { we can return true-> for update , and false->for not update}
 
-then call => render(){ UpDate nested/child Component} ->
+3.then call => componentWillUpdate(nextProps,nextState) -> this is a signal , Now the component will be Update.
+
+4.then call => render(){ UpDate nested/child Component} ->
 
 finally call => componentDidUpdate(){}
 
