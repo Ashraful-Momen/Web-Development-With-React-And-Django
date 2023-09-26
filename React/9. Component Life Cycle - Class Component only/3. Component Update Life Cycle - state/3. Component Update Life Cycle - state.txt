@@ -2,7 +2,7 @@
 
 
 ---------------------------------------------Main component to child component------------------------------------
-componentWillReceiveProps("nextProps "-> {}) --->  shouldComponentUpdate(nextProps,nextState ->{}) ---> componentWillUpdate(nextProps,nextState) ---> render(){ UpDate nested/child Component} --->componentDidUpdate(){}
+shouldComponentUpdate(nextProps,nextState ->{}) ---> componentWillUpdate(nextProps,nextState) ---> render(){ UpDate nested/child Component} --->componentDidUpdate(){}
 --------------------------------------------------------------------------------------------------------------------
 
 
