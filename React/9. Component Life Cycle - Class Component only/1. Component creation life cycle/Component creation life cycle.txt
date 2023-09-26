@@ -2,8 +2,8 @@
 
 when create a component : it's call constructor(props) function.
 then call (component will mount- function: it's a build in function)
-then call (render()-function>>> render nested or child component)
-then call (componentDidMount())
+then call (render()-function>>> render nested or child component+[child.constructor(),willmount(),render(),didmount()])
+then call (componentDidMount()) from main component.
 
 >>> component()->constructor(props) --> componentWillMount()-->render()--->componentDidMount().
 
