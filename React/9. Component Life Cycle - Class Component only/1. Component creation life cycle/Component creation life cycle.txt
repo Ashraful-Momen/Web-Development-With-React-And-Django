@@ -13,7 +13,7 @@ After call this 5 function build a  creation life cycle.
 
 if we want to change any state in component , then change in those function --->componentDidMount() -> render(), -> .
 
-serial of call function in component life cycle => constructor(props) --> componentWillMount() - means : component will render --->componentDidMount() - means render already called.-->render().
+serial of call function in component life cycle => constructor(props) --> componentWillMount() - means : component will render -->render()--->componentDidMount() - means render already called.
 --------------------------------------------------------------------------------------------------------------------------------
 src >>> Component >>> MainComponent.jsx: => 
 --------------------------------------------------------------------------------------------------------------------------------
