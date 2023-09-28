@@ -114,6 +114,11 @@ build the image again . before remove user >>> docker stop containerId.
 -----------------------------------------
 container remove >>> docker rm containerId 
 -------------------------------------------
+#after delete container then we can delete the image :
+>>>docker image rm imageID.
+if not delete then try-> 
+>>> docker image rm -f 9c7a54a9a43c
+
 -------------------------------------------
 # share docker container with others -> firstly create a account with docker hub -> create a repository as
 the same name of container name as public.
