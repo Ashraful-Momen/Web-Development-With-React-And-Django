@@ -1,3 +1,5 @@
+***first create the route => '/path'/ with <Routes> then create navItem for prevent browserLoading.
+-----------------------------------------------------------------------------------------
 add react router -> npm install react-router-dom (autometically install latest version) =>
 ------------------------------------------------------------------------------------------------------------------
 src >> App.js >> 
