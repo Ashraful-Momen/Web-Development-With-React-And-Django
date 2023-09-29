@@ -68,6 +68,8 @@ windows feature on/off -> hyper V (click) -> virtualization(click)-> WindwosVirt
 ----------------------------------
 restart > downlaod docker > install > restart > run Docker desktop.
 -------------------------------------------------------------------------------------------------
+run docker server in windows => docker-machine start default
+for Linux => sudo server docker start | sudo systemctl start docker.
 --------------------------------------Main Part From Here-----------------------------------------------------------
 goto official docker website -> get started -> git clone https://github.com/docker/getting-started-app.git
 ------------------------------
