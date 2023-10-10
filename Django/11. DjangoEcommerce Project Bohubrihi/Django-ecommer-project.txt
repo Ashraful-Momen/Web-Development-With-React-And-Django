@@ -2649,3 +2649,59 @@ order.html=>
 
 
     -----------------------------------------Alhamdulillah------------------------------------------------
+
+
+
+ ----------------------------------------- Search ------------------------------------------------
+
+    AppShop::urls.py=> 
+    -------------------
+    from django.urls import path 
+from .views import Home,ProductDetails
+from App_Shop import views
+
+app_name = 'App_Shop'
+
+urlpatterns = [
+    path("",Home.as_view(), name='home'),
+    path("product/<pk>/",ProductDetails.as_view(), name='product_details'),
+    path("search/",views.search,name='search')
+]
+
+    -------------------
+    -------------------
+    AppShop::views.py=> 
+    -------------------
+    -------------------
+    
+# def search(request):
+#     # products = Product.objects.all()
+#     search = request.GET['search']  # Using get() method with a default value of ''
+#     products = Product.objects.filter(name_price__icontains=search)
+#     print(search)
+    
+#     return render(request, 'App_Shop/search.html', context={'products': products})
+
+from django.db.models import Q
+
+def search(request):
+    search_query = request.GET.get('search', '')  
+    products = Product.objects.filter(
+        Q(name__icontains=search_query) | Q(price__icontains=search_query)
+    )
+    
+    return render(request, 'App_Shop/search.html', context={'products': products})
+
+    -------------------
+    -------------------
+    AppShop::home.html=> 
+    -------------------
+    -------------------
+     <div class="d-flex justify-content-center">
+        <form class="  align-content-center "  action="search" method="get">
+            <input class="form-control-sm me-2 rounded-pill" name="search" type="search" placeholder="Search  Products..." aria-label="Search">
+            <button class="btn btn-success justify-content-center" type="submit">Search</button>
+        </form>
+    </div>
+  
+
