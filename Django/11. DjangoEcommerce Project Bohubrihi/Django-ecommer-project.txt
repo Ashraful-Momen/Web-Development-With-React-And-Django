@@ -2703,5 +2703,246 @@ def search(request):
             <button class="btn btn-success justify-content-center" type="submit">Search</button>
         </form>
     </div>
-  
+  -----------------------------------------------------------------------------------------------------
+  ---------------------------------------::Category ways Product shows::--------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------
+  App_Shop::urls.py=> 
+  --------------------
+  --------------------
+  from django.urls import path 
+from .views import Home,ProductDetails
+from App_Shop import views
+
+app_name = 'App_Shop'
+
+urlpatterns = [
+    path("",Home.as_view(), name='home'),
+    path("product/<pk>/",ProductDetails.as_view(), name='product_details'),
+    path("search/",views.search,name='search'),
+    # path("categories/", views.CategoryList.as_view(), name='category_list'),
+    path("category/<pk>/", views.ProductByCategory.as_view(), name='product_by_category'),
+   
+]
+
+  --------------------
+   App_Shop::views.py=> 
+  --------------------
+  --------------------
+  from django.shortcuts import render
+from django.shortcuts import HttpResponse, redirect
+from django.urls import reverse
+# Create your views here.
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView
+
+from App_Shop.models import Product,Category
+
+
+
+# class Home(ListView): 
+#     model = Product 
+#     template_name = 'App_Shop/home.html'
+
+
+# class Home(ListView): 
+#     model = Product 
+#     template_name = 'App_Shop/home.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['categories'] = Category.objects.all()
+#         return context
+
+class Home(ListView): 
+    model = Product 
+    template_name = 'App_Shop/home.html'
+    context_object_name = 'products'
+    
+    def get_queryset(self): # if we want to use custom query set ....
+        return Product.objects.all()
+
+    def get_context_data(self, **kwargs): # 
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
+
+
+class ProductDetails(DetailView):
+    model = Product 
+    template_name = 'App_Shop/product_details.html' 
+
+
+
+from django.db.models import Q
+
+def search(request):
+    search_query = request.GET.get('search', '')  
+    products = Product.objects.filter(
+        Q(name__icontains=search_query) | Q(price__icontains=search_query)
+    )
+    
+    return render(request, 'App_Shop/search.html', context={'products': products})
+
+
+
+
+
+
+# class CategoryList(ListView):
+#     model = Category
+#     template_name = 'App_Shop/category_list.html'
+#     context_object_name = 'categories'
+
+
+class ProductByCategory(ListView): 
+    template_name = 'App_Shop/product_by_category.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        category_id = self.kwargs['pk']
+        return Product.objects.filter(category_id=category_id)
+
+  --------------------
+  --------------------
+   App_Shop::home.html=> 
+  --------------------
+  --------------------
+  {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Home Page
+{% endblock  %}
+
+{% block body_block %}
+<!-- object_list comes from views of App_Shop as default. -->
+<div class="container my-5">
+    <h2 class="my-5 text-center m">Search Products</h2>
+    <div class="d-flex justify-content-center">
+        <form class="  align-content-center "  action="search" method="get">
+            <input class="form-control-sm me-2 rounded-pill" name="search" type="search" placeholder="Search  Products..." aria-label="Search">
+            <button class="btn btn-success justify-content-center" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="container my-5">
+        <div class="row">
+            <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+                <!-- Navbar content -->
+                {% for category in categories %}
+                <div class="col-md-6 col-sm-12 col-lg-3">
+                    <a href="{% url 'App_Shop:product_by_category' pk=category.pk %}" class="text-decoration-none d-flex justify-content-evenly text-dark">
+                        <div class="">
+                            <h5 class="card-title">{{ category.title }}</h5>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+            </nav>
+            
+        </div>
+    </div>
+    
+
+    <h2 class="my-5">Feature Products</h2>
+    <div class="row">
+        {% for product in object_list %}
+        <div class="col-md-6 col-sm-12 col-lg-3">
+            <figure class="card card-product">
+                <div class="img-wrap">
+                    <img src="/media/{{product.mainImage}}" alt="Product Image" style="width: 100%; height: 300px;" class="">
+                </div>
+                <figcaption class="info-warp">
+                    <a href="{% url 'App_Shop:product_details' pk=product.pk %}">
+                        <h6 class="card-title">{{product.name}}</h6>
+                    </a>
+                    <div class="action-wrap">
+                        <div class="price-wrap h5">
+                            <span class="price-new">
+                                &#2547; {{product.price|floatformat:2}}
+                            </span>
+                            <span class="price-old">
+                               <strike> &#2547; {{product.old_price|floatformat:2}}</strike>
+                            </span>
+                        </div>
+                    </div>
+                </figcaption>
+
+            </figure>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock  %}
+
+  --------------------
+  --------------------
+  --------------------
+   App_Shop::product_by_category.html=> 
+  --------------------
+  --------------------
+  {% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Products by Category
+{% endblock  %}
+
+{% block body_block %}
+<div class="container my-5">
+    <h2 class="my-5 text-center">Products by Category</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-6 col-sm-12 col-lg-3">
+            <figure class="card card-product">
+                <div class="img-wrap">
+                    <img src="/media/{{product.mainImage}}" alt="Product Image" style="width: 100%; height: 300px;" class="">
+                </div>
+                <figcaption class="info-warp">
+                    <a href="{% url 'App_Shop:product_details' pk=product.pk %}">
+                        <h6 class="card-title">{{product.name}}</h6>
+                    </a>
+                    <div class="action-wrap">
+                        <div class="price-wrap h5">
+                            <span class="price-new">
+                                &#2547; {{product.price|floatformat:2}}
+                            </span>
+                            <span class="price-old">
+                               <strike> &#2547; {{product.old_price|floatformat:2}}</strike>
+                            </span>
+                        </div>
+                    </div>
+                </figcaption>
+
+            </figure>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{% if products %}
+    <p>Products found: {{ products.count }}</p>
+{% else %}
+    <p>No products found.</p>
+{% endif %}
+{% endblock  %}
+
+  --------------------
+  --------------------
+  -----------------------------------------------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------
+
+
 
