@@ -2235,8 +2235,599 @@ tempalate::first_app::album_form.html=>
 
 {% endblock %}
 
-----------------------------------
 ----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+-------------------------------Dynamic Template Part 1(route bind(pass varibale)+ForeignKey)--------------------------------------------------------------------------
+*** primary_key:is a unique key and ForeignKey is join more table . one table to another table data access by ForeignKey.
+----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+{% url 'first_app:album_list' %} . this line means-> {% url 'app_Name: route_name' %}
+----------------------------------
+first_app::views.py=>
+----------------------------------
+from django.shortcuts import render
+from django.http import HttpResponse
+from first_app.models import Musician, Album
+from first_app import forms
+
+
+
+#Read => Crud:------------------------------
+def index(request):
+    musician = Musician.objects.order_by('first_name')
+   
+    
+    dictionary={'title':"Home Page","musician_list":musician,}
+    return render(request,'first_app/index.html',context=dictionary)
+
+def album_list(request,artist_id):
+    artist_info=Musician.objects.get(pk=artist_id) #*** this (get) ORM command reterun 1 Row in the table.
+    
+    dictionary={"title":'Show Album Page', 'artist_info':artist_info}
+    return render(request,'first_app/album_list.html',context=dictionary)
+
+#create => Crud:---------------------------------------
+
+def musician_form(request):
+    form = forms.MusicianForm() #create an object from first_app/forms(MusicianForm class)
+
+    if request.method=="POST":
+        form = forms.MusicianForm(request.POST)
+            
+        if form.is_valid():
+           form.save(commit=True)
+           return index(request)
+
+
+    dictionary={'title':'Add Musician','musician_form':form}
+    return render(request,'first_app/musician_form.html',context=dictionary)
+
+def album_form(request):
+    form = forms.AlbumForm()
+
+    if request.method=="POST":
+        form = forms.AlbumForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return index(request)
+    dictionary={'title':'Add Album','album_form':form}
+    return render(request,'first_app/album_form.html',context=dictionary)
+
+
+
+
+
+
+# def form(request):
+#     new_form = forms.MusicianForm()
+#     dictionary={'test_form':new_form,'heading1_form':"Django Default Forms!"}
+
+#     if request.method == 'POST':
+#         new_form = forms.MusicianForm(request.POST)
+       
+
+#         if new_form.is_valid():
+#             new_form.save(commit=True) # form field save to the DataBase.
+#             return index(request) #redirect to index(request) <-views.
+
+
+#     return render(request, 'first_app/form.html',context=dictionary)
+----------------------------------
+----------------------------------
+first_app::urls.py=>
+----------------------------------
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),  # Keep your existing index URL
+    path('add_album/',views.album_form, name='album_form'),
+    path('add_musician/',views.musician_form, name='musician_form'),
+    path('album_list/<int:artist_id>/',views.album_list,name='album_list'),
+]
+
+----------------------------------
+tempalate::first_app::index.html=>
+----------------------------------
+<!doctype html>
+{% extends 'first_app/base.html' %}
+
+
+
+{% block body_block%}
+
+<h3>Musicin List</h3>
+<hr>
+
+<ul>
+    {% if musician_list %}
+
+    {% for musician in musician_list%}
+    <!-- <a href="/first_app/album_list/{{ musician.id }}/">
+        <li>
+            {{ musician.first_name }}
+        </li>
+    </a> -->
+    
+       <!-- <a href="{% url 'first_app:album_list/' artist_id=musician.id % }" > *** use the correct route name()--> 
+        <a href="{% url 'first_app:album_list' artist_id=musician.id %}">
+
+        <li>
+           
+            {{musician.first_name}}
+        </li>
+       </a>
+    {% endfor %}
+    {% else %}
+    <p class="text-danger"> Musician not found!</p>
+    {% endif %}
+
+</ul>
+
+
+{% endblock %}
+----------------------------------
+----------------------------------
+tempalate::first_app::album_list.html=>
+----------------------------------
+<!doctype html>
+{% extends 'first_app/base.html' %}
+
+{% block body_block%}
+
+<p>Album list</p>
+<h5>Artist info:</h5>
+
+<p>{{artist_info}}</p>
+<p>{{artist_info.first_name}}</p>
+<p>{{artist_info.last_name}}</p>
+<p>{{artist_info.instrument}}</p>
+
+{% endblock %}
+----------------------------------
+----------------------------------
+
+----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------Dynamic Template Part 2::(Aggregation , date showing )-----------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+artist_info=Musician.objects.filter(pk=artist_id) # this ORM command return more Row from the table.
+----------------------------------------------------------------------------------------------------------------------
+album_info = Album.objects.filter(artist=artist_info) # **** return more Row according to artist_id . Example=> album_info = Album.objects.filter(foreignKeyName=artist_info)
+----------------------------------------------------------------------------------------------------------------------
+first_app::urls.py->
+-----------------------------------
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),  # Keep your existing index URL
+    path('add_album/',views.album_form, name='album_form'),
+    path('add_musician/',views.musician_form, name='musician_form'),
+    path('album_list/<int:artist_id>/',views.album_list,name='album_list'),
+]
+
+-----------------------------------
+first_app::views.py->
+-----------------------------------
+from django.shortcuts import render
+from django.http import HttpResponse
+from first_app.models import Musician, Album
+from first_app import forms
+from django.db.models import Avg 
+
+
+
+#Read => Crud:------------------------------
+def index(request):
+    musician = Musician.objects.order_by('first_name')
+   
+    
+    dictionary={'title':"Home Page","musician_list":musician,}
+    return render(request,'first_app/index.html',context=dictionary)
+
+
+def album_list(request, artist_id):
+    artist_info = Musician.objects.get(pk=artist_id) # return one Row according to artist_id
+    
+    album_info = Album.objects.filter(artist=artist_info).order_by('name','release_date') # **** return more Row according to artist_id . Example=> album_info = Album.objects.filter(foreignKeyName=artist_info)
+
+    #average : the model among all data...
+    album_rating_av = Album.objects.filter(artist=artist_id).aggregate(Avg('num_star')) # aggregation : is an operaton on DataBase_Table=> (Average, min, max etc)
+    
+    dictionary = {"title": 'Show Album Page', 'artist_info': artist_info, 'album_info': album_info, 'album_rating_av':album_rating_av}
+    return render(request, 'first_app/album_list.html', context=dictionary)
+
+
+# def album_list(request,artist_id):
+    
+#     artist_info=Musician.objects.get(pk=artist_id) # return one Row according to artist_id
+    
+#     album_info = Album.objects.filter(pk=artist_id) # return more Row according to artist_id
+    
+#     dictionary={"title":'Show Album Page', 'artist_info':artist_info, 'album_info':album_info}
+#     return render(request,'first_app/album_list.html',context=dictionary)
+
+#create => Crud:---------------------------------------
+
+def musician_form(request):
+    form = forms.MusicianForm() #create an object from first_app/forms(MusicianForm class)
+
+    if request.method=="POST":
+        form = forms.MusicianForm(request.POST)
+            
+        if form.is_valid():
+           form.save(commit=True)
+           return index(request)
+
+
+    dictionary={'title':'Add Musician','musician_form':form}
+    return render(request,'first_app/musician_form.html',context=dictionary)
+
+def album_form(request):
+    form = forms.AlbumForm()
+
+    if request.method=="POST":
+        form = forms.AlbumForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return index(request)
+    dictionary={'title':'Add Album','album_form':form}
+    return render(request,'first_app/album_form.html',context=dictionary)
+
+
+
+
+
+
+# def form(request):
+#     new_form = forms.MusicianForm()
+#     dictionary={'test_form':new_form,'heading1_form':"Django Default Forms!"}
+
+#     if request.method == 'POST':
+#         new_form = forms.MusicianForm(request.POST)
+       
+
+#         if new_form.is_valid():
+#             new_form.save(commit=True) # form field save to the DataBase.
+#             return index(request) #redirect to index(request) <-views.
+
+
+#     return render(request, 'first_app/form.html',context=dictionary)
+-----------------------------------
+tempalate::first_app::album_list=>
+-----------------------------------
+<!DOCTYPE html>
+{% extends 'first_app/base.html' %} {% block body_block%}
+
+<h3>Artist info:</h3>
+
+<p>Name: {{artist_info.first_name}} {{artist_info.last_name}}</p>
+<p>instrument:{{artist_info.instrument}}</p>
+<p>Average of Album rating: {{album_rating_av}}</p>
+
+<h4>Album info</h4>
+
+<div >
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">Album Name</th>
+				<th scope="col">Release Date</th>
+				<th scope="col">Rating</th>
+			</tr>
+		</thead>
+		<!-- ... -->
+		<tbody>
+			{% for album in album_info %}
+			<tr>
+				<td scope="row">{{ album.name }}</td>
+				<td>{{ album.release_date|date:"M d, Y" }}</td>
+				<td>{{ album.num_star }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		<!-- ... -->
+	</table>
+</div>
+
+{% endblock %}
+
+-----------------------------------
+-----------------------------------------Django Update+Delete(flash sms+Edit)-----------------------------------------------------------------------------
+-----------------------------------
+-----------------------------------
+first_app::views.py=>
+-----------------------------------
+from django.shortcuts import render
+from django.http import HttpResponse
+from first_app.models import Musician, Album
+from first_app import forms
+from django.db.models import Avg 
+
+
+
+#Read => Crud:------------------------------
+def index(request):
+    musician = Musician.objects.order_by('first_name')
+   
+    
+    dictionary={'title':"Home Page","musician_list":musician,}
+    return render(request,'first_app/index.html',context=dictionary)
+
+
+def album_list(request, artist_id):
+    artist_info = Musician.objects.get(pk=artist_id) # return one Row according to artist_id
+    
+    album_info = Album.objects.filter(artist=artist_info).order_by('name','release_date') # **** return more Row according to artist_id . Example=> album_info = Album.objects.filter(foreignKeyName=artist_info)
+
+    #average : the model among all data...
+    album_rating_av = Album.objects.filter(artist=artist_id).aggregate(Avg('num_star')) # aggregation : is an operaton on DataBase_Table=> (Average, min, max etc)
+    
+    dictionary = {"title": 'Show Album Page', 'artist_info': artist_info, 'album_info': album_info, 'album_rating_av':album_rating_av}
+    return render(request, 'first_app/album_list.html', context=dictionary)
+
+
+# def album_list(request,artist_id):
+    
+#     artist_info=Musician.objects.get(pk=artist_id) # return one Row according to artist_id
+    
+#     album_info = Album.objects.filter(pk=artist_id) # return more Row according to artist_id
+    
+#     dictionary={"title":'Show Album Page', 'artist_info':artist_info, 'album_info':album_info}
+#     return render(request,'first_app/album_list.html',context=dictionary)
+
+#create => Crud:---------------------------------------
+
+def musician_form(request):
+    form = forms.MusicianForm() #create an object from first_app/forms(MusicianForm class)
+
+    if request.method=="POST":
+        form = forms.MusicianForm(request.POST)
+            
+        if form.is_valid():
+           form.save(commit=True)
+           return index(request)
+
+
+    dictionary={'title':'Add Musician','musician_form':form}
+    return render(request,'first_app/musician_form.html',context=dictionary)
+
+def album_form(request):
+    form = forms.AlbumForm()
+
+    if request.method=="POST":
+        form = forms.AlbumForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return index(request)
+    dictionary={'title':'Add Album','album_form':form}
+    return render(request,'first_app/album_form.html',context=dictionary)
+
+#Update: -------------------------------------------------------------
+
+def edit_artist(request,artist_id):
+    artist_info= Musician.objects.get(pk=artist_id)
+    form = forms.MusicianForm(instance=artist_info) # Musician, forms.MusicianForm both are comes form same models => use (instance -> load the form with model data, for editing)
+    dictionary={'musician_form':form}
+    
+    if request.method=='POST':
+        form=forms.MusicianForm(request.POST, instance=artist_info)
+        
+        if form.is_valid():
+            form.save(commit=True)
+            return album_list(request,artist_id)
+    return render(request,'first_app/edit_artist.html',context=dictionary)
+
+def edit_album(request,album_id):
+    album_info = Album.objects.get(pk=album_id)
+    form = forms.AlbumForm(instance=album_info)
+    dictionary={}
+    
+    if request.method=="POST":
+        form = forms.AlbumForm(request.POST, instance=album_info)
+        
+        if form.is_valid():
+            form.save(commit=True)
+            dictionary.update({'success_text':"Successfull Updated"})
+            return album_list(request,album_info.artist_id)
+    
+    dictionary.update({'update_form':form})
+    return render(request,'first_app/edit_album.html',context=dictionary)
+
+#delete--------------------------------------
+
+def delete(request,album_id):
+    album = Album.objects.get(pk=album_id).delete()
+    
+    dictionary={'delete':"Successfully delete album"}
+    return render(request,'first_app/delete.html',context=dictionary)
+
+def delete_artist(request,artist_id):
+    artist = Musician.objects.get(pk=artist_id).delete()
+    dictionary={'delete':"Successfully delete artist"}
+    return render(request,'first_app/delete.html',context=dictionary)
+
+
+
+# def form(request):
+#     new_form = forms.MusicianForm()
+#     dictionary={'test_form':new_form,'heading1_form':"Django Default Forms!"}
+
+#     if request.method == 'POST':
+#         new_form = forms.MusicianForm(request.POST)
+       
+
+#         if new_form.is_valid():
+#             new_form.save(commit=True) # form field save to the DataBase.
+#             return index(request) #redirect to index(request) <-views.
+
+
+#     return render(request, 'first_app/form.html',context=dictionary)
+-----------------------------------
+-----------------------------------
+first_app:: urls.py=>
+-----------------------------------
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),  # Keep your existing index URL
+    path('add_album/',views.album_form, name='album_form'),
+    path('add_musician/',views.musician_form, name='musician_form'),
+    path('album_list/<int:artist_id>/',views.album_list,name='album_list'),
+    path('edit_artist/<int:artist_id>/',views.edit_artist,name='edit_artist'),
+    path('edit_album/<int:album_id>/',views.edit_album,name='edit_album'),
+    path('delete/<int:album_id>/',views.delete,name='delete'),
+    path('delete_artist/<int:artist_id>/',views.delete_artist,name='delete_artist')
+]
+
+-----------------------------------
+-----------------------------------
+tempalate::first_app::album_list.html=>
+-----------------------------------
+<!DOCTYPE html>
+{% extends 'first_app/base.html' %} {% block body_block%}
+
+<h3>Artist info:</h3>
+
+<p>Name: {{artist_info.first_name}} {{artist_info.last_name}}</p>
+<p>instrument:{{artist_info.instrument}}</p>
+<p>Average of Album rating: {{album_rating_av}}</p>
+<a href="{% url 'first_app:edit_artist' artist_id=artist_info.id %}" class="btn btn-secondary">Edit Artist Info</a>
+<a href="{% url 'first_app:delete_artist' artist_id=artist_info.id %}" class="btn btn-danger" >Delete Artist Info</a>
+
+
+
+
+<h4>Album info</h4>
+
+<div >
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">Album Name</th>
+				<th scope="col">Release Date</th>
+				<th scope="col">Rating</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<!-- ... -->
+		<tbody>
+			{% for album in album_info %}
+			<tr>
+				<td scope="row">{{ album.name }}</td>
+				<td>{{ album.release_date|date:"M d, Y" }}</td>
+				<td>{{ album.num_star }}</td>
+				<td>
+					<a href="{% url 'first_app:edit_album' album_id=album.id %}">
+						<button class="btn btn-secondary">Edit</button>
+					</a>
+
+					<a href="{% url 'first_app:delete' album_id=album.id %}">
+						<button class="btn btn-danger" onclick="return confirm('Delete This Album')">Delete</button>
+					</a>
+					
+					
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		<!-- ... -->
+	</table>
+</div>
+
+{% endblock %}
+
+-----------------------------------
+-----------------------------------
+template::first_app::edit_artist.html
+-----------------------------------
+{% extends 'first_app/base.html' %}
+
+{% block body_block%}
+
+
+
+<p>Edit Artist Profile</p>
+<hr>
+<form action="" method="POST">
+
+    {% csrf_token %}
+    {{musician_form.as_p}}
+
+    <input type="submit" name="submit" value="Update" class="btn btn-success">
+
+</form>
+
+
+
+{% endblock %}
+-----------------------------------
+-----------------------------------
+tempalate::first_app::edit_album.html=>
+-----------------------------------
+{% extends 'first_app/base.html' %}
+
+{% block body_block%}
+
+
+{% if success_text%}
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+	{{success_text}}
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+	
+</div>
+{% endif %}
+
+<p>Edit Album </p>
+<hr>
+<form action="" method="POST">
+
+    {% csrf_token %}
+    {{update_form.as_p}}
+
+    <input type="submit" name="submit" value="Update" class="btn btn-success">
+
+</form>
+
+
+
+{% endblock %}
+-----------------------------------
+-----------------------------------
+template::first_app::delete.html=>
+-----------------------------------
+
+{% extends 'first_app/base.html' %}
+
+{% block body_block%}
+
+
+{% if delete%}
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+	{{delete}}
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+	
+</div>
+{% endif %}
+
+<p>Delete Data Page</p>
+
+
+
+
+
+{% endblock %}
+-----------------------------------
+-----------------------------------
+-----------------------------------
+-----------------------------------
+
+
 -----------------------------------------End Crud:with MySQL-----------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------
