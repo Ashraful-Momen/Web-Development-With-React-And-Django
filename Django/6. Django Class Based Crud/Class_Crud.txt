@@ -1,0 +1,275 @@
+forms.py=> 
+-----------------------------
+    <h1>Delete Confirmation {{data.title}}</h1>
+    <img src="/media/{{data.image}}" alt="Image not Found" width="70px" height="60px" class="img-thumbnail rounded-circle">
+    <p>Are you sure you want to delete '{{ data }}'?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirm Delete" class="btn btn-sm btn-danger">
+    </form>
+-------------------------------------------------------------------------------------------------------------
+urls.py=> 
+---------------
+from django.urls import path 
+from . import views 
+
+app_name = 'Class_Crud'
+
+urlpatterns = [
+    path('cl_list/',views.View.as_view(),name='list'), 
+    path('cl_create/', views.Create.as_view(), name='create'),
+    path('cl_edit/<pk>/', views.Edit.as_view(), name='edit'),
+    path('cl_delete/<pk>/', views.Delete.as_view(), name='delete')
+]
+-------------------------------------------------------------------------------------------------------------
+views.py=> 
+-------------
+from django.shortcuts import render,HttpResponse
+from django.urls import reverse_lazy
+from Function_Crud.models import Crud
+from .forms import ClassFrom
+from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
+
+# Create your views here.
+
+
+class View(ListView):
+    model = Crud 
+    context_object_name = 'data'
+    template_name = 'Class_Crud/views.html'  
+
+class Create(CreateView):
+    model = Crud
+    fields = ['title', 'description', 'image']
+    template_name = 'Class_Crud/create.html'
+    # success_url = '/cl_list/'
+
+    def get_success_url(self) -> str:
+        return '/cl_list/'
+    
+class Edit(UpdateView): 
+    model = Crud 
+    fields = '__all__'
+    template_name = 'Class_Crud/edit.html'
+    success_url = '/cl_list/'
+
+class Delete(DeleteView): #for delete need a extra template for delete confirmations.
+
+    model = Crud
+    context_object_name = 'data'
+    template_name = 'Class_Crud/delete.html'
+    success_url =  reverse_lazy('Class_Crud:list') #after delete redirect to this page.
+
+  
+    
+-------------------------------------------------------------------------------------------------------------
+views.html=> 
+------------------
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Show Data</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  {% load static %}
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    <table class="table border rounded my-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Descriptions</th>
+            <th scope="col">Image</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          {% for data in data %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{data.title}}</td>
+            <td>{{data.description}}</td>
+            
+            {% if data.image %}
+            <td>
+                <img src="/media/{{data.image}}" alt="Image not Found" width="70px" height="60px" class="img-thumbnail rounded-circle">
+            </td>
+            {% else %}
+            <td>
+                <img src="http://127.0.0.1:8000/media/default/default.jpg" alt="default img" width="80px" height="50px" class="img-thumbnail rounded-circle">
+            </td>
+            {% endif %}
+                
+            <td>
+                <a href="{% url 'Class_Crud:edit' pk=data.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'Class_Crud:delete' pk=data.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+          </tr>
+            
+          {% endfor %}
+            
+        </tbody>
+      </table>
+  </div>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
+-------------------------------------------------------------------------------------------------------------
+create.html-> 
+--------------------------
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center">Create Data </h1>
+    <hr>
+    <div class="row  d-flex justify-content-center  ">
+        <div class="col-6  m-2 p-3 border rounded">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form|crispy}}
+              <button type="submit" class="btn btn-sm btn-success">Submit</button>
+        
+            </form>
+        </div>
+    </div>
+  </div>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
+-------------------------------------------------------------------------------------------------------------
+edit.html-> 
+------------------
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center">Edit Data </h1>
+    <hr>
+    <div class="row  d-flex justify-content-center  ">
+        <div class="col-6  m-2 p-3 border rounded">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form|crispy}}
+              <button type="submit" class="btn btn-sm btn-success">Submit</button>
+        
+            </form>
+        </div>
+    </div>
+  </div>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
+-------------------------------------------------------------------------------------------------------------
+delete.html=> 
+--------------------
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+ <div class="container">
+    <h1>Delete Confirmation {{data.title}}</h1>
+    <img src="/media/{{data.image}}" alt="Image not Found" width="70px" height="60px" class="img-thumbnail rounded-circle">
+    <p>Are you sure you want to delete '{{ data }}'?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirm Delete" class="btn btn-sm btn-danger">
+    </form>
+ </div>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
+-------------------------------------------------------------------------------------------------------------
