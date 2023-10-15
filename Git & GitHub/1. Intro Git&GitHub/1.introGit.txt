@@ -206,4 +206,22 @@ this is a github template ... write down about github repo in read.me... and the
 to write the details in readme.md ....
 -------------------------------------------Error fixing for pushing --------------------------------
 if can't push to github repo => git pull origin main --allow-unrelated-histories
+--------------------------------------------------------------------------------------------------------
+# Check the current remote URLs:
+>>>git remote -v
+
+#set the remote repo:
+>>>git remote set-url origin https://github.com/Ashraful-Momen/AWS.git
+
+#if the push not work then pull the repo : 
+>>> git pull origin main
+#if still now working : 
+>>> git pull origin main --allow-unrelated-histories
+
+
+#now push again repo: 
+>>> git push origin main
+
+
+
 
