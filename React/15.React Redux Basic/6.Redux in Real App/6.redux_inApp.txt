@@ -1,0 +1,185 @@
+>>> install 'redux' and 'react-redux';
+
+
+
+reducer.js=> 
+----------------
+import dish from fileLocation;
+import comment from fileLocation;
+
+
+1. create state: 
+const initialState{
+    dishes: dish , 
+    comments: comments,
+}
+
+2. reducer=> export const reducer (state=initialState, action){
+    return state;
+}
+
+store.js=> 
+---------------
+
+import {createStore} from 'redux'
+import {reducer} from 'reducerLocation';
+
+const mystore = createStore(reducer)
+
+export default mystore;
+
+-----------
+App.js=> 
+-------------------------
+import {mystore} from mystoreLocation;
+import {Provider} from 'react-redux';
+
+function App(){
+    //check the mystore is working or not-> 
+    console.log('App.js',mystore.getState()) // print the dish and comment.
+
+
+    return (
+        <div className='App'>
+        <Provider store={mystore}> //here 'store' is the defualt variable fo redux. 
+            <BrowseRouter>
+                <Main/>
+            </BrowseRouter>
+        </Provider>
+        </div>
+    )
+}
+----------------------------------------------------------
+3. Accessing Redux Store from Components
+----------------------------------------------------------
+Home.js=> 
+----------------
+
+import {connect} from 'react-redux' // this {connect} help to get mystore data .
+
+//check the mystore value is avilable on Home.js or not ? 
+
+
+const mapStateToProps = state => { // this state comes from <Provider state={mystore}></Provider>
+    console.log('mapStateToProps => ',state)
+    return {
+        //*** pass mystore data to 'Home component'
+
+        dish:state.dish, // now this 'dish' pass to 'Home Component' as props. 
+
+    }
+}
+
+
+class Home extends Component{
+    componentDidMount(){
+        console.log("Home state", this.state);
+        console.log("Home Props", this.props);
+        console.log("Home props that comes form mystore", this.props.dish, this.props.comment) //important Line.
+    }
+    render(){
+        document.title = "My Project title"
+        return (
+            <div>
+            
+            </div>
+        )
+    }
+}
+
+
+export default connect(mapStateToProps) (Home) ; //connect(mapStateToProps) used for getting data from mystore as props.
+-------------------------
+
+----------------------------------------------------------
+4. Dispatching Action from Component
+----------------------------------------------------------
+Home.js=> 
+----------------
+
+import {connect} from 'react-redux' // this {connect} help to get mystore data .
+
+//check the mystore value is avilable on Home.js or not ? 
+
+
+const mapStateToProps = state => { // this state comes from <Provider state={mystore}></Provider>
+    console.log('mapStateToProps => ',state)
+    return {
+        //*** pass mystore data to 'Home component'
+
+        dish:state.dish, // now this 'dish' pass to 'Home Component' as props. 
+
+    }
+}
+
+
+class Home extends Component{
+
+    componentDidMount(){
+        console.log("Home state", this.state);
+        console.log("Home Props", this.props);
+        console.log("Home props that comes form mystore", this.props.dish, this.props.comment) //important Line.
+
+        //Dispatching=> send to reducer.
+        -----------------
+        this.props.dispatch({
+            type:'Test',
+            str: "Shuvo",
+        })
+    }
+
+    componentDidUpdate(){
+        console.log('after dispatch print the update mystore value', this.props); // after home component reload we can see the update .
+    }
+
+
+    render(){
+        document.title = "My Project title"
+        return (
+            <div>
+            
+            </div>
+        )
+    }
+}
+
+
+export default connect(mapStateToProps) (Home) ; //connect(mapStateToProps) used for getting data from mystore as props.
+
+
+
+-------------------------
+after dispatch form home component we update the reducer.
+-------------------------
+
+reducer.js=> 
+----------------
+import dish from fileLocation;
+import comment from fileLocation;
+
+
+1. create state: 
+const initialState{
+    dishes: dish , 
+    comments: comments,
+    name: Hello,
+}
+
+2. reducer=> export const reducer (state=initialState, action){
+
+    console.log(action.str)
+
+    if(action.type==='Test'){
+        ...state, 
+        name: state.name + action.str // update as 'Hello Shuvo'
+
+    }
+    return state;
+}
+
+
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+
