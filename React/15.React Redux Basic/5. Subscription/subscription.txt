@@ -29,7 +29,7 @@ const store = redux.createStore(rootReducer);
 // console.log(store); return object with some function.
 console.log(store.getState());
 
-//subscription: see the update of state after each dispatch of action....
+//subscription: see the update of state autometically after each dispatch of action. And inside subscription (use any function)....
 store.subscribe(()=>{
     console.log('[Subscription]',store.getState());
 })
