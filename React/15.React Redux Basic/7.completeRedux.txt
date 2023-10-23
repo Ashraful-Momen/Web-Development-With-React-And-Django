@@ -1,0 +1,297 @@
+store: 
+----------
+import { Reducer } from "./reducer";
+import {createStore,applyMiddleware} from 'redux';
+import logger from "redux-logger";
+import thunk from "redux-thunk";
+
+//logger is a middleware & monitor -> activities [actionDispatch -> reducer -> updateState... and print auto]
+
+//thunk help to call multiple dispatch (1.support without 1st function ZXCobject) 2.Async support -> 
+                                        // export const fetchDishes = () =>{
+                                        //     return dispatch =>{
+                                        //         dispatch (dishLoading());
+
+                                        //         setTimeout(() => {
+                                        //             dispatch(loadDishes(DISHES));
+                                        //         }, 2000);
+                                        //     }
+                                        // }
+
+const myStore = createStore(Reducer,applyMiddleware(logger, thunk));
+
+export default myStore;
+-----------------------------------------------------------------------------------------------------
+actionTypes.jsx:
+--------------
+export const ADD_COMMENT = 'ADD_COMMENT';
+
+
+export const LOAD_DISHES = 'LOAD_DISHES' //SHOW DISHES AFTER LOADING.
+export const DISHES_LOADING = 'DISHES_LOADING' // SHOW THE LOADING SPINNER.
+-----------------------------------------------------------------------------------------------------
+actionsCreators.jsx:
+---------------------
+import * as actionTypes from "./actionsTypes"
+import DISHES from "../data/dishes";
+
+
+export const addComment = (dishesId,author,rating,comment) => 
+    (
+        {type: actionTypes.ADD_COMMENT,
+            payload :{
+              dishesId:dishesId,
+              author:author,
+              rating:rating,
+              comment:comment}}
+    )
+
+export const loadDishes = (dishes) => ({
+    type: actionTypes.LOAD_DISHES,
+    payload: dishes
+})
+
+export const dishLoading = () => ({
+    type: actionTypes.DISHES_LOADING
+})
+
+
+export const fetchDishes = () =>{
+    return dispatch =>{
+        dispatch (dishLoading());
+
+        setTimeout(() => {
+            dispatch(loadDishes(DISHES));
+        }, 2000);
+    }
+}
+-----------------------------------------------------------------------------------------------------
+reducer.jsx:
+----------------
+import COMMENTS from '../data/comments'
+import DISHESH from '../data/dishes'
+import { combineReducers } from 'redux'
+import * as actionType from './actionsTypes'
+
+
+const dishReducer = (dishState={isLoading:false,dishes:[]},action) =>{
+    switch(action.type){
+        case actionType.DISHES_LOADING:
+            return{
+                ...dishState,
+                isLoading:true,
+                dishes:[]
+            }
+        case actionType.LOAD_DISHES:
+            return{
+                ...dishState,
+                isLoading:false,
+                dishes:action.payload,
+            }
+
+
+        default:
+            return dishState;
+    }
+    
+}
+
+
+const commentReducer = (commentState=COMMENTS, action) => {
+    switch(action.type){
+        case actionType.ADD_COMMENT:
+            let comment = action.payload;
+            comment.id =  commentState.length;
+            comment.date = new Date().toDateString();
+            console.log(comment);
+            return commentState.concat(comment)
+            
+        default:  return commentState;
+
+
+    }
+    // if (action.type === 'ADD_COMMENT') {
+    //     let comment = action.payload;
+    //     comment.id =  commentState.length;
+    //     comment.date = new Date().toDateString();
+    //     console.log(comment);
+    //     return commentState.concat(comment)
+    // }
+
+    return commentState;
+}
+
+
+
+
+export const Reducer = combineReducers ({
+    dishes:dishReducer,
+    comments:commentReducer,
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const initialState = {
+//     dishes: DISHESH,
+//     comments:COMMENTS,
+   
+// }
+
+
+
+// export const Reducer = (state=initialState,action)=>{
+//     // console.log(action);
+//     if(action.type==='ADD_COMMENT')
+//     {
+//         let comment = action.payload;
+//         comment.id =  state.comments.length;
+//         comment.date = new Date().toDateString();
+//         // console.log(comment);
+//         return{
+//             ...state,
+//             comments:state.comments.concat(comment)
+//         }
+        
+//     }
+   
+//     return state;
+// }
+-----------------------------------------------------------------------------------------------------
+Menu.jsx=> 
+-------------
+import React,{Component, useState} from 'react'
+import MenuItem from './MenuItem'
+import DISHES from '../../data/dishes'
+import COMMENTS from '../../data/comments'
+import DishDetails from './DishDetails'
+import { CardColumns, CardGroup, Modal, ModalFooter } from 'reactstrap'
+import { connect } from 'react-redux';
+import { addComment } from '../../redux/actionsCreator'
+import { fetchDishes } from '../../redux/actionsCreator'
+import  LoadSpinner from './LoadSpinner'
+
+
+const mapStateToProps=(state)=>{ 
+  return {
+    dishes:state.dishes,
+    comments:state.comments
+  }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+  return{
+    addComment:(dishesId,author,rating,comment)=>dispatch(addComment(dishesId,author,rating,comment)),
+    fetchDishes:()=>dispatch(fetchDishes())
+  }
+}
+
+
+
+class Menu extends Component {
+  state={
+    // dishes:DISHES,
+    // comments:COMMENTS,
+    selectedDish:null,
+    modalOpen:false,
+  }
+ 
+
+     onSelectDish = (dish)=> {
+      this.setState({
+        selectedDish:dish,
+        modalOpen:true,
+        
+      });
+      
+    }
+
+  
+  modalToggle = () => {
+    this.setState({
+      modalOpen:!this.state.modalOpen
+    })
+  }
+
+  componentDidMount(){
+    this.props.fetchDishes()
+    console.log(this.props);
+  }
+
+      
+  render()
+
+  {
+    if(this.props.dishes.isLoading===true)
+    {
+      return <LoadSpinner/>
+    }
+    else{
+      const menu = this.props.dishes.dishes.map((dish)=>{
+
+        // console.log(selectedDish)
+
+        
+
+
+      return <MenuItem key={dish.id} dish={dish} onSelectDish={this.onSelectDish}  />
+    })
+
+    
+    
+    //  const deshDetials = this.state.selectedDish ?  <DishDetails dish={this.state.selectedDish} /> : null;
+
+    let deshDetials = null ;
+    if(this.state.selectedDish != null){
+      let comments = this.props.comments.filter((comment => {
+        return comment.dishesId === this.state.selectedDish.id 
+      }))
+      deshDetials = <DishDetails dish={this.state.selectedDish} comments={comments} addComment={this.props.addComment}/>
+    }
+
+      document.title = 'Menu'
+
+
+      return (
+        <div>
+          <div className="container">
+            <div className="row ">
+              <div className="">
+              <CardColumns className='d-lg-flex '>
+              {menu}
+              
+              </CardColumns>
+              <Modal isOpen={this.state.modalOpen} >
+                {deshDetials}
+                <ModalFooter onClick={this.modalToggle} className=''><button className='btn btn-sm bg-warning'>Close</button></ModalFooter>
+              </Modal>
+              </div>
+                
+                
+            </div>
+          </div>
+        </div>
+      )
+    }
+       
+  }
+  
+}
+
+export default  connect(mapStateToProps,mapDispatchToProps)(Menu);
+-----------------------------------------------------------------------------------------------------
