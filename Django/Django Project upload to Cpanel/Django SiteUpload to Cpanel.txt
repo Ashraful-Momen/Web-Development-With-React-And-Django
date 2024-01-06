@@ -1,0 +1,17 @@
+1. goto setup python app.
+
+2. set folder name : DjangoUpload (In File manager we can see it )
+
+3. in setup python add /pro/log. 
+
+4. goto Django upload folder and add requirments. 
+
+5. again goto setup python then add the requirments and run for install all packages.
+
+6. after install all package then goto file manager and upload the project zip file . 
+
+7. upzip , then pro.log.wsgi open with editor. add the file path > main project > setting.wgsi. 
+
+8. add the file path in prolog.wgsi > from project_folder_name.wgsi import applications.
+
+9. restart the applications. 
