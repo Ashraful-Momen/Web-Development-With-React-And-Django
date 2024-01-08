@@ -1,0 +1,205 @@
+inside the class of function's variable we can use ex:
+-------------------------------------------------------
+class NewBook extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      bookName: "",
+      writer:"",
+      description:"",
+    }
+  }
+  
+  handelInputChange = (event) =>{ // use this function to set the input name value to the state{}.
+
+    // console.log(event.target);
+
+    const name = event.target.name;
+    const value = event.target.value;
+    console.log(name,value);
+    this.setState({
+      [name]:value, // if we want to access the variable in side the function of class  . then we have to use [variable name , ex: name/vale]
+    })
+  }
+----------------------------------------------------------
+new to technique for update the state value of class : 
+--------------------------------------------------------
+                    <label  >Book Name</label>
+					<br />
+					<input type="text" name="bookName" value={this.state.bookName} onChange={(event)=>this.handelInputChange(event)}/>
+					
+*** here we use => onChange={(event)=>this.handelInputChange(event)} ... for sending the value into state.
+
+-------------------------------another way to send the value into state: not need to bind() inside the value for send into state... ---------------------------------------
+                    
+                    <form>
+                    <label  >Book Name</label>
+					<br />
+					<input type="text" name="bookName" value={this.state.bookName} onChange={this.handelInputChange}/>
+
+class NewBook extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			bookName: "",
+			writer: "",
+			description: "",
+		};
+
+		this.handelInputChange = this.handelInputChange.bind(this); //*****.bind( 'this') indecate the input feild of nameVariable...
+	}
+----------------------------------------------------------------------------------------------------------------------
+**** as like handelInputChange( ) method we can also use handleSubmit().=>
+------------------------------------------Controlled Form!----------------------------------------------------------------------------
+import React, { Component } from "react";
+
+class NewBook extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			bookName: "",
+			writer: "",
+			description: "",
+		};
+
+		this.handelInputChange = this.handelInputChange.bind(this); //*****.bind( 'this') indecate the input feild of nameVariable...
+	}
+
+	handelInputChange = (event) => {
+		// use this function to set the input name value to the state{}.
+
+		// console.log(event.target);
+
+		const name = event.target.name;
+		const value = event.target.value;
+		// console.log(name,value);
+
+		this.setState({
+			[name]: value, // if we want to access the variable in side the function of class  . then we have to use [variable name , ex: name/vale]
+		});
+	};
+	handelSubmit = (e) => {
+		// prevent the form submit loading...
+		e.preventDefault();
+		console.log(this.state);
+	};
+	// componentDidUpdate(){ // check the state value is update or not
+	//   console.log(this.state)
+	// }
+
+	render() {
+		return (
+			<div>
+				<h1>NewBook</h1>
+				<form onSubmit={(e) => this.handelSubmit(e)}>
+					<label>Book Name</label>
+					<br />
+					<input
+						type="text"
+						name="bookName"
+						value={this.state.bookName}
+						onChange={this.handelInputChange}
+					/>
+					<br />
+					<label>Writer</label>
+					<br />
+					<input
+						type="text"
+						name="writer"
+						value={this.state.writer}
+						onChange={this.handelInputChange}
+					/>
+					<br />
+					<label>Describtion</label>
+					<br />
+					<textarea
+						type="text"
+						name="description"
+						value={this.state.description}
+						onChange={this.handelInputChange}
+					/>
+					<br />
+					<input type="submit" />
+				</form>
+			</div>
+		);
+	}
+}
+
+export default NewBook;
+
+------------------------------------------------new update code : Uncontrolled Form( state not used)----------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+import React, { Component } from "react";
+
+class NewBook extends Component {
+	constructor(props) {
+		super(props);
+    this.bookName = React.createRef();
+    this.writer = React.createRef();
+    this.description = React.createRef();
+
+    this.handelSubmit= this.handelSubmit.bind(this);
+
+	
+  }
+
+
+
+	handelSubmit = (e) => {
+		// prevent the form submit loading...
+		
+		console.log(this.bookName.current.value);
+		console.log(this.writer.current.value);
+		console.log(this.description.current.value);
+    e.preventDefault();
+	};
+
+
+
+	render() {
+		return (
+			<div>
+				<h1>NewBook</h1>
+				<form onSubmit={this.handelSubmit}>
+					<label>Book Name</label>
+					<br />
+					<input
+						type="text"
+						name="bookName"
+            ref={this.bookName}
+					
+					/>
+					<br />
+					<label>Writer</label>
+					<br />
+					<input
+						type="text"
+						name="writer"
+            ref={this.writer}
+						
+					/>
+					<br />
+					<label>Describtion</label>
+					<br />
+					<textarea
+						type="text"
+						name="description"
+            ref={this.description}
+						
+					/>
+					<br />
+					<input type="submit" />
+				</form>
+			</div>
+		);
+	}
+}
+
+export default NewBook;
+
+----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+					
+
