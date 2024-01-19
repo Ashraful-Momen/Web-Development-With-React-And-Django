@@ -13,5 +13,6 @@
 7. upzip , then pro.log.wsgi open with editor. add the file path > main project > setting.wgsi. 
 
 8. add the file path in prolog.wgsi > from project_folder_name.wgsi import applications.
+   and allow the headers in settings.py .
 
 9. restart the applications. 
