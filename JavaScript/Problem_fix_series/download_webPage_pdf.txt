@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- your existing head content -->
+
+    <!-- Add the html2pdf library -->
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+    <script>
+        // Function to generate PDF
+        function generatePDF() {
+            // Target the element containing your invoice
+            const element = document.getElementById('invoice');
+
+            // Configure the PDF options
+            const pdfOptions = {
+                margin: 10,
+                filename: 'invoice.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            };
+
+            // Generate PDF
+            html2pdf(element, pdfOptions);
+        }
+
+        // Call the function after the page is fully loaded
+        window.onload = function () {
+            generatePDF();
+        };
+    </script>
+</head>
+
+<body>
+    <!-- your existing body content -->
+
+    <!-- You can add a button or any trigger for the PDF download -->
+    <button onclick="generatePDF()">Download PDF</button>
+</body>
+
+</html>
