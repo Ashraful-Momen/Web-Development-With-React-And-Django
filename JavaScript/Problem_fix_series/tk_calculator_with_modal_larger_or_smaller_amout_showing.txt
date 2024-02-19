@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Amount Calculator</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  .result-box {
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+  <!-- Button to trigger modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#amountCalculatorModal">
+    Amount Calculator
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="amountCalculatorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Main Amount Calculator</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="mainAmount">Main Amount:</label>
+          <input type="number" id="mainAmount" name="mainAmount">
+          <br><br>
+          <input type="checkbox" id="fixedAmountCheckbox" name="fixedAmountCheckbox" onchange="showFields()">
+          <label for="fixedAmountCheckbox">Fixed Amount</label>
+          <br>
+          <input type="number" id="fixedAmount" name="fixedAmount" style="display: none;">
+          <br><br>
+          <input type="checkbox" id="percentageAmountCheckbox" name="percentageAmountCheckbox" onchange="showFields()">
+          <label for="percentageAmountCheckbox">Percentage Amount</label>
+          <br>
+          <input type="number" id="percentageAmount" name="percentageAmount" style="display: none;">
+          <br><br>
+          <button onclick="calculateTotal()">Calculate</button>
+
+          <div class="result-box" id="largerAmountBox" style="display: none;">
+            <strong>Larger Amount:</strong> <span id="largerAmount"></span>
+          </div>
+          <div class="result-box" id="smallerAmountBox" style="display: none;">
+            <strong>Smaller Amount:</strong> <span id="smallerAmount"></span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+function showFields() {
+  var fixedAmountCheckbox = document.getElementById("fixedAmountCheckbox");
+  var percentageAmountCheckbox = document.getElementById("percentageAmountCheckbox");
+  var fixedAmount = document.getElementById("fixedAmount");
+  var percentageAmount = document.getElementById("percentageAmount");
+
+  if (fixedAmountCheckbox.checked) {
+    fixedAmount.style.display = "block";
+  } else {
+    fixedAmount.style.display = "none";
+  }
+
+  if (percentageAmountCheckbox.checked) {
+    percentageAmount.style.display = "block";
+  } else {
+    percentageAmount.style.display = "none";
+  }
+}
+
+function calculateTotal() {
+  var mainAmount = parseFloat(document.getElementById("mainAmount").value);
+  var fixedAmount = parseFloat(document.getElementById("fixedAmount").value);
+  var percentageAmount = parseFloat(document.getElementById("percentageAmount").value);
+
+  if (!isNaN(mainAmount)) {
+    var total = mainAmount;
+    if (!isNaN(fixedAmount)) {
+      total += fixedAmount;
+    }
+    if (!isNaN(percentageAmount)) {
+      total += (mainAmount * percentageAmount / 100);
+    }
+
+    var largerAmount, smallerAmount, largerAmountType;
+    if (!isNaN(fixedAmount) && !isNaN(percentageAmount)) {
+      if (fixedAmount > (mainAmount * percentageAmount / 100)) {
+        largerAmount = fixedAmount;
+        largerAmountType = "Fixed Amount";
+        smallerAmount = mainAmount * percentageAmount / 100;
+      } else {
+        largerAmount = mainAmount * percentageAmount / 100;
+        largerAmountType = "Percentage Amount";
+        smallerAmount = fixedAmount;
+      }
+    } else if (!isNaN(fixedAmount)) {
+      largerAmount = fixedAmount;
+      largerAmountType = "Fixed Amount";
+      smallerAmount = mainAmount * percentageAmount / 100;
+    } else if (!isNaN(percentageAmount)) {
+      largerAmount = mainAmount * percentageAmount / 100;
+      largerAmountType = "Percentage Amount";
+      smallerAmount = fixedAmount;
+    }
+
+    document.getElementById("largerAmount").textContent = largerAmount.toFixed(2) + " (" + largerAmountType + ")";
+    document.getElementById("smallerAmount").textContent = smallerAmount.toFixed(2);
+    document.getElementById("largerAmountBox").style.display = "block";
+    document.getElementById("smallerAmountBox").style.display = "block";
+  } else {
+    alert("Please enter a valid Main Amount.");
+  }
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
