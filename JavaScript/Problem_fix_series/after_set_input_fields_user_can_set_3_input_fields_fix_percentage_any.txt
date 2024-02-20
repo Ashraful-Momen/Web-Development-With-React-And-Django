@@ -1,0 +1,155 @@
+ <div id="naturalDeath" style="display: none;"
+                                    class="col form-row mb-4 m-2 border rounded border-dark py-2">
+                                    <br>
+                                    {{-- have to remove  --}}
+                                    <div class="col-auto">
+                                        <label for="naturalDeathAmount" class="col-form-label">Life Coverage
+                                            Amount:</label>
+                                        <input type="number" id="lifeCoverageAmount" name="life_coverage_amount"
+                                            class="form-control-input" placeholder="Life Coverage Amount"><br>
+                                    </div>
+                                    {{-- have to remove  --}}
+
+
+                                    <label for="naturalDeathAmount" class="btn btn-warning" disabled>For select natural Death Amount please set the value of Life Coverage Amount First :</label>
+
+                                        <div id="checkboxOptions" style="display: none;">
+                                            <label for="naturalDeathAmount">Natural Death Amount:</label>
+                                            <input type="checkbox" id="fixAmountCheckbox"> Fix amount
+                                            <input type="checkbox" id="percentageAmountCheckbox"> Percentage of amount
+                                            <input type="checkbox" id="anyAmountCheckbox"> Any amount
+                                            <br>
+                                        </div>
+
+                                        <div id="additionalFields"></div>
+
+                                        <script>
+                                            document.getElementById("lifeCoverageAmount").addEventListener("input", function() {
+                                                showCheckboxOptions();
+                                            });
+
+                                            function showCheckboxOptions() {
+                                                let lifeCoverageAmount = document.getElementById("lifeCoverageAmount").value;
+                                                if (lifeCoverageAmount !== "") {
+                                                    document.getElementById("checkboxOptions").style.display = "block";
+                                                } else {
+                                                    document.getElementById("checkboxOptions").style.display = "none";
+                                                }
+                                            }
+
+                                            document.getElementById("fixAmountCheckbox").addEventListener("change", function() {
+                                                if (this.checked) {
+                                                    showFixAmountInput();
+                                                    // Uncheck other checkboxes
+                                                    document.getElementById("percentageAmountCheckbox").checked = false;
+                                                    document.getElementById("anyAmountCheckbox").checked = false;
+                                                } else {
+                                                    hideAdditionalFields();
+                                                }
+                                            });
+
+                                            document.getElementById("percentageAmountCheckbox").addEventListener("change", function() {
+                                                if (this.checked) {
+                                                    showPercentageInput();
+                                                    // Uncheck other checkboxes
+                                                    document.getElementById("fixAmountCheckbox").checked = false;
+                                                    document.getElementById("anyAmountCheckbox").checked = false;
+                                                } else {
+                                                    hideAdditionalFields();
+                                                }
+                                            });
+
+                                            document.getElementById("anyAmountCheckbox").addEventListener("change", function() {
+                                                if (this.checked) {
+                                                    showAnyAmount();
+                                                    // Uncheck other checkboxes
+                                                    document.getElementById("fixAmountCheckbox").checked = false;
+                                                    document.getElementById("percentageAmountCheckbox").checked = false;
+                                                } else {
+                                                    hideAdditionalFields();
+                                                }
+                                            });
+
+                                            function showFixAmountInput() {
+                                                hideAdditionalFields();
+                                                let fixAmountInput = document.createElement("input");
+                                                fixAmountInput.setAttribute("type", "number");
+                                                fixAmountInput.setAttribute("id", "fixAmountInput");
+                                                fixAmountInput.setAttribute("name", "natural_death_amount");
+                                                fixAmountInput.setAttribute("class", "form-control");
+                                                fixAmountInput.setAttribute("placeholder", "Natural Death Amount");
+                                                document.getElementById("additionalFields").appendChild(fixAmountInput);
+                                            }
+
+                                            function showPercentageInput() {
+                                                hideAdditionalFields();
+
+                                                // Get the value of life coverage amount
+                                                let lifeCoverageAmount = parseFloat(document.getElementById("lifeCoverageAmount").value);
+
+                                                // Get the percentage amount from the user input or any other source
+                                                let percentage = parseFloat(prompt("Enter the percentage amount:"));
+
+                                                // Calculate the fix amount based on the percentage and life coverage amount
+                                                let fixAmount = (percentage / 100) * lifeCoverageAmount;
+
+                                                // Create the input field for fix amount
+                                                let fixAmountInput = document.createElement("input");
+                                                fixAmountInput.setAttribute("type", "number");
+                                                fixAmountInput.setAttribute("id", "fixAmountInput");
+                                                fixAmountInput.setAttribute("name", "natural_death_amount");
+                                                fixAmountInput.setAttribute("class", "form-control");
+                                                fixAmountInput.setAttribute("placeholder", "Natural Death Amount");
+                                                fixAmountInput.value = fixAmount; // Set the calculated fix amount
+
+                                                // Append the input field to the additional fields container
+                                                document.getElementById("additionalFields").appendChild(fixAmountInput);
+
+                                                // Show the fix amount value under the input field
+                                                let fixAmountValueLabel = document.createElement("label");
+                                                fixAmountValueLabel.textContent = "The Percentage Amount is : " + fixAmount.toFixed(
+                                                    2); // Show the value with two decimal places
+                                                document.getElementById("additionalFields").appendChild(fixAmountValueLabel);
+                                            }
+
+                                            function showAnyAmount() {
+                                                hideAdditionalFields();
+
+                                                let lifeCoverageAmount = document.getElementById("lifeCoverageAmount").value;
+
+                                                // Create an input field with the name "natural_death_amount"
+                                                let fixAmountInput = document.createElement("input");
+                                                fixAmountInput.setAttribute("type", "number");
+                                                fixAmountInput.setAttribute("name", "natural_death_amount");
+                                                fixAmountInput.setAttribute("class", "form-control");
+                                                fixAmountInput.setAttribute("placeholder", "Natural Death Amount");
+                                                fixAmountInput.value = lifeCoverageAmount; // Set the value to lifeCoverageAmount
+                                                document.getElementById("additionalFields").appendChild(fixAmountInput);
+                                            }
+
+                                            function hideAdditionalFields() {
+                                                document.getElementById("additionalFields").innerHTML = "";
+                                            }
+                                        </script>
+
+
+
+
+
+
+
+                                    <label for="naturalDeathAmount">Natural Death Claim Charge Back Amount
+                                        :</label><br>
+                                    <input type="number" id="naturalDeathAmount"
+                                        name="natural_death_claim_chargeback_amount" class="form-control"
+                                        placeholder="Natural Death Claim Charge Back Amount"><br>
+
+                                    <label for="naturalDeathAmount">Natural Death Claim (waiting period or effective
+                                        date) :</label><br>
+                                    <input type="number" id="naturalDeathAmount" name="natural_death_claim_waiting_date"
+                                        class="form-control"
+                                        placeholder="Natural Death Claim (waiting period or effective date)"><br>
+
+                                    <hr>
+
+                                </div>
