@@ -1,0 +1,131 @@
+<div class="col-auto">
+    <label for="hospitalCoverageAmount" class="col-form-label">Hospital Coverage Amount:</label>
+    <input type="number" id="hospitalCoverageAmount" name="hospital_coverage_amount"
+        class="form-control-input" placeholder="Hospital Coverage Amount"><br>
+</div>
+
+<div id="ambulanceAmount" style="display: none;" class="col form-row mb-4 m-2 border rounded border-dark py-2">
+    <br>
+
+    <label for="ambulanceAmount" class="btn btn-warning" disabled>Please set the value of Hospital Coverage Amount first!</label>
+
+    <div id="ambulanceOptions" style="display: none;">
+        <label for="ambulanceAmount">Ambulance Amount:</label>
+        <input type="checkbox" id="ambulanceFixAmountCheckbox"> Fix amount
+        <input type="checkbox" id="ambulancePercentageAmountCheckbox"> Percentage of amount
+        <input type="checkbox" id="ambulanceAnyAmountCheckbox"> Any amount
+        <br>
+    </div>
+
+    <div id="additionalAmbulanceFields"></div>
+
+    <script>
+        document.getElementById("hospitalCoverageAmount").addEventListener("input", function() {
+            showAmbulanceCheckboxOptions();
+        });
+
+        function showAmbulanceCheckboxOptions() {
+            let hospitalCoverageAmount = document.getElementById("hospitalCoverageAmount").value;
+            if (hospitalCoverageAmount !== "") {
+                document.getElementById("ambulanceOptions").style.display = "block";
+            } else {
+                document.getElementById("ambulanceOptions").style.display = "none";
+            }
+        }
+
+        document.getElementById("ambulanceFixAmountCheckbox").addEventListener("change", function() {
+            if (this.checked) {
+                showAmbulanceFixAmountInput();
+                // Uncheck other checkboxes
+                document.getElementById("ambulancePercentageAmountCheckbox").checked = false;
+                document.getElementById("ambulanceAnyAmountCheckbox").checked = false;
+            } else {
+                hideAdditionalAmbulanceFields();
+            }
+        });
+
+        document.getElementById("ambulancePercentageAmountCheckbox").addEventListener("change", function() {
+            if (this.checked) {
+                showAmbulancePercentageInput();
+                // Uncheck other checkboxes
+                document.getElementById("ambulanceFixAmountCheckbox").checked = false;
+                document.getElementById("ambulanceAnyAmountCheckbox").checked = false;
+            } else {
+                hideAdditionalAmbulanceFields();
+            }
+        });
+
+        document.getElementById("ambulanceAnyAmountCheckbox").addEventListener("change", function() {
+            if (this.checked) {
+                showAmbulanceAnyAmount();
+                // Uncheck other checkboxes
+                document.getElementById("ambulanceFixAmountCheckbox").checked = false;
+                document.getElementById("ambulancePercentageAmountCheckbox").checked = false;
+            } else {
+                hideAdditionalAmbulanceFields();
+            }
+        });
+
+        function showAmbulanceFixAmountInput() {
+            hideAdditionalAmbulanceFields();
+            let ambulanceFixAmountInput = document.createElement("input");
+            ambulanceFixAmountInput.setAttribute("type", "number");
+            ambulanceFixAmountInput.setAttribute("id", "ambulanceFixAmountInput");
+            ambulanceFixAmountInput.setAttribute("name", "ambulance_claim_amount");
+            ambulanceFixAmountInput.setAttribute("class", "form-control");
+            ambulanceFixAmountInput.setAttribute("placeholder", "Ambulance Amount");
+            document.getElementById("additionalAmbulanceFields").appendChild(ambulanceFixAmountInput);
+        }
+
+        function showAmbulancePercentageInput() {
+            hideAdditionalAmbulanceFields();
+
+            // Get the value of hospital coverage amount
+            let hospitalCoverageAmount = parseFloat(document.getElementById("hospitalCoverageAmount").value);
+
+            // Get the percentage amount from the user input or any other source
+            let percentage = parseFloat(prompt("Enter the percentage amount:"));
+
+            // Calculate the fix amount based on the percentage and hospital coverage amount
+            let fixAmount = (percentage / 100) * hospitalCoverageAmount;
+
+            // Create the input field for fix amount
+            let ambulanceFixAmountInput = document.createElement("input");
+            ambulanceFixAmountInput.setAttribute("type", "number");
+            ambulanceFixAmountInput.setAttribute("id", "ambulanceFixAmountInput");
+            ambulanceFixAmountInput.setAttribute("name", "ambulance_claim_amount");
+            ambulanceFixAmountInput.setAttribute("class", "form-control");
+            ambulanceFixAmountInput.setAttribute("placeholder", "Ambulance Amount");
+            ambulanceFixAmountInput.value = fixAmount; // Set the calculated fix amount
+
+            // Append the input field to the additional fields container
+            document.getElementById("additionalAmbulanceFields").appendChild(ambulanceFixAmountInput);
+
+            // Show the fix amount value under the input field
+            let fixAmountValueLabel = document.createElement("label");
+            fixAmountValueLabel.textContent = "The Percentage Amount is : " + fixAmount.toFixed(2); // Show the value with two decimal places
+            document.getElementById("additionalAmbulanceFields").appendChild(fixAmountValueLabel);
+        }
+
+        function showAmbulanceAnyAmount() {
+            hideAdditionalAmbulanceFields();
+
+            let hospitalCoverageAmount = document.getElementById("hospitalCoverageAmount").value;
+
+            // Create an input field with the name "ambulance_claim_amount"
+            let ambulanceFixAmountInput = document.createElement("input");
+            ambulanceFixAmountInput.setAttribute("type", "number");
+            ambulanceFixAmountInput.setAttribute("name", "ambulance_claim_amount");
+            ambulanceFixAmountInput.setAttribute("class", "form-control");
+            ambulanceFixAmountInput.setAttribute("placeholder", "Ambulance Amount");
+            ambulanceFixAmountInput.value = hospitalCoverageAmount; // Set the value to hospitalCoverageAmount
+            document.getElementById("additionalAmbulanceFields").appendChild(ambulanceFixAmountInput);
+        }
+
+        function hideAdditionalAmbulanceFields() {
+            document.getElementById("additionalAmbulanceFields").innerHTML = "";
+        }
+    </script>
+
+    <hr>
+</div>
