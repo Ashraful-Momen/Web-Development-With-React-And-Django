@@ -1,0 +1,117 @@
+<form action="{{ route('childDealer.child_addTo_cart', $life_health->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                <input type="hidden" name="hospital_card" value="0"
+                                                    id="hidden_hospital_card_{{ $life_health->id }}">
+                                                <input type="hidden" name="teli_medicine" value="0"
+                                                    id="hidden_teli_medicine_{{ $life_health->id }}">
+                                                <input type="hidden" name="billing_frequency"
+                                                    id="hidden_billing_frequency_{{ $life_health->id }}" value="monthly">
+
+                                                @php
+                                                    $teli_medicine_fees = \App\Model\LifeAndHealth::where('id', $life_health->id)
+                                                        ->pluck('teli_medicine_fee')
+                                                        ->filter();
+                                                    $teli_medicine_fees = json_decode($teli_medicine_fees);
+                                                    $teli_medicine_array_value = $teli_medicine_fees[0]; // Define the variable properly here
+
+                                                    $teli_medicine_fees = \App\Model\LifeAndHealth::where('id', $life_health->id)
+                                                        ->pluck('teli_medicine_fee')
+                                                        ->filter();
+                                                    $teli_medicine_fees = json_decode($teli_medicine_fees);
+                                                    $teli_medicine_array_value = $teli_medicine_fees[0]; // Define the variable properly here
+
+                                                    // dd($teli_medicine_array_value);
+
+                                                @endphp
+
+                                                @if ($teli_medicine_fees[0] == 'free')
+                                                    <button type="button" class="btn btn-primary">
+                                                        Teli Medicine Service is Free!
+                                                    </button>
+                                                    <input type="hidden" name="teli_medicine_charge" value="free"
+                                                        id="hidden_teli_medicine_{{ $life_health->id }}">
+                                                @else
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#telmediModal">
+                                                        Choose Teli Medicine Service
+                                                    </button>
+                                                    <input type="hidden" name="teli_medicine_charge"
+                                                        value="{{ $teli_medicine_fees[0] }}"
+                                                        id="hidden_teli_medicine_{{ $life_health->id }}">
+
+
+                                                    @php
+
+                                                        // dd( $teli_medicine_array_value);
+
+                                                        // $lh_id = $life_health->id;
+
+                                                        // dd($lh_id,$teli_medicine_fees[0]); //according to the this  $life_health->id = 2 ; dd($teli_medicine_fees[0]) => "{"teli_medi_fee_1":"5656554","teli_medi_fee_2":"454","teli_medi_fee_3":"45","teli_medi_fee_4":"45","teli_medi_fee_5":"45","teli_medi_fee_6":"45","teli_medi_fee_7":"45","teli_medi_fee_8":"45","teli_medi_fee_9":"4","unlimited":"526565"} ◀"
+                                                    @endphp
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="telmediModal" tabindex="-1"
+                                                        aria-labelledby="telmediModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="telmediModalLabel">Select
+                                                                        Teli
+                                                                        Medicine Service</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body text-start">
+                                                                    @foreach ($teli_medicine_fees as $key => $jsonData)
+                                                                        {{-- Decode the JSON data --}}
+                                                                        @php
+                                                                            $data = json_decode($jsonData, true);
+                                                                        @endphp
+
+                                                                        {{-- Check if decoding was successful --}}
+                                                                        @if ($data)
+                                                                            {{-- Loop through each key-value pair inside the decoded JSON data --}}
+                                                                            @foreach ($data as $key => $value)
+                                                                                {{-- Output the checkbox --}}
+                                                                                @php
+                                                                                    $counter = 1;
+                                                                                @endphp
+                                                                                <div class="form-check">
+                                                                                    <input class="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        name="teli_medicine_charge"
+                                                                                        value="{{ $counter }}:{{ $value }}">
+                                                                                    <label class="form-check-label"
+                                                                                        for="teli_medicine_{{ $key }}">
+                                                                                        {{$counter}}
+                                                                                        Number of call
+
+                                                                                        => {{ $value }} Tk
+                                                                                    </label>
+                                                                                </div>
+                                                                                @php
+                                                                                    $counter++;
+                                                                                @endphp
+                                                                            @endforeach
+                                                                        @else
+                                                                            {{-- Handle the case where decoding failed --}}
+                                                                            <p>Teli medicine is Free !!!</p>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+
+
+                                                <button type="submit" class="btn btn-danger p-2 my-2 ms-1 d-inline tbody"
+                                                    onclick="setHiddenValues({{ $life_health->id }})">Add To Cart</button>
+                                            </form>
