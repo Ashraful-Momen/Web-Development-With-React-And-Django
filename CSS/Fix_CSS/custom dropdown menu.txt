@@ -1,0 +1,152 @@
+<style>
+    .activeMe {
+        background: #002e5b;
+        color: #fff !important;
+    }
+
+    /* css for the sidebar dropdown */
+
+
+    /* ---------------------------------------------------------- */
+    .single-pricing-box {
+        /* Ensure the menu items are left-aligned */
+        text-align: left;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #b5b9bd;
+        min-width: 160px;
+        z-index: 1;
+        left: 0;
+        /* Align dropdown menu to the left */
+    }
+
+    .dropdown-content a {
+        color: 002e5b;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        /* Align text to the left */
+    }
+
+    .dropdown-content a:hover {
+        background-color: #fff;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    #hoverMe:hover {
+        background-color: #ddd;
+    }
+
+
+    /* css for the sidebar dropdown */
+</style>
+
+{{-- -------------------------------------------------------------------- --}}
+
+{{-- -------------------------------------------------------------------- --}}
+
+
+<div class="single-pricing-box">
+    <div class="pricing-header ">
+        <div class="card2">
+            <div class="avatar">
+                @isset(Auth::user()->avatar_original)
+                    <img src="{{ url(Auth::user()->avatar_original) }}" alt="avatar" />
+                @endisset
+            </div>
+            <div class="content">
+                <p class="text-white">{{ Auth::user()->name }}<br>
+            </div>
+        </div>
+    </div>
+    <a href="{{ route('user.dashboard') }}">
+        <div class="mb-1 {{ Request::is('dashboard') ? 'activeMe1' : '' }}" id="hoverMe">
+            Dashboard
+        </div>
+    </a>
+    <a href="{{ route('user.profile') }}">
+        <div class="mb-1 {{ Request::is('profile') ? 'activeMe' : '' }}" id="hoverMe">
+            Profile Manage
+        </div>
+    </a>
+    {{-- #Ashraful  --}}
+    {{-- Life and Health Insurance start  --}}
+    {{-- {{ route('#') }} --}}
+
+    {{-- -------------------------------side bar dropdown------------------------------------------------------------- --}}
+    <div class="dropdown">
+        <a href="{{ route('life_and_health') }}">
+            <div class=" mb-1 {{ Request::is('insurance/claim/history') ? 'activeMe' : '' }}" id="hoverMe">
+                Life And Health
+            </div>
+        </a>
+        <div class="dropdown-content">
+            {{-- <a href="">Life And Health History</a> --}}
+            <a class="" href="{{ route('order_all') }}">Life And Health Orders</a>
+            <a class="" href="{{ route('cart_all') }}">Life And Health Cart</a>
+            <a class="" href="{{ route('customer.life_and_health_claim_form') }}">Life And Health Claim Request</a>
+            <a class="" href="{{ route('customer.life_and_health_claim_list') }}">Life And Health Claim List</a>
+        </div>
+
+    </div>
+    <a href="{{ route('insurance.quotation.form') }}">
+        <div class="mb-1 {{ Request::is('medical/insurance/quotation') ? 'activeMe' : '' }}" id="hoverMe">
+            Get Travel Insurance
+        </div>
+    </a>
+    <a href="{{ route('user.insurance.purchase.history') }}">
+        <div class="mb-1 {{ Request::is('insurance/purchase/*') ? 'activeMe' : '' }}" id="hoverMe">
+            Travel Insurance History
+        </div>
+    </a>
+    <a href="{{ route('user.device-insurance.history') }}">
+        <div class="mb-1 {{ Request::is('device-insurance/history') || Request::is('device-insurance/details/*') || Request::is('device-insurance-claim') ? 'activeMe' : '' }}"
+            id="hoverMe">
+            Device Insurance History
+        </div>
+    </a>
+    <a href="{{ route('user.device-insurance.claim-requests') }}">
+        <div class="mb-1 {{ Request::is('device-insurance/support-tickets') ? 'activeMe' : '' }}" id="hoverMe">
+            Device Support Tickets
+        </div>
+    </a>
+
+    <a href="{{ route('user.insuranceClaimHistory') }}">
+        <div class="mb-1 {{ Request::is('insurance/claim/history') ? 'activeMe' : '' }}" id="hoverMe">
+            Device Claim History
+        </div>
+    </a>
+
+
+
+    <a href="#" href="{{ route('logout') }}"
+        onclick="event.preventDefault();
+       document.getElementById('logout-form').submit();">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+        <div class="mb-1" id="hoverMe">
+            Sign Out
+        </div>
+    </a>
+
+    {{-- -------------------------------side bar dropdown------------------------------------------------------------- --}}
+
+    
+    {{-- End Life and Health Insurance start  --}}
+
+
+
+</div>
