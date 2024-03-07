@@ -26,6 +26,10 @@
         z-index: 1;
         left: 0;
         /* Align dropdown menu to the left */
+        background-color: rgba(0, 0, 0, 0.1);
+        /* Semi-transparent white background */
+        backdrop-filter: blur(10px);
+        /* Apply a blur effect to create a glass-like effect */
     }
 
     .dropdown-content a {
@@ -92,11 +96,12 @@
                 Life And Health
             </div>
         </a>
-        <div class="dropdown-content">
+        <div class="dropdown-content" style="">
             {{-- <a href="">Life And Health History</a> --}}
             <a class="" href="{{ route('order_all') }}">Life And Health Orders</a>
             <a class="" href="{{ route('cart_all') }}">Life And Health Cart</a>
-            <a class="" href="{{ route('customer.life_and_health_claim_form') }}">Life And Health Claim Request</a>
+            <a class="" href="{{ route('customer.life_and_health_claim_form') }}">Life And Health Claim
+                Request</a>
             <a class="" href="{{ route('customer.life_and_health_claim_list') }}">Life And Health Claim List</a>
         </div>
 
@@ -144,7 +149,7 @@
 
     {{-- -------------------------------side bar dropdown------------------------------------------------------------- --}}
 
-    
+
     {{-- End Life and Health Insurance start  --}}
 
 
