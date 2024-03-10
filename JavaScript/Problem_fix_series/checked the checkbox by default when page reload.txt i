@@ -1,0 +1,25 @@
+ <!-- Accidental Damages -->
+                                    <!--  input -->
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <h2 class="form-label" for="form3Example1">What coverages do you want for your vehicle?</h2>
+                                        <p class="text-muted">
+                                            <input type="checkbox" id="coverageCheckbox"> Accidental Damages and Theft Coverage
+                                        </p>
+                                    </div>
+
+                                    <script>
+                                        window.onload = function() {
+                                            // Check if there's a stored value for the checkbox
+                                            const isChecked = localStorage.getItem('coverageChecked');
+
+                                            // If there's a stored value, set the checkbox state accordingly
+                                            if (isChecked === 'true') {
+                                                document.getElementById('coverageCheckbox').checked = true;
+                                            }
+
+                                            // Listen for checkbox changes and store the state
+                                            document.getElementById('coverageCheckbox').addEventListener('change', function() {
+                                                localStorage.setItem('coverageChecked', this.checked);
+                                            });
+                                        };
+                                    </script>
