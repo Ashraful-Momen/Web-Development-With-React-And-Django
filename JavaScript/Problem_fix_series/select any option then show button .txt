@@ -1,0 +1,40 @@
+<div data-mdb-input-init class="form-outline">
+    <select name="c_type" id="claimType" class="form-select form-control" aria-label="Default select example">
+        <option value="0" selected disabled>Select Identification:</option>
+        <option value="Natural Death">Natural Death</option>
+        <option value="Accidental Death">Accidental Death</option>
+        <option value="Critical Illness">Critical Illness</option>
+        <option value="PPD-PPT">PPD-PPT</option>
+        <option value="IPD">IPD</option>
+        <option value="OPD">OPD</option>
+        <option value="Dental">Dental</option>
+        <option value="Eye">Eye</option>
+        <option value="Ambulance">Ambulance</option>
+    </select>
+    <label class="form-label" for="claimType">Claim Type</label>
+</div>
+
+@php
+    $total_coverage_amount = 0; // Assuming this variable holds the total coverage amount
+@endphp
+
+<a id="claimLink" href="{{ route('childDealer.life_and_health_claim_form') }}" style="display: none;">
+    <button id="claimButton" class="btn btn-outline btn-primary form-control" disabled>Request for the Claim</button>
+</a>
+
+<script>
+    const claimTypeSelect = document.getElementById('claimType');
+    const claimButton = document.getElementById('claimButton');
+    const claimLink = document.getElementById('claimLink');
+
+    const totalCoverageAmount = {{ $total_coverage_amount }};  // this is the laravel blade varibale => $total_coverage_amount
+
+    claimTypeSelect.addEventListener('change', function() {
+        if (this.value === '0' || totalCoverageAmount === 0) {
+            claimLink.style.display = 'none';
+        } else {
+            claimLink.style.display = 'block';
+            claimButton.disabled = false;
+        }
+    });
+</script>
