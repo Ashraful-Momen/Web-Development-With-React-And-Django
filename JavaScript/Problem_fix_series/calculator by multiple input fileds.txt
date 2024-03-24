@@ -1,0 +1,82 @@
+<div class="row mb-4">
+                                        <h4>Breakup of Hospitalizations and Treatment Expenses</h4>
+                                        <div class="col">
+                                            <label class="form-label" for="form3Example2">Hospital Accomodation</label>
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input type="number" name="add_1" id="form3Example2"
+                                                    class="form-control" placeholder="Ex: 15000">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="form3Example2">Consultant's Fee</label>
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input type="number" name="add_2" id="form3Example2"
+                                                    class="form-control" placeholder="Ex: 15000">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="form3Example2">Routine Investigation</label>
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input type="number" name="add_3" id="form3Example2"
+                                                    class="form-control" placeholder="Ex: 15000">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="form3Example2">Medicine/Drugs</label>
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input type="number" name="add_4" id="form3Example2"
+                                                    class="form-control" placeholder="Ex: 15000">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="form3Example2">Surgical Charges</label>
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input type="number" name="add_5" id="form3Example2"
+                                                    class="form-control" placeholder="Ex: 15000">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="form3Example2">Ancillary Services</label>
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input type="number" name="add_6" id="form3Example2"
+                                                    class="form-control" placeholder="Ex: 15000">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="form3Example2">Others</label>
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input type="number" name="add_7" id="form3Example2"
+                                                    class="form-control" placeholder="Ex: 15000">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <label class="form-label" for="form3Example1">Claim Type</label>
+
+                                                <input type="text" name="c_type" value="{{ $category ?? '' }}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <label class="form-label text-danger" for="form3Example2">Total Claim
+                                                    Amount</label>
+
+                                                <input type="number" name="c_amount" id="form3Example2"
+                                                    class="form-control" placeholder="{{ $substruct_amount ?? '' }} Tk"
+                                                    value="{{ $substruct_amount ?? '' }}">
+                                            </div>
+                                        </div> --}}
+                                        <div class="col">
+                                            <label class="form-label" for="totalClaimAmount">Total Claim Amount</label>
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input type="number" name="c_amount" id="totalClaimAmount"
+                                                    class="form-control" placeholder="{{ $substruct_amount ?? '' }} Tk"
+                                                    value="{{ $substruct_amount ?? '' }}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
