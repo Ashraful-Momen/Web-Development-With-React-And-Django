@@ -1,0 +1,39 @@
+ <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="status">Select Status:</label>
+                                                            <select name="status" id="status" class="form-control">
+                                                                <option value="pending">Pending</option>
+                                                                <option value="approved">Approved</option>
+                                                                <option value="rejected">Rejected</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group" id="status_reason_group">
+                                                            <label for="status_reason">Status Reason:</label>
+                                                            <textarea name="status_reason" id="status_reason" class="form-control" rows="3"></textarea>
+                                                        </div>
+                                                        <div class="form-group" id="additional_document_group">
+                                                            <label for="additional_document">Additional Document Required:</label>
+                                                            <textarea name="additional_document" id="additional_document" class="form-control" rows="3"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes & Send Mail</button>
+                                                    </div>
+
+                                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                                    <script>
+                                                        $(document).ready(function () {
+                                                            $('#status').change(function () {
+                                                                var selectedOption = $(this).val();
+                                                                if (selectedOption === 'pending') {
+                                                                    $('#status_reason_group').hide();
+                                                                    $('#additional_document_group').show();
+                                                                } else {
+                                                                    $('#status_reason_group').show();
+                                                                    $('#additional_document_group').hide();
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
