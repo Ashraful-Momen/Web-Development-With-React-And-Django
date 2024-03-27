@@ -1,0 +1,25 @@
+ <div class="col">
+                                    <!-- Hospital Card -->
+                                    <label class="form-label" for="health_discount_card">Health Discount Card:</label>
+                                    <select name="health_discount_card" id="health_discount_card">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+
+                                    </select>
+                                    <input type="number" name="hospital_card_fee" id="hospital_card_fee"
+                                        value="{{ old('hospital_card_fee') }}" class="form-control-input"
+                                        placeholder="Hospital Card Fee" style="display: none;">
+                                </div>
+
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#health_discount_card').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('#hospital_card_fee').show();
+                                            } else {
+                                                $('#hospital_card_fee').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
