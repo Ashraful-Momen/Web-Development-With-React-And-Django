@@ -16,6 +16,10 @@
 
 #check the venv pip package>>> pip list
 
+#store the installed packages in requirments.txt file: 
+
+>>> pip freeze > requirements.txt
+
 #after active venv : can install package...
 
 >>>pip install django==4.2.4
