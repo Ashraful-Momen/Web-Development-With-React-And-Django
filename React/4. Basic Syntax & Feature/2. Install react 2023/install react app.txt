@@ -23,7 +23,17 @@ for globally install react app
 
 3. src : App.js main app folder , and all the code export ....
 
-4. src : index.js : render all code to <div id="root"></div> .....index.html file....
+4. src : index.js : render all code inject to <div id="root"></div> .....index.html file....
+   src > index.js > "ReactDOM.createRoot(document.getElementById('root'))" this  function that is inject react component to 
+                    (public>index.html)index.html file <div id="root"></div> . 
+index.js: 
+-------------
+const root = ReactDOM.createRoot(document.getElementById('root')); //this fn inject code to the index.html (in public folder)
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 ---------------------------------------------------------------------------
 
 *** in public folder : index.html <- if we add the link of css then not need import css in >src > App.css file .
