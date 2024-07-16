@@ -31,6 +31,7 @@ root.render(
 
 reportWebVitals();
 -----------------------------------------------------------------
+-----------------------------------------------------------------
 folder => src => App.js =>
 ---------------------------
 import React from 'react';
@@ -39,18 +40,23 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <h1>React Basic Component</h1>
-      <Person />  // Person function pass here , which render with <App/>
+      <h1>
+        Hello World
+      </h1>
+      {/* call the function person / component of person | this function must be in Capital Latter */}
+      <Person />
     </div>
   );
 }
 
-function Person() {
+function Person () {
   return (
     <div>
-      <h4>I am person component</h4>
+      <h1>
+        function Person is a basically a component in React 
+      </h1>
     </div>
-  );
+  )
 }
 
 export default App;
