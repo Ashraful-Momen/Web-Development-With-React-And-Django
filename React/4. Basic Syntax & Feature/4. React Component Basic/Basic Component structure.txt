@@ -1,4 +1,4 @@
-
+Every Js function/class is a react component.
 App.js goesto (src folder) > index.js(src folder) > index.html(public-folder)
 
 -------------------------------------------------------
