@@ -69,6 +69,7 @@ function Person(props) {   // this Persion(props)->varibale can receive Apps.js 
     return (
     <div>
       <h4>Name : {props.name} </h4> // print the varible(props.name) which comes from Apps.js component
+      <h4> Children Element : {props.children} </h4>
     </div>
     );
     
