@@ -1,4 +1,4 @@
-*** Wite file name according to class / function name , is a good practise also.***
+*** Wite file name according to class / function name , is a good practise also.And first latter must be capital***
 
 
 1. goto => src => create a new folder => Component => Person.js=>
