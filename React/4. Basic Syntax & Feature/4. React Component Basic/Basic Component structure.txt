@@ -1,4 +1,8 @@
 Every Js function/class is a react component.
+we can render 1 div (all code write down inside this main div) as a main 'div' component in functional / class component , if we render <div>...</div> <div>...</div> 
+then we get error . so we have to export , function person () { render(<div>Export 1 div , inside this div write all code </di>)}
+
+------------------------------------------------------
 App.js goesto (src folder) > index.js(src folder) > index.html(public-folder)
 
 -------------------------------------------------------
