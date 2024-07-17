@@ -35,6 +35,7 @@ class App extends React.Component {
 
   // function for update book item
   updateBook = (index, updatedBook) => { //index: receive from map function index, and updatedBook: receive from Person component
+    
     const books = [...this.state.books]; // create a copy of the books array
     books[index] = updatedBook; // update the book at the specified index
     this.setState({ books }); // update the state with the new array
@@ -47,7 +48,7 @@ class App extends React.Component {
         key={book.id}
         toggleBooks={(event) => this.toggleBooks(event, book.id)}
         deleteBook={(event) => this.deleteBook(event, index)}
-        updateBook={(updatedBook) => this.updateBook(index, updatedBook)} //here {(update)=>here this updateBook arrow function }
+        updateBook={(getTheBookFromPerson) => this.updateBook(index, getTheBookFromPerson)} //here {(update)=>here this updateBook arrow function }
         book={book}
         book_name={book.name}
         book_author={book.author}
