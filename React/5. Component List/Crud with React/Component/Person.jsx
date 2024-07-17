@@ -11,7 +11,7 @@ const Person = (props) => { //props: receive from App a single book with App map
       name: bookName, // update the name and author
       author: bookAuthor,
     };
-    props.updateBook(updatedBook);
+    props.updateBook(updatedBook); // pass the function to the App component =>updateBook fn
     setIsEditing(false); // Close the input fields after updating
   };
 
