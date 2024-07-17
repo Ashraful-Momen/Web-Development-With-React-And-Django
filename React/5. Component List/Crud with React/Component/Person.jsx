@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 const Person = (props) => { //props: receive from App a single book with App map function(index, book)=> <Person /> . 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); // 
   const [bookName, setBookName] = useState(props.book_name); //in App map fn render each book with Person component as single item .
   const [bookAuthor, setBookAuthor] = useState(props.book_author);
 
   const handleUpdate = () => {
     const updatedBook = {
-      ...props.book,
-      name: bookName,
+      ...props.book, //receive the current book 
+      name: bookName, // update the name and author
       author: bookAuthor,
     };
     props.updateBook(updatedBook);
@@ -43,8 +43,10 @@ const Person = (props) => { //props: receive from App a single book with App map
           Name: {props.book_name} | Author: {props.book_author} | {props.children}
         </p>
       )}
-      <button onClick={() => setIsEditing(!isEditing)}>
-        {isEditing ? "Cancel" : "Update"}
+
+      {/* //if isEditing value is true then show "Cancel" else "Update" */}
+      <button onClick={() => setIsEditing(!isEditing)}> 
+        {isEditing ? "Cancel" : "Update"}  
       </button>
       <button onClick={props.deleteBook}>Delete</button>
     </div>
