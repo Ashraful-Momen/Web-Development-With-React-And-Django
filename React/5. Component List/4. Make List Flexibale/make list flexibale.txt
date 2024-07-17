@@ -60,7 +60,7 @@ class App extends Component {
     //CRUD=> Delete = > -------------------------------------------------
     //function for delete book item: best way for delete item correctly
     // deleteBook = (event,index) => {
-    //   //here index is the book.id , which start from 1, but array start from 0. so index-1.
+    //   //here index is the book.id , which start from 1, but array start from 0. so index-1. but in <preson > pass index with             //map function 
     //   //if book.id start form 0, then index = index
       
     //   console.log(event.target, index);
@@ -68,6 +68,17 @@ class App extends Component {
     //   books.splice(index-1, 1); // remove the item at the specified index 
     //   this.setState({ books }); // update the state with the new array
     // }
+
+    // //delete function with filter method: 
+      // deleteBook = (event, index) => {
+      //   // Here index is the book.id, which starts from 1, but array starts from 0. So index-1.
+      //   // If book.id starts from 0, then index = index
+      
+      //   console.log(event.target, index);
+      //   //this filter method return those element that are not equal to the index
+      //   const books = this.state.books.filter((_, i) => i !== index ); // filter out the book at the specified index
+      //   this.setState({ books }); // update the state with the new array
+      // };
 
      deleteIndexBook = (index) => {
       //copy Array : 
