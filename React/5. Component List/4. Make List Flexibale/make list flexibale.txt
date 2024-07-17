@@ -3,7 +3,7 @@
 
 // const showBooks = this.state.books.map(book => <Person key={book.id} deleteBook = {(event) => this.deleteBook(event,book.id)} updateBook = {(event) => this.updateBook(event,book.id)} );
 
-*** If we want to get which div we click /change then we use 'event' on delete/update/toggle function and pass to the function params. 
+*** If we want to get which div we click /change then we use 'event' on (onClick:delete/toggle) , onChange:update/ function and pass to the function params. 
     Ex: {(event) => this.deleteBook(event,book.id)}. 
         1'event': trigger if we click/change anything. 
         second event pass (which item/div we click)to the delete function this.deleteBook(second_event_pass_to_delete_fn,params) 
