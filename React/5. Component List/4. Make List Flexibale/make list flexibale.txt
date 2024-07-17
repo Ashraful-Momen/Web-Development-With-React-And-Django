@@ -50,6 +50,17 @@ class App extends Component {
   // ------------------------------------
 
     //CRUD=> Delete = > -------------------------------------------------
+    //function for delete book item: best way for delete item correctly
+    // deleteBook = (event,index) => {
+    //   //here index is the book.id , which start from 1, but array start from 0. so index-1.
+    //   //if book.id start form 0, then index = index
+      
+    //   console.log(event.target, index);
+    //   const books = [...this.state.books]; // create a copy of the books array
+    //   books.splice(index-1, 1); // remove the item at the specified index 
+    //   this.setState({ books }); // update the state with the new array
+    // }
+
      deleteIndexBook = (index) => {
       //copy Array : 
       //  const book = this.state.books.map((item)=> item)
