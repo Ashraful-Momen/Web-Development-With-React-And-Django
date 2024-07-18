@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with Conditional Fields</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css">
+</head>
+<body>
+<form action="" method="" enctype="multipart/form-data">
+    <select name="item_type" id="item_type" class="form-select mb-4 text-center" aria-label="Default select example" onchange="toggleFields()">
+        <option disabled selected>Open this select menu</option>
+        <option value="category">Category</option>
+        <option value="pkg">Package</option>
+        <option value="trending">Trending Package</option>
+        <option value="special">Special Package</option>
+    </select>
+    <div class="row mb-4">
+        <div class="col">
+            <div data-mdb-input-init class="form-outline">
+                <input type="text" name="brand_name" id="brand_name" class="form-control" />
+                <label class="form-label" for="brand_name">Brand name</label>
+            </div>
+        </div>
+        <div class="col category-field">
+            <div data-mdb-input-init class="form-outline">
+                <input type="text" id="cat_name" name="cat_name" class="form-control" />
+                <label class="form-label" for="cat_name">Category name</label>
+            </div>
+        </div>
+        <div class="col category-field">
+            <div data-mdb-input-init class="form-outline">
+                <input type="text" id="route_name" name="route_name" class="form-control" />
+                <label class="form-label" for="route_name">Category Route name</label>
+            </div>
+        </div>
+        <div class="col category-field">
+            <div data-mdb-input-init class="form-outline">
+                <input type="text" id="cat_img" name="cat_img" class="form-control" />
+                <label class="form-label" for="cat_img">Category Icon Name</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col">
+            <div data-mdb-input-init class="form-outline">
+                <input type="text" id="pkg_name" name="pkg_name" class="form-control" />
+                <label class="form-label" for="pkg_name">Package Name</label>
+            </div>
+        </div>
+        <div class="col">
+            <div data-mdb-input-init class="form-outline">
+                <input type="text" name="pkg_sorting" id="pkg_sorting" class="form-control" />
+                <label class="form-label" for="pkg_sorting">Package/Category Sorting Number</label>
+            </div>
+        </div>
+        <div class="col package-field">
+            <div data-mdb-input-init class="form-outline">
+                <input type="text" id="pkg_details_url" name="pkg_details_url" class="form-control" />
+                <label class="form-label" for="pkg_details_url">Package URL</label>
+            </div>
+        </div>
+    </div>
+
+    <div data-mdb-input-init class="form-outline mb-4">
+        <input type="text" name="item_type" id="item_type_input" class="form-control" />
+        <label class="form-label" for="item_type_input">Item type</label>
+    </div>
+
+    <div data-mdb-input-init class="form-outline mb-4">
+        <input type="file" id="thumbnail" class="form-control" />
+        <label class="form-label" for="thumbnail">Thumbnail</label>
+    </div>
+
+    <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+</form>
+
+<script>
+    function toggleFields() {
+        const itemType = document.getElementById('item_type').value;
+        const categoryFields = document.querySelectorAll('.category-field');
+        const packageFields = document.querySelectorAll('.package-field');
+        
+        categoryFields.forEach(field => {
+            field.style.display = (itemType === 'category') ? 'block' : 'none';
+        });
+        
+        packageFields.forEach(field => {
+            field.style.display = (itemType !== 'category') ? 'block' : 'none';
+        });
+    }
+
+    // Initialize the form fields display
+    document.addEventListener('DOMContentLoaded', toggleFields);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+</body>
+</html>
