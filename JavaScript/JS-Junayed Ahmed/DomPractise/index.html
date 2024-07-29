@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dom Practise </title>
+    <style>
+        body{
+            margin: 0px auto;
+            box-sizing: border-box;
+            
+        }
+        #box1,#box2,#box3,#box4{
+           
+            border:1px solid;
+            text-align: center;
+            
+            width: 100%;
+        }
+        ul>li{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="boxes">
+        <div class="box" id="box1" data-atr="box1" data-extra="attrToRemove"  height="100px" >
+            <h4>Box1</h4>
+        </div>
+        <div class="box" id="box2">
+            <h4>Box2</h4>
+        </div>
+        <div class="box" id="box3">
+            <h4>Box3</h4>
+            <p class="child_node">
+                <b>child node to parent node</b>
+            </p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia magni rem impedit asperiores, natus ipsam. Commodi quos beatae fugit molestiae?</p>
+        </div>
+        <div class="box" id="box4">
+            <h4>Box4</h4>
+            <ul>
+                <li>About the document</li>
+                <li>list line1</li>
+                <li id="sibling">list line 2(middle or sibling check)</li>
+                <li>list line 3</li>
+            </ul>
+        </div>
+
+        <!-- box5 is used for event  -->
+
+        <div id="box5" align="center" >
+            <form action="" method style="padding-top:10px; border: 1px solid; height: 150px;">
+                <input type="text" placeholder="Name" name="name">
+                <button type="submit" onclick="(confirm (alert('submit clicked')))">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+
+    
+    <!-- <script src="1.dom_selection.js"></script> -->
+    <!-- <script src="2.dom_crud.js"></script> -->
+    <script src="3.event.js"></script>
+</body>
+</html>
