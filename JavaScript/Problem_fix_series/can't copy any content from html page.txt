@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disable Copy and Select</title>
+    <style>
+        body {
+            user-select: none; /* Disable text selection */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <p>Try to select or copy this text. It should not be possible.</p>
+    </div>
+
+    <script>
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Disable keyboard shortcuts for copy (Ctrl+C), cut (Ctrl+X), and paste (Ctrl+V)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'v')) || 
+                (e.metaKey && (e.key === 'c' || e.key === 'x' || e.key === 'v'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
