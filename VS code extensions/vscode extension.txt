@@ -21,3 +21,26 @@
 21.vscode-icone
 22. indent-rainbow  
 
+#for flowchart diagram: website => coggle.it
+23.Draw.io Integration
+24.PlantUML
+25.Markdown Preview Mermaid Support
+26.Graphviz (dot) Language Support
+27.Mermaid Diagrams
+
+#auto code complete: 
+28.codium:AI coding
+# Remote ssh : 
+29. Remote -ssh
+30. Remote -ssh : editing config file
+31. Remote - Tunnels . 
+32. Remote - Explorer
+
+#For Laravel : 
+33. Laravel snippet. 
+
+
+
+
+  
+
