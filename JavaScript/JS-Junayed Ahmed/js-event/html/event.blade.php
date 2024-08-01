@@ -74,6 +74,15 @@
 
             </div>
 
+             {{-- onload  --}}
+            <div class="col">
+                <div id="loader" class="d-flex justify-content-center align-items-center position-fixed w-100 h-100 bg-info" style="z-index: 1000;">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+
+            </div>
+
 
 
         </div>
