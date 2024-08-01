@@ -146,4 +146,11 @@ document.getElementById("colorPicker").addEventListener("input", (e) => {
 //   },
 //   false,
 // );
+// ----------------------------------- onLoad,onResize(if window is resized/changed then fire this event,onScroll), : show loader until loading the html page -------------------------
+
+
+// Hide the loader when the page is fully loaded
+window.addEventListener("load", () => {
+    document.getElementById("loader").style.display = "none";
+  });
 
