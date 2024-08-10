@@ -37,6 +37,7 @@
 
 //----------------------------------------------------call Back and Higher Order function-----------------------------
 
+
 // function squre(x){
 //     console.log( `The squre of ${x} => ${x**2}`);
 // }
@@ -52,7 +53,21 @@
 // higherOrderFunction(4,squre);
 
 //------------------------------------------call back : function call chaining --------------------------------------------------------
-
+#we know that task2 is async fn . if we want to call all function (task1,task2,task3... ) one by one , then we have to use callback(). 
+task1(callback_fn_pass_ass_params){ call_back_fn_calling()}; 
+exampe=> 
+    
+// task1(function f1() {
+//     task2(function f2() {
+//         task3(function f3() {
+//             task4(function f4() {
+//                 task5();
+//             })
+//         });
+//     });
+// });
+------------------------------------------ use of callback function ------------------------
+    
 // const task1 = (callBack) => {
 //     console.log('Task 1 ');
 //     callBack();
