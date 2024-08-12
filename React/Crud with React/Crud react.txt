@@ -1,0 +1,393 @@
+#Book / book.js=> 
+--------------------
+const book =[
+    {
+      id: 1,
+      name: "Book 1",
+      author: "Author 1"
+    },
+    {
+      id: 2,
+      name: "Book 2",
+      author: "Author 2"
+    },
+    {
+      id: 3,
+      name: "Book 3",
+      author: "Author 3"
+    }
+  ]
+
+export default book;
+
+#App.js
+
+----------------------
+#src / App.js => 
+----------------------
+import logo from './logo.svg';
+import './App.css';
+import Person from './Component/Person';
+import book from './Book/book'; // Custom import for book from another folder
+import React, { Component } from 'react'; // Custom import for writing class component with 'Component'
+
+class App extends React.Component {
+
+  state = {
+    books: book,
+    showBooks: true,
+    newBookName: '',  // New state property for new book name
+    newBookAuthor: '', // New state property for new book author
+  };
+
+  // Function for toggle
+  toggleBooks = (event) => {
+    console.log("clicked", event.target);
+    this.setState({ showBooks: !this.state.showBooks });
+  };
+
+  // Function for deleting book item using filter method
+  deleteBook = (event, index) => {
+    console.log(event.target, index);
+    const books = this.state.books.filter((_, i) => i !== index); // Filter out the book at the specified index
+    this.setState({ books }); // Update the state with the new array
+  };
+
+  //     //   //function for delete book item: 
+//   //   // deleteBook = (event,index) => {
+//   //   //   //here index is the book.id , which start from 1, but array start from 0. so index-1.
+//   //   //   //if book.id start form 0, then index = index
+      
+//   //   //   console.log(event.target, index);
+//   //   //   const books = [...this.state.books]; // create a copy of the books array
+//   //   //   books.splice(index, 1); // remove the item at the specified index 
+//   //   //   this.setState({ books }); // update the state with the new array
+//   //   // }
+
+  // Function for updating book item
+  updateBook = (index, updatedBook) => { // index: receive from map function index, and updatedBook: receive from Person component
+    const books = [...this.state.books]; // Create a copy of the books array
+    books[index] = updatedBook; // Update the book at the specified index
+    this.setState({ books }); // Update the state with the new array
+  };
+
+  // Function for adding a new book
+  addBook = (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    const newBook = {
+      id: this.state.books.length + 1, // Generate a new id
+      name: this.state.newBookName,
+      author: this.state.newBookAuthor,
+    };
+    const books = [...this.state.books, newBook]; // Add new book to the books array
+    this.setState({ books, newBookName: '', newBookAuthor: '' }); // Update state and clear input fields
+  };
+
+  render() {
+    const showBooks = this.state.books.map((book, index) => (
+      <Person
+        key={book.id}
+        deleteBook={(event) => this.deleteBook(event, index)}
+        updateBook={(updatedBook) => this.updateBook(index, updatedBook)} // Updated prop to handle the updatedBook directly
+        book={book}
+        book_name={book.name}
+        book_author={book.author}
+      >
+        List of Books
+      </Person>
+    ));
+
+    return (
+      <div className="App">
+        <h1>React CRUD</h1>
+        <form onSubmit={this.addBook}>
+          <input
+            type="text"
+            value={this.state.newBookName}
+            onChange={(e) => this.setState({ newBookName: e.target.value })}
+            placeholder="Book Name"
+            required
+          />
+          <input
+            type="text"
+            value={this.state.newBookAuthor}
+            onChange={(e) => this.setState({ newBookAuthor: e.target.value })}
+            placeholder="Book Author"
+            required
+          />
+          <button type="submit">Add Book</button>
+        </form>
+        {showBooks}
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+// ===========================================================================
+// import logo from './logo.svg';
+// import './App.css';
+// import Person from './Component/Person'
+// import book from './Book/book'; // custom import for book from another folder
+// import React, { Component } from 'react'; // custom import for writing class component with 'Component'
+
+// class App extends React.Component {
+
+//   state = {
+//     books: book,
+//     showBooks: true,
+//   }
+
+//   // function for toggle
+//   toggleBooks = (event) => {
+//     console.log("clicked", event.target);
+//     this.setState({ showBooks: !this.state.showBooks });
+//   }
+
+//   // function for delete book item with filter method
+//   deleteBook = (event, index) => {
+//     console.log(event.target, index);
+//     const books = this.state.books.filter((_, i) => i !== index); // filter out the book at the specified index
+//     this.setState({ books }); // update the state with the new array
+//   };
+//     //   //function for delete book item: 
+//   //   // deleteBook = (event,index) => {
+//   //   //   //here index is the book.id , which start from 1, but array start from 0. so index-1.
+//   //   //   //if book.id start form 0, then index = index
+      
+//   //   //   console.log(event.target, index);
+//   //   //   const books = [...this.state.books]; // create a copy of the books array
+//   //   //   books.splice(index, 1); // remove the item at the specified index 
+//   //   //   this.setState({ books }); // update the state with the new array
+//   //   // }
+
+//   // function for update book item
+//   updateBook = (index, updatedBook) => { //index: receive from map function index, and updatedBook: receive from Person component
+    
+//     const books = [...this.state.books]; // create a copy of the books array
+//     books[index] = updatedBook; // update the book at the specified index
+//     this.setState({ books }); // update the state with the new array
+//   };
+
+//   render() {
+//     //     // const showBooks = this.state.books.map(book => <li key={book.id}>{book.name}</li>); //show books from state with map fn. 
+//     const showBooks = this.state.books.map((book, index) => (
+//       <Person
+//         key={book.id}
+//         toggleBooks={(event) => this.toggleBooks(event, book.id)}
+//         deleteBook={(event) => this.deleteBook(event, index)}
+//         updateBook={(event) => this.updateBook(index, event)} //here {(update)=>here this updateBook arrow function }
+//         book={book}
+//         book_name={book.name}
+//         book_author={book.author}
+//       >
+//         List of Book
+//       </Person>
+//     ));
+
+//     return (
+//       <div className="App">
+//         <h1>React Crud</h1>
+//         {showBooks}
+//       </div>
+//     );
+//   }
+// }
+
+// export default App;
+
+
+---------------------
+#src > Component > Person.js 
+---------------------
+
+import React, { useState } from 'react';
+
+const Person = (props) => { // props: receive from App a single book with App map function(index, book)=> <Person /> . 
+  const [isEditing, setIsEditing] = useState(false);
+  const [bookName, setBookName] = useState(props.book_name); // In App map fn render each book with Person component as single item.
+  const [bookAuthor, setBookAuthor] = useState(props.book_author);
+
+  const handleUpdate = () => {
+    const updatedBook = {
+      ...props.book, // Receive the current book 
+      name: bookName, // Update the name and author
+      author: bookAuthor,
+    };
+
+    props.updateBook(updatedBook); // Pass the function to the App component => updateBook fn
+    setIsEditing(false); // Close the input fields after updating
+  };
+
+  const style = {
+    color: props.book_name ? 'green' : 'black',
+    backgroundColor: props.book_author ? 'smokey' : 'white',
+  };
+
+  return (
+    <div className='bg-danger' style={style}>
+      {isEditing ? ( // isEditing == true ? true : false
+        <>
+          <input
+            type="text"
+            value={bookName}
+            onChange={(e) => setBookName(e.target.value)}
+            placeholder="Update Book Name"
+          />
+          <input
+            type="text"
+            value={bookAuthor}
+            onChange={(e) => setBookAuthor(e.target.value)}
+            placeholder="Update Book Author"
+          />
+          <button onClick={handleUpdate}>Save</button>
+        </>
+      ) : (
+        <p>
+          Name: {props.book_name} | Author: {props.book_author} | {props.children}
+        </p>
+      )}
+
+      <button onClick={() => setIsEditing(!isEditing)}>
+        {isEditing ? "Cancel" : "Update"}
+      </button>
+      <button onClick={props.deleteBook}>Delete</button>
+    </div>
+  );
+};
+
+export default Person;
+
+// ==========================================================================================
+// import React, { useState } from 'react';
+
+// const Person = (props) => { //props: receive from App a single book with App map function(index, book)=> <Person /> . 
+//   const [isEditing, setIsEditing] = useState(false); // 
+//   const [bookName, setBookName] = useState(props.book_name); //in App map fn render each book with Person component as single item .
+//   const [bookAuthor, setBookAuthor] = useState(props.book_author);
+
+//   const handleUpdate = () => {
+//     const updatedBook = {
+//       ...props.book, //receive the current book 
+//       name: bookName, // update the name and author
+//       author: bookAuthor,
+//     };
+
+//     props.updateBook(updatedBook); // pass the function to the App component =>updateBook fn
+//     setIsEditing(false); // Close the input fields after updating
+//   };
+
+//   const style = {
+//     color: props.book_name ? 'green' : 'black',
+//     backgroundColor: props.book_author ? 'smokey' : 'white',
+//   };
+
+//   return (
+//     <div className='bg-danger' style={style}>
+//       {isEditing ? (   //isEditing == true ? true : false
+//         <>
+//           <input
+//             type="text"
+//             value={bookName}
+//             onChange={(e) => setBookName(e.target.value)}
+//             placeholder="Update Book Name"
+//           />
+//           <input
+//             type="text"
+//             value={bookAuthor}
+//             onChange={(e) => setBookAuthor(e.target.value)}
+//             placeholder="Update Book Author"
+//           />
+//           <button onClick={handleUpdate}>Save</button>
+//         </>
+//       ) : (
+//         <p>
+//           Name: {props.book_name} | Author: {props.book_author} | {props.children}
+//         </p>
+//       )}
+
+//       {/* //if isEditing value is true then show "Cancel" else "Update" */}
+//       <button onClick={() => setIsEditing(!isEditing)}> 
+//         {isEditing ? "Cancel" : "Update"}  
+//       </button>
+//       <button onClick={props.deleteBook}>Delete</button>
+//     </div>
+//   );
+// }
+
+// export default Person;
+
+
+// ==================================================================================================
+// import React, { useState } from 'react';
+
+// const Person = (props) => {
+//   const [bookName, setBookName] = useState(props.book_name);
+//   const [bookAuthor, setBookAuthor] = useState(props.book_author);
+
+//   const handleUpdate = () => {
+//     const updatedBook = {
+//       ...props.book,
+//       name: bookName,
+//       author: bookAuthor,
+//     };
+//     props.updateBook(updatedBook);
+//   };
+
+//   const style = {
+//     color: props.book_name ? 'green' : 'black',
+//     backgroundColor: props.book_author ? 'smokey' : 'white',
+//   };
+
+//   return (
+//     <div className='bg-danger' style={style}>
+//       <p>
+//         Name: {props.book_name} | Author: {props.book_author} | {props.children}
+//       </p>
+//       <input
+//         type="text"
+//         value={bookName}
+//         onChange={(e) => setBookName(e.target.value)}
+//         placeholder="Update Book Name"
+//       />
+//       <input
+//         type="text"
+//         value={bookAuthor}
+//         onChange={(e) => setBookAuthor(e.target.value)}
+//         placeholder="Update Book Author"
+//       />
+//       <button onClick={handleUpdate}>Update</button>
+//       <button onClick={props.deleteBook}>Delete</button>
+//     </div>
+//   );
+// }
+
+// export default Person;
+
+
+
+// ==================================================================================================
+
+// import React from 'react'
+
+// const Person = (props) => {
+//     // console.log(props)
+//     const style = {
+//         color: props.book_name ? 'green' : 'black',
+//         backgroundColor: props.book_author  ? 'smokey' : 'white'
+
+//     }
+//   return (
+//     // use toggle function
+//     // <div className='bg-danger' style={style} onClick={props.toggleBooks}>Name : {props.book_name} | Age : {props.book_author} | {props.children}</div>
+//     // use delete function 
+//     // <div className='bg-danger' style={style} onClick={props.deleteBook} >Name : {props.book_name} | Age : {props.book_author} | {props.children}</div>
+//     //use update function
+//     <div className='bg-danger' style={style} onClick={props.updateBook} >Name : {props.book_name} | Age : {props.book_author} | {props.children}</div>
+//   )
+// }
+
+// export default Person 
