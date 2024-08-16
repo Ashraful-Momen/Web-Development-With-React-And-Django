@@ -1,0 +1,79 @@
+
+
+====================================<App>Compnent</App>==================================
+import logo from './logo.svg';
+import './App.css';
+import Person from './Component/Person';
+import book from './Book/book'; // Custom import for book from another folder
+import React, { Component } from 'react'; // Custom import for writing class component with 'Component'
+
+class App extends React.Component {
+
+  state = {
+    books: book,
+    hideBooks : false,
+  }
+
+  // Function for toggle (1st_event,2nd_index,3rd_array)
+
+  // receive (index): toggleBooks = (index) => {
+  // receive (event): toggleBooks = (event) => {
+  
+    toggleBooks = (event,index) => {
+
+    console.log("clicked",index);
+    console.log("clicked",event.target);
+    // console.log("clicked",index,event.target);
+   
+    this.setState({hideBooks:!this.state.hideBooks});
+  }
+
+  render() {
+    const showBooks = this.state.books.map((book, index) => (
+      //
+      //pass index  =>  <Person  toggle = {()=>this.toggleBooks(index)}> //
+      //pass event  =>  <Person  toggle = {(event)=>this.toggleBooks(event)}> //
+      //pass event,index<Person toggle = {(event)=>this.toggleBooks(event,index)}>
+      <Person key={book.id} book={book} toggle = {(event)=>this.toggleBooks(event,index)}> //
+       List of Book        
+      </Person>
+    ));
+
+    return (
+      <div className="App">
+        <h1>React CRUD</h1>
+        {/* { this.state.hideBooks == true ? null : showBooks} */}
+        {  showBooks}
+
+      </div>
+    );
+  }
+}
+
+export default App;
+
+===============================<Person > Component</Person>===========================================
+
+
+import React, { useState } from 'react';
+
+const Person = (props) => { // props: receive from App a single book with App map function(index, book)=> <Person /> . 
+
+  // console.log(props);
+  const style = {
+    color : props.book.name ? 'green' : 'black',
+    backgroundColor: props.book.author ? 'lightgray' : 'white',
+   
+  }
+  return (
+   <div style={style}>
+     <b onClick={props.toggle}>
+        id : {props.book.id} - Book : {props.book_name} - Author : {props.book.author}
+        <button>Hide Book</button>
+     </b>
+   </div>
+    
+  );
+};
+
+export default Person;
