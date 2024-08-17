@@ -2,8 +2,29 @@
 
 >>> component()->constructor(props) --> componentWillMount()-->render(if have child then call [4 functions ] )--->componentDidMount().
 
+----------------------------------------------------------React Life cycle journey for single component----------------------------------------------------
+
+Child Component
+  ├── Constructor
+  ├── componentWillMount (Deprecated)
+  ├── Render
+  └── componentDidMount
 
 
+----------------------------------------------------------React Life cycle journey for parent+child component----------------------------------------------------
+Parent Component
+  ├── Constructor
+  ├── componentWillMount (Deprecated)
+  ├── Render
+  │     └── Child Component
+  │         ├── Constructor
+  │         ├── componentWillMount (Deprecated)
+  │         ├── Render
+  │         └── componentDidMount
+  └── componentDidMount
+
+
+------------------------------------------------------------------------------------------------------------------------------------
 
 
 // when a component call : each of every portion (function how call )
