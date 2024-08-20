@@ -40,3 +40,6 @@ console.log(sum5(1,1));
 let name = (a) => a; //here return the name
 
 console.log(`the name is `,name('shuvo'));
+==================================*** auto return with arrow function ====================
+    const returnValueWithoutReturnKeywork = (a,b) =>(//write here the code logic;));
+    const returnValueWithReturnKeywork = (item,index) => ({ return (now here write logic); });
