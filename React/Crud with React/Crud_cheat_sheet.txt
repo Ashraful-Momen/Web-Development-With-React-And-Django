@@ -1,0 +1,163 @@
+App.js=> 
+---------
+import React, { Component } from "react";
+import "./App.css";
+import Book from "./Component/Book";
+import book from "./Book/book";
+
+class App extends Component {
+  state = {
+    books: book,
+    otherProps: "I am other property",
+  };
+
+  //2. delete book: -------------------------------------
+  deleteBook = (event,index)=>{
+    console.log(index,event.target);
+    var book = this.state.books.filter((_,i)=>(
+      i != index
+    ));
+    this.setState({
+      books:book
+    })
+  }
+
+  //3. update book: -------------------------------------
+  updateBook = (updateBook,index) =>{
+    console.log(updateBook,index)
+    //bring all books : 
+    var books =[...this.state.books];
+    //find the books with index for updating the single books : 
+    // books[index].name=updateBook; //method 1 for update single key
+    // books[index].author=updateBook; // same as method 1
+
+    books[index]={ // method 2 : update whole object
+
+    ...books[index], //why use this line ? ans : if we are not use this speard oparetor, then book[index] other proberty lost. 
+    //let  book[index]={ id: 1,name: "Old Book Name",author: "Old Author",year: 2020}
+    //If you update the book without spreading the existing properties: books[index] = {name: "New Book Name",author: "New Author"};
+    //The resulting object would be:{ name: "New Book Name",author: "New Author"}
+    //But if you use the spread operator: book[index]={ ...book[index],id: 1,name: "Old Book Name",author: "Old Author",year: 2020}
+    //The resulting object would be:{id:02, name: "New Book Name",author: "New Author" , year: 2025} *** object key not lost. 
+
+    id:index,
+      name:"Book Name Janina ",
+      author:"Shuvo"
+    }
+    ;
+    //push the update book into the state of books array : 
+    this.setState({books});
+    
+    console.log(books);
+  }
+
+
+
+
+  render() {
+    // console.log(this.state);
+    const style = {
+      width: "80%",
+      color: "white",
+      background: "black",
+      padding: "5px",
+      margin: "5px auto",
+      border: "1px solid red",
+      borderRadius: "10px",
+    };
+
+
+  
+    //show the books 1 by 1: 
+    const showBook = this.state.books.map((book, index) => {
+     return ( <Book
+      key={book.id}
+      // Updated prop to handle the updatedBook directly
+      book={book}
+      book_name={book.name}
+      book_author={book.author}
+      deleteBook={(event)=>this.deleteBook(event,index)}
+      updateBook={(updateBook)=>this.updateBook(updateBook,index)}
+
+    >
+      List of Books
+    </Book>);
+    });
+
+    
+
+    return (
+      <div className="App">
+        <h2 style={style}>Book List</h2>
+        <hr />
+        {showBook}
+      </div>
+    );
+  }
+}
+
+export default App;
+------------------------------
+book.js=> 
+-------------------------------
+import React,{useState} from "react";
+import "../Style/Books.css";
+
+const Book = (props) => {
+  console.log(props);
+  // console.log(props.bookName, props.writer);
+  const [isEditing,setEditing]=useState(false);
+
+
+  function toogleDiv (){
+    setEditing(!isEditing);
+  }
+  const updateValue = (e) =>{
+    // console.log(e.target.value);
+    //sent the value to the Update function : 
+    props.updateBook(e.target.value);
+  }
+
+  return (
+    <div className="Books my-1">
+     
+    <div className="my-2">
+
+      <p >
+        Name: {props.book_name} | Author: {props.book_author} | {props.children}
+        <button onClick={toogleDiv} className="btn btn-info ms-1">Update</button>
+        <button onClick={props.deleteBook} className="btn btn-danger ms-1">Delete</button>
+      </p>
+    </div>
+
+      {/* if click update button then show the div and pass value to the update function  */}
+
+      <div className={isEditing ? "d-block my-2 border b-2 border-danger" : "d-none"} >
+       
+            <input  name="Book_name" onChange={updateValue} placeholder="Update The Book Name "/>
+        
+      </div>
+
+
+
+
+      
+
+      {/* another way to show the toggle of the book div  ----------*/}
+      {/* {isEditing && (
+          <div>
+          <input 
+            className="form-control my-2" 
+            placeholder="Input New Book Name" 
+            value={props.book_name}
+            onChange={(e) => props.updateBook(e.target.value)}
+            />
+        </div>
+      )} */}
+    {/* End another way to show the toggle of the book div  ----------*/}
+     
+    </div>
+  );
+};
+
+export default Book;
