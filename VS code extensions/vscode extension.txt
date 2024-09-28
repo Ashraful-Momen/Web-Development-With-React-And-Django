@@ -38,6 +38,8 @@
 
 #For Laravel : 
 33. Laravel snippet. 
+34. Laravel Extension pack.
+35. PHP Debug, PHP xdebug, PHP extension pack, PHP Namesapce resolver
 
 
 
