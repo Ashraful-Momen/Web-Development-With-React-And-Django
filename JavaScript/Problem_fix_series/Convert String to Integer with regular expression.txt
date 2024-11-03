@@ -1,0 +1,8 @@
+let total_amount = document.querySelector('.total-amount').innerText;
+let amount = parseInt(total_amount.replace(/\D/g, ''));
+console.log(amount); // Output will be 7947
+===============================================
+Explanation:
+
+    Remove Non-Numeric Characters: The replace(/\D/g, '') part removes all non-numeric characters (\D matches anything that isn’t a digit, and g ensures all such characters are removed).
+    Convert to Integer: parseInt() then converts the cleaned string to an integer.
