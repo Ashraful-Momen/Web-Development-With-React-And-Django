@@ -151,3 +151,12 @@ Here, the cleanup function ensures that the fetch request is canceled if the com
 ### Key Takeaway:
 The `return () => { clearInterval(timer); }` line is like a **cleanup crew** that tidies up after your component is gone. It stops timers, cancels requests, or removes event listeners to prevent memory leaks and unwanted behavior. Always include cleanup logic when using `useEffect` for things like timers, subscriptions, or async operations!
 
+
+Key Points:
+
+    The useEffect does not run again every 1 second. It only runs once when the component mounts (because of the empty dependency array []).
+
+    The setInterval callback (console.log("Timer running");) is what runs every 1 second.
+
+    The cleanup function (clearInterval) is used to stop the timer when the component unmounts, so it doesn’t keep running in the background.
+
