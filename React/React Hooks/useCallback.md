@@ -67,22 +67,12 @@ export default ParentComponent;
 ==============================================================================
 ### **Understanding `useCallback` with a Simple Example**  
 
-The `useCallback` hook is used to **memoize functions**, ensuring they are **only recreated when necessary**. This helps optimize performance, especially when passing functions as props to child components.
+#useCallback() : real life example : 
+---------------------------------------
 
----
 
-### **Scenario**
-- We have **two buttons**:
-  1. **Count Button** → Increases the count value.
-  2. **Toggle Button** → Toggles a boolean state (`on/off`).
-- The **Child Component** has a function that updates the count.
-- Clicking the **Toggle Button** causes the **parent component to re-render**, which **also re-renders the child component unnecessarily**.
-- We use **`useCallback`** to prevent unnecessary re-renders of the **Child Component**.
+//------------------------- coding portion --------------------------//
 
----
-
-### **Full Example**
-```jsx
 import React, { useState, useCallback } from "react";
 
 // Child Component
@@ -119,85 +109,13 @@ const ParentComponent = () => {
 };
 
 export default ParentComponent;
-```
 
----
 
-### **Explanation (Line by Line)**
-#### **Child Component (`ChildComponent`)**
-```jsx
-const ChildComponent = React.memo(({ increment }) => {
-```
-- **`React.memo`** prevents the child component from re-rendering unless its props change.
+# explaination part : ---------------------------------------
+parent component use> button toggle : off/on .
+                    > button count : change the count value and show on the main component 
+                    > when click , count button : call the child component and change the count value and show on parent component. 
 
-```jsx
-console.log("Child component re-rendered");
-```
-- This logs when the child component **re-renders**, helping us verify performance optimizations.
+#the problem is : if we click the toggle auto call the child component , cause we pass a function to the parent to child component . 
 
-```jsx
-<button onClick={increment}>Increment Count</button>
-```
-- Calls the `increment` function, which updates the count.
-
----
-
-#### **Parent Component (`ParentComponent`)**
-```jsx
-const [count, setCount] = useState(0);
-```
-- Initializes the **count state**.
-
-```jsx
-const [toggle, setToggle] = useState(false);
-```
-- Initializes the **toggle state** (used to trigger a re-render).
-
----
-
-#### **Using `useCallback` to Optimize Function Re-Creation**
-```jsx
-const incrementCount = useCallback(() => {
-  setCount((prevCount) => prevCount + 1);
-}, [count]); 
-```
-- **`useCallback`** memoizes the `incrementCount` function.
-- The function is **only recreated when `count` changes**.
-- If the **toggle button is clicked**, this function **remains the same**, preventing unnecessary child re-renders.
-
----
-
-#### **Passing the Memoized Function to the Child**
-```jsx
-<ChildComponent increment={incrementCount} />
-```
-- The **memoized function** is passed as a prop.
-- Because of `useCallback`, **clicking the toggle button does not cause the child to re-render**.
-
----
-
-#### **Toggle Button (Causes Unnecessary Parent Re-Renders)**
-```jsx
-<button onClick={() => setToggle(!toggle)}>
-  Toggle: {toggle ? "ON" : "OFF"}
-</button>
-```
-- Clicking this button **re-renders the parent**.
-- Without `useCallback`, the `incrementCount` function would be **re-created**, causing the child to re-render.
-- With `useCallback`, the function **remains unchanged**, preventing the unnecessary child re-render.
-
----
-
-### **Key Takeaways**
-✅ `useCallback` ensures that **functions are only recreated when needed**, reducing unnecessary re-renders.  
-✅ Helps optimize performance when passing **callbacks to memoized child components**.  
-✅ `React.memo` works well with `useCallback` to **prevent re-renders unless props actually change**.  
-
----
-
-### **What Happens Without `useCallback`?**
-If you remove `useCallback`, every time the **Parent Component re-renders**, a **new instance** of `incrementCount` is created. Since `React.memo` only prevents re-renders if props remain the same, the child will **still re-render** due to the new function reference.
-
----
-
-Would you like a deeper explanation or a different example? 🚀
+#that's why use the useCallback hook , and told the hook that if only change the count value then call the child component either don't call the child component . 
