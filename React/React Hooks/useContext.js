@@ -8,7 +8,9 @@
 
     const [user, setUser] = usestate({id:101, name:"Ashraful});
 
-    <UserContext.Provider value = {{user, other object pass here}} >
+    //<UserContext.Provider value = {user, other object pass here} > // pass only varibale 
+    
+    <UserContext.Provider value = {{user, other object pass here}} > // pass as an object
         <Component 2> 
     <UserContext.Provider>
     
