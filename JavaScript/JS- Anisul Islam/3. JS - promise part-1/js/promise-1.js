@@ -20,7 +20,7 @@ console.log("hi");
 //         // let taskCompleted = false;
 
 //         if (taskCompleted){
-//             resole('taskCompleted')
+//             resolve('taskCompleted')
 //         }
 //         else{
 //             // reject('task not completed');
