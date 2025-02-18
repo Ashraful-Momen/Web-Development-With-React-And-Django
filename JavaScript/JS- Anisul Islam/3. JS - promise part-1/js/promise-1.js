@@ -14,18 +14,16 @@
 
 console.log("hi");
 
-// let promise1 = new Promise(function(resole, reject){
+//let promise1 = new Promise(function(resolve, reject) {
+//     // let taskCompleted = true;
+//     let taskCompleted = false;
 
-//         let taskCompleted = true;
-//         // let taskCompleted = false;
-
-//         if (taskCompleted){
-//             resolve('taskCompleted')
-//         }
-//         else{
-//             // reject('task not completed');
-//             reject(new Error('task not completed'));
-//         }
+//     if (taskCompleted) {
+//         resolve('taskCompleted');
+//     } else {
+//         reject('task not completed');
+//         // reject(new Error('task not completed'));
+//     }
 // });
 
 // console.log(promise1);
