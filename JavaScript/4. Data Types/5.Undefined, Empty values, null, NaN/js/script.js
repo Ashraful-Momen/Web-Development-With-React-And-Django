@@ -8,7 +8,7 @@ b
 null
 a == b
 true
-a === b
+a === b  // === compare value with type  
 false
 var c = ""; // emty value assign.
 undefined
