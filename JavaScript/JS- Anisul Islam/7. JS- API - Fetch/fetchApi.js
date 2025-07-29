@@ -1,4 +1,4 @@
-// 4 ways to call api - XMLHttpRequest, fetch, axios, jquery
+// 4 ways to call api - XMLHttpRequest, fetch, axios, ajax
 
 // fetch() has replaced XMLHttpRequest
 // fetch() - global method for making HTTP Request
