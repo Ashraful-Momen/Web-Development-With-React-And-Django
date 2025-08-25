@@ -16,4 +16,10 @@ we can debug error with react app easyly.... !!!
 9. now local postion we can see the varibale and select , add to watch list.
 10. if we want to go net iteration , or next loaded of app then click F5, or play button.
 
+
 11. if we want to stop the debuging option , simply click the stop button, remove item from watch list , and remove the break point.
+
+
+#Learn Debuging for the react : 
+--------------------------------
+https://www.youtube.com/watch?v=FOXNlZFkbPk
