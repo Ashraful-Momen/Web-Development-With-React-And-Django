@@ -57,3 +57,26 @@ divided(10,2)
 divided(10,4)
 
 divided(10,0)
+
+# ---------------------------------------- controll the function call by decorator -------------------
+def repeat(times):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(times):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@repeat(times=2)
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("Alice")
+
+┌──(ashraful㉿kali)-[~/Instasure/MicroService_Python/Python]
+└─$ python decorator.py
+Hello, Alice!
+Hello, Alice!
+
+
+
