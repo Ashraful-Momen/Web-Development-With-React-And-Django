@@ -17,16 +17,16 @@ comList = [i**3 for i in myList if i%2==1]
 myList = [1,2,3,4,5,6,7,8,9,10]
 
 newList = [i*i for i in myList if i%2 == 0]
-newDic = {i:i*i for i in myList }
+newDic = {i:i*i for i in myList }   # key: value => i : i*i
 newSet = {i**3 for i in myList }
 newTuple = tuple({i**3 for i in myList })
 newTupleList = [(i,i**3,i**4) for i in myList ]
 
 # print(newList)
-# print(newDic)
+# print(newDic)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81, 10: 100}
 # print(newSet)
-# print(newTuple)
-# print(newTupleList)
+# print(newTuple) 
+# print(newTupleList) # [(1, 1, 1), (2, 8, 16), (3, 27, 81), (4, 64, 256), (5, 125, 625), (6, 216, 1296), (7, 343, 2401), (8, 512, 4096), (9, 729, 6561), (10, 1000, 10000)]
 # ========================dic to list convert=================================
 
 myDic = {'name':'shuvo', 
@@ -73,3 +73,4 @@ print(newMatrix)
 flatMatrix= [i[0] for i in newMatrix]
 
 print(flatMatrix)
+
