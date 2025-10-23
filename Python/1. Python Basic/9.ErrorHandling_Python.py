@@ -43,6 +43,34 @@
 
 # x = func1()
 # print(x)
+
+#---------------------------------- Tricky way to show the error msg--------------------------------------
+
+def func1():
+    try:
+        l = [1, 5, 6, 7]
+        i = int(input("Enter the index: "))
+        print(l[i])
+        return 1
+    
+    except IndexError:
+        print("IndexError: List index out of range!")
+        return 0
+    
+    except ValueError:
+        print("ValueError: Invalid input! Please enter a number.")
+        return 0
+    
+    except Exception as e:
+        print(f"Error occurred: {type(e).__name__} - {e}")
+        return 0
+    
+    finally:
+        print("I am always executed")
+
+# Test the function
+x = func1()
+print(x)
 # ----------------------------------------------------------------------
 # a = int(input("Enter any value between 5 and 9"))
 
@@ -80,3 +108,4 @@ try:
 except ValueError as e:
     print("value error is printing in Here") 
 print(voter(17))
+
