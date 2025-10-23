@@ -8,12 +8,20 @@
 # print_myfn(my_fun)
 # =======================innner function return===========================
 
+
+def greet (name):
+    def hello():
+        return "My Name is "+name
+    return hello() #function return <-------call the fun here with () 
+
+print(greet("Ashraful")) 
+
 # def greet (name):
 #     def hello():
 #         return "My Name is "+name
-#     return hello #function return
+#     return hello #function return <------ return only the function not call here 
 
-# print(greet("Ashraful")()) 
+# print(greet("Ashraful")()) <----------- the blank () , call the function for hello() .
 # =======================Decorator core concept===========================
 
 def greet(fn):
@@ -47,4 +55,5 @@ def divided(a,b):
 
 divided(10,2)
 divided(10,4)
+
 divided(10,0)
