@@ -29,9 +29,20 @@
 # print(word)
 
 
-
 # var2 =" ".join(word)
 # print(var2)
+
+word = "what, are, you, doing"
+print(word.startswith("Hello")) #return True/False.
+print(word.endswith("Hello")) #return True/False.
+word = word.split(", ") # split function basically return a list. string to array . 
+print(word) # ['what', 'are', 'you', 'doing']
+# array to string 
+word_string = ", ".join(word_list)
+print(word_string)  # "what, are, you, doing"
+
+
+
 
 # -----------------------------timer: check the run time ----------------------------------
 
@@ -69,3 +80,4 @@ greeting = " \"Welcome \" "+" "+firstName+" "+lastName+ "! And your ID: "+str(id
 # greeting = "Welcome "+" "+firstName+" "+lastName+ " ",id
 print(greeting)
 print(greeting[::-1]) #Reverse of string
+
