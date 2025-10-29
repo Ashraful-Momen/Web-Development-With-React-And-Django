@@ -13,6 +13,8 @@ const makeRequest = (method, url, data) => {
 
         xhr.setRequestHeader('Content-Type', 'application/json');  // xhr.setRequestHeader('Content-Type', 'application/json');
 
+        xhr.send(JSON.stringify(data));   //xhr.send()
+
         xhr.onload = () => {
             let data = xhr.response;      //xhr.responseText or xhr.reponse 
             console.log(JSON.parse(data))
@@ -22,7 +24,7 @@ const makeRequest = (method, url, data) => {
             console.log('error is here');
         }
 
-        xhr.send(JSON.stringify(data));   //xhr.send()
+        //xhr.send(JSON.stringify(data));   //xhr.send()
     });
 }
 
@@ -61,4 +63,5 @@ const makeRequest = (method, url, data) => {
 // const deleteData = () => {
 //     makeRequest('DELETE', 'https://jsonplaceholder.typicode.com/posts/1');
 // }
+
 // deleteData();
