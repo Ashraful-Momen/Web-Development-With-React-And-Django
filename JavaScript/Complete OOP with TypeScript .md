@@ -1,0 +1,689 @@
+# 🔥 **Complete TypeScript OOP Guide**  
+*Object-Oriented Programming in TypeScript with Examples*
+
+---
+
+## 📦 **1. CLASS BASICS**
+
+```typescript
+# Syntax
+class ClassName {
+  // Properties
+  property1: type;
+  property2: type;
+  
+  // Constructor
+  constructor(param1: type, param2: type) {
+    this.property1 = param1;
+    this.property2 = param2;
+  }
+  
+  // Methods
+  methodName(): returnType {
+    // code
+  }
+}
+
+# Example
+class Person {
+  name: string;
+  age: number;
+  
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  introduce(): string {
+    return `Hi, I'm ${this.name}, ${this.age} years old`;
+  }
+}
+
+# Create Object
+const person1 = new Person("Alice", 25);
+console.log(person1.introduce());
+```
+
+---
+
+## 🎭 **2. ACCESS MODIFIERS**
+
+```typescript
+class BankAccount {
+  // Public - accessible everywhere (default)
+  public accountNumber: string;
+  
+  // Private - only within this class
+  private balance: number;
+  
+  // Protected - within class and child classes
+  protected bankName: string;
+  
+  // Readonly - can't be changed after initialization
+  readonly createdAt: Date;
+  
+  constructor(accountNumber: string, balance: number, bankName: string) {
+    this.accountNumber = accountNumber;
+    this.balance = balance;
+    this.bankName = bankName;
+    this.createdAt = new Date();
+  }
+  
+  // Getter for private property
+  getBalance(): number {
+    return this.balance;
+  }
+  
+  // Setter with validation
+  deposit(amount: number): void {
+    if (amount > 0) {
+      this.balance += amount;
+    }
+  }
+}
+
+# Usage
+const account = new BankAccount("ACC123", 1000, "HDFC");
+console.log(account.accountNumber);  // OK
+// console.log(account.balance);     // ERROR: Private
+// account.createdAt = new Date();   // ERROR: Readonly
+```
+
+---
+
+## 👨‍👩‍👧‍👦 **3. INHERITANCE**
+
+```typescript
+# Parent Class
+class Animal {
+  name: string;
+  
+  constructor(name: string) {
+    this.name = name;
+  }
+  
+  makeSound(): void {
+    console.log("Some generic animal sound");
+  }
+}
+
+# Child Class
+class Dog extends Animal {
+  breed: string;
+  
+  constructor(name: string, breed: string) {
+    super(name);  // Must call parent constructor
+    this.breed = breed;
+  }
+  
+  # Method Overriding
+  makeSound(): void {
+    console.log("Bark! Bark!");
+  }
+  
+  # Additional Method
+  wagTail(): void {
+    console.log(`${this.name} is wagging tail`);
+  }
+}
+
+# Usage
+const dog = new Dog("Buddy", "Golden Retriever");
+dog.makeSound();  // "Bark! Bark!"
+dog.wagTail();    // "Buddy is wagging tail"
+```
+
+---
+
+## ⚡ **4. ABSTRACT CLASSES**
+
+```typescript
+# Cannot instantiate directly, must be extended
+abstract class Shape {
+  color: string;
+  
+  constructor(color: string) {
+    this.color = color;
+  }
+  
+  # Abstract method - must be implemented by child
+  abstract calculateArea(): number;
+  
+  # Concrete method - has implementation
+  getColor(): string {
+    return `Color: ${this.color}`;
+  }
+}
+
+# Concrete Class
+class Circle extends Shape {
+  radius: number;
+  
+  constructor(color: string, radius: number) {
+    super(color);
+    this.radius = radius;
+  }
+  
+  # Must implement abstract method
+  calculateArea(): number {
+    return Math.PI * this.radius * this.radius;
+  }
+}
+
+# Usage
+const circle = new Circle("Red", 5);
+console.log(circle.calculateArea());  // 78.54
+console.log(circle.getColor());       // "Color: Red"
+
+// const shape = new Shape("Blue");  // ERROR: Cannot instantiate abstract class
+```
+
+---
+
+## 📝 **5. INTERFACES**
+
+```typescript
+# Interface defines structure
+interface Vehicle {
+  brand: string;
+  model: string;
+  start(): void;
+  stop(): void;
+}
+
+interface Electric {
+  batteryLevel: number;
+  charge(): void;
+}
+
+# Class implementing interfaces
+class Tesla implements Vehicle, Electric {
+  brand: string;
+  model: string;
+  batteryLevel: number;
+  
+  constructor(brand: string, model: string) {
+    this.brand = brand;
+    this.model = model;
+    this.batteryLevel = 100;
+  }
+  
+  start(): void {
+    console.log(`${this.brand} ${this.model} starting silently`);
+  }
+  
+  stop(): void {
+    console.log("Stopping");
+  }
+  
+  charge(): void {
+    this.batteryLevel = 100;
+    console.log("Fully charged");
+  }
+}
+
+# Interface for function type
+interface MathOperation {
+  (x: number, y: number): number;
+}
+
+const add: MathOperation = (a, b) => a + b;
+const multiply: MathOperation = (a, b) => a * b;
+```
+
+---
+
+## 🔄 **6. GETTERS & SETTERS**
+
+```typescript
+class Product {
+  private _price: number;
+  
+  constructor(public name: string, price: number) {
+    this._price = price;
+  }
+  
+  # Getter
+  get price(): number {
+    return this._price;
+  }
+  
+  # Setter with validation
+  set price(value: number) {
+    if (value > 0) {
+      this._price = value;
+    } else {
+      throw new Error("Price must be positive");
+    }
+  }
+  
+  # Read-only getter
+  get discountedPrice(): number {
+    return this._price * 0.9;
+  }
+}
+
+# Usage
+const laptop = new Product("MacBook", 1500);
+console.log(laptop.price);           // 1500
+console.log(laptop.discountedPrice); // 1350
+
+laptop.price = 1600;                 // Works
+// laptop.price = -100;              // Throws error
+// laptop.discountedPrice = 1400;    // ERROR: Read-only
+```
+
+---
+
+## 🧬 **7. STATIC MEMBERS**
+
+```typescript
+class MathUtils {
+  # Static property - belongs to class, not instances
+  static PI: number = 3.14159;
+  
+  # Static method
+  static add(a: number, b: number): number {
+    return a + b;
+  }
+  
+  static max(...numbers: number[]): number {
+    return Math.max(...numbers);
+  }
+}
+
+# Usage - no need to create instance
+console.log(MathUtils.PI);               // 3.14159
+console.log(MathUtils.add(5, 3));        // 8
+console.log(MathUtils.max(1, 5, 3, 9));  // 9
+
+# Static property in constructor
+class Counter {
+  static count: number = 0;
+  
+  constructor() {
+    Counter.count++;
+  }
+  
+  static getCount(): number {
+    return Counter.count;
+  }
+}
+
+new Counter();
+new Counter();
+console.log(Counter.getCount());  // 2
+```
+
+---
+
+## 🎯 **8. POLYMORPHISM**
+
+```typescript
+# Method Overloading (compile-time)
+class Calculator {
+  add(a: number, b: number): number;
+  add(a: string, b: string): string;
+  add(a: any, b: any): any {
+    if (typeof a === "number" && typeof b === "number") {
+      return a + b;
+    }
+    return a.toString() + b.toString();
+  }
+}
+
+const calc = new Calculator();
+console.log(calc.add(5, 3));      // 8
+console.log(calc.add("5", "3"));  // "53"
+
+# Runtime Polymorphism
+class Animal {
+  makeSound(): void {
+    console.log("Animal sound");
+  }
+}
+
+class Cat extends Animal {
+  makeSound(): void {
+    console.log("Meow");
+  }
+}
+
+class Dog extends Animal {
+  makeSound(): void {
+    console.log("Bark");
+  }
+}
+
+# Same method, different behaviors
+const animals: Animal[] = [new Cat(), new Dog(), new Animal()];
+animals.forEach(animal => animal.makeSound());
+// Output: Meow, Bark, Animal sound
+```
+
+---
+
+## 🧩 **9. COMPOSITION OVER INHERITANCE**
+
+```typescript
+# Instead of deep inheritance chains, use composition
+class Engine {
+  start(): void {
+    console.log("Engine started");
+  }
+}
+
+class Wheels {
+  rotate(): void {
+    console.log("Wheels rotating");
+  }
+}
+
+class Car {
+  private engine: Engine;
+  private wheels: Wheels;
+  
+  constructor() {
+    this.engine = new Engine();
+    this.wheels = new Wheels();
+  }
+  
+  drive(): void {
+    this.engine.start();
+    this.wheels.rotate();
+    console.log("Car is driving");
+  }
+}
+
+# Usage
+const car = new Car();
+car.drive();
+```
+
+---
+
+## 🛡️ **10. ENCAPSULATION**
+
+```typescript
+# Full encapsulation example
+class Employee {
+  private _salary: number;
+  private _taxRate: number = 0.2;
+  
+  constructor(public name: string, salary: number) {
+    this._salary = salary;
+  }
+  
+  # Private helper method
+  private calculateTax(): number {
+    return this._salary * this._taxRate;
+  }
+  
+  # Public method to access private data
+  getNetSalary(): number {
+    return this._salary - this.calculateTax();
+  }
+  
+  # Controlled access to private property
+  get salary(): number {
+    return this._salary;
+  }
+  
+  set salary(newSalary: number) {
+    if (newSalary >= 0) {
+      this._salary = newSalary;
+    }
+  }
+}
+
+# Usage
+const emp = new Employee("John", 50000);
+console.log(emp.getNetSalary());  // 40000
+console.log(emp.salary);          // 50000
+emp.salary = 60000;               // Valid
+// emp._salary = 70000;           // ERROR: Private
+```
+
+---
+
+## 🧰 **11. PRACTICAL EXAMPLE: E-COMMERCE SYSTEM**
+
+```typescript
+# Base Interface
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  getDetails(): string;
+}
+
+# Abstract Base Class
+abstract class BaseProduct implements Product {
+  constructor(
+    public id: number,
+    public name: string,
+    public price: number,
+    public description: string
+  ) {}
+  
+  abstract getDetails(): string;
+  
+  applyDiscount(percent: number): number {
+    return this.price * (1 - percent / 100);
+  }
+}
+
+# Concrete Classes
+class Book extends BaseProduct {
+  author: string;
+  pages: number;
+  
+  constructor(id: number, name: string, price: number, author: string, pages: number) {
+    super(id, name, price, `A book by ${author}`);
+    this.author = author;
+    this.pages = pages;
+  }
+  
+  getDetails(): string {
+    return `${this.name} by ${this.author}, ${this.pages} pages - $${this.price}`;
+  }
+}
+
+class Electronics extends BaseProduct {
+  warranty: number; // in months
+  
+  constructor(id: number, name: string, price: number, warranty: number) {
+    super(id, name, price, `Electronic item with ${warranty} months warranty`);
+    this.warranty = warranty;
+  }
+  
+  getDetails(): string {
+    return `${this.name} - Warranty: ${this.warranty} months - $${this.price}`;
+  }
+}
+
+# Cart System
+class ShoppingCart {
+  private items: Product[] = [];
+  
+  addProduct(product: Product): void {
+    this.items.push(product);
+  }
+  
+  removeProduct(id: number): void {
+    this.items = this.items.filter(item => item.id !== id);
+  }
+  
+  getTotal(): number {
+    return this.items.reduce((total, item) => total + item.price, 0);
+  }
+  
+  listItems(): void {
+    this.items.forEach(item => {
+      console.log(item.getDetails());
+    });
+  }
+}
+
+# Usage
+const cart = new ShoppingCart();
+cart.addProduct(new Book(1, "TypeScript Guide", 29.99, "John Doe", 300));
+cart.addProduct(new Electronics(2, "Wireless Mouse", 25.99, 24));
+
+cart.listItems();
+console.log(`Total: $${cart.getTotal()}`);
+```
+
+---
+
+## 💡 **12. TYPE VS INTERFACE FOR OOP**
+
+```typescript
+# When to use Interface:
+# 1. For object shapes
+# 2. When you need to extend/implement
+# 3. Declaration merging
+
+interface Person {
+  name: string;
+}
+
+interface Employee extends Person {
+  id: number;
+}
+
+# When to use Type:
+# 1. For unions, primitives, tuples
+# 2. Complex type transformations
+# 3. Mapped types
+
+type ID = string | number;
+type Point = [number, number];
+type Nullable<T> = T | null;
+
+# Both can be used almost interchangeably
+type UserType = {
+  name: string;
+  age: number;
+};
+
+interface UserInterface {
+  name: string;
+  age: number;
+}
+```
+
+---
+
+## 🚀 **13. ADVANCED: GENERIC CLASSES**
+
+```typescript
+# Generic Stack Class
+class Stack<T> {
+  private items: T[] = [];
+  
+  push(item: T): void {
+    this.items.push(item);
+  }
+  
+  pop(): T | undefined {
+    return this.items.pop();
+  }
+  
+  peek(): T | undefined {
+    return this.items[this.items.length - 1];
+  }
+  
+  isEmpty(): boolean {
+    return this.items.length === 0;
+  }
+}
+
+# Usage
+const numberStack = new Stack<number>();
+numberStack.push(1);
+numberStack.push(2);
+console.log(numberStack.pop());  // 2
+
+const stringStack = new Stack<string>();
+stringStack.push("Hello");
+stringStack.push("World");
+
+# Generic with Constraint
+interface Identifiable {
+  id: number;
+}
+
+class Repository<T extends Identifiable> {
+  private items: T[] = [];
+  
+  add(item: T): void {
+    this.items.push(item);
+  }
+  
+  findById(id: number): T | undefined {
+    return this.items.find(item => item.id === id);
+  }
+}
+```
+
+---
+
+## 📋 **14. QUICK REFERENCE CHEATSHEET**
+
+```bash
+# OOP Principles in TypeScript:
+# 1. ENCAPSULATION: private/protected, getters/setters
+# 2. INHERITANCE: extends, super()
+# 3. POLYMORPHISM: method overriding, interfaces
+# 4. ABSTRACTION: abstract classes, interfaces
+
+# Compile with strict OOP features:
+tsc --target es6 --experimentalDecorators --emitDecoratorMetadata
+
+# Common Patterns:
+# - Factory Pattern: Create objects without exposing logic
+# - Singleton Pattern: Only one instance exists
+# - Observer Pattern: Event-driven programming
+```
+
+---
+
+## 🎮 **15. PRACTICE EXERCISES**
+
+```typescript
+# Exercise 1: Create a Banking System
+# - Account class with deposit/withdraw
+# - SavingsAccount (adds interest)
+# - CurrentAccount (adds overdraft)
+# - Use inheritance and polymorphism
+
+# Exercise 2: Create a Game Character System
+# - Character base class
+# - Warrior, Mage, Archer subclasses
+# - Each has unique skills
+# - Use abstract methods and interfaces
+
+# Exercise 3: Build a Data Storage System
+# - Generic Repository<T> class
+# - CRUD operations
+# - Use generics and constraints
+```
+
+---
+
+## ✅ **KEY TAKEAWAYS**
+
+1. **Use `class` for creating blueprints of objects**
+2. **`private`/`protected` for proper encapsulation**
+3. **`extends` for inheritance, `super()` to call parent constructor**
+4. **`abstract` classes for base implementations**
+5. **`implements` for interfaces to define contracts**
+6. **Getters/Setters for controlled property access**
+7. **`static` for class-level properties/methods**
+8. **Generics for reusable, type-safe classes**
+9. **Composition often better than deep inheritance**
+10. **Use interfaces for public APIs, types for internal logic**
+
+---
