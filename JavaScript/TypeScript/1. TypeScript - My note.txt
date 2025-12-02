@@ -1,0 +1,735 @@
+#install ts-node
+npm install -g ts-node
+
+# install typescript
+npm install -g typescript
+
+# create ts file
+touch index.ts
+
+# compile ts file to js file
+tsc index.ts
+
+# compile semontiously
+tsc index.ts --watch
+
+#*** run typescript file
+ts-node index.ts
+
+# run js file
+node index.js
+
+--------------------------------------------------------
+# any type declare : when you don't know the type
+------------------------
+
+let userName : any;
+example: userName = "hello";
+
+
+--------------------------------------------------------
+# array type declare : 
+------------------------
+let userName : string[];
+example: userName = ["hello","world"];
+
+let userName : (string|number)[];
+example: userName = ["hello",1];
+
+or 
+
+let userName : Array<string>;
+example: userName = ["hello","world"];
+
+or multiple type declare : 
+let userName : Array<string | number>;
+example: userName = ["hello",1];
+
+
+--------------------------------------------------------
+# tuple type declare : 
+------------------------
+let userName : [number,string];
+example: userName = [1,"hello"];
+
+or 
+
+let userName : [number,string,boolean];
+example: userName = [1,"hello",true];
+
+
+--------------------------------------------------------
+# enum type declare : no duplicate data , helps to store constants
+------------------------
+#numeric enum
+-------------
+
+// Numeric enum - values are auto-incremented from 0 or specified value
+enum Color {
+    Red = 1,    // 1
+    Green,      // 2 (auto-incremented)
+    Blue        // 3 (auto-incremented)
+}
+
+// Accessing VALUES (number) by KEY (string)
+enum Color { Red = 1, Green = 2, Blue = 3 };
+
+// Method 1: Access value using dot notation
+let colorValue: Color = Color.Green;  // Returns: 2
+console.log(colorValue);              // Output: 2
+
+// Method 2: Direct access
+console.log(Color.Red);    // Output: 1
+console.log(Color.Blue);   // Output: 3
+
+// Accessing KEYS (string) by VALUE (number)
+enum Color { Red = 1, Green = 2, Blue = 3 };
+
+// Using bracket notation with number
+let colorName: string = Color[2];  // Returns: "Green"
+console.log(colorName);            // Output: "Green"
+
+console.log(Color[1]);  // Output: "Red"
+console.log(Color[3]);  // Output: "Blue"
+
+enum RequestType {
+    GET = 1,
+    POST = 2,
+    PUT = 3,
+    DELETE = 4
+}
+
+// Access values (numbers)
+console.log(RequestType.GET);     // Output: 1
+console.log(RequestType.POST);    // Output: 2
+
+// Access keys (strings)
+console.log(RequestType[1]);      // Output: "GET"
+console.log(RequestType[2]);      // Output: "POST"
+
+// Using enum in function parameters
+function handleRequest(method: RequestType): void {
+    console.log(`Handling ${RequestType[method]} request`);
+}
+
+handleRequest(RequestType.POST);  // Output: "Handling POST request"
+
+--------------------------------
+
+enum Color {Red=1,Green=2,Blue=3};
+console.log(Color)
+
+# access enum key
+let c:Color = Color.Green
+or
+let c = Color[2]
+console.log(c)
+
+example: enum Color {Red=1,Green=2,Blue=3};
+
+enum RequstType {GET=1,POST=2};
+console.log(RequstType)
+
+example: enum RequstType {GET=1,POST=2};
+
+#access enum value
+console.log(RequstType.GET)
+
+
+
+#string enum
+-------------
+
+enum Color {Red="Red",Green="Green",Blue="Blue"};
+console.log(Color)
+let c:Color = Color.Green
+
+example: enum Color {Red="Red",Green="Green",Blue="Blue"};
+
+# heterogeneous: mix of numeric and string
+------------------
+
+enum Color {Red=1,Green="Green",Blue="Blue"};
+let c:Color = Color.Green
+
+example: enum Color {Red=1,Green="Green",Blue="Blue"};
+
+
+
+
+--------------------------------------------------------
+
+#Object type: 
+----------------
+
+let user:object;
+user = {
+    name: string,
+    age: number
+}
+
+#type declare optional
+let user:object;
+user = {
+    name?: string, // '?' means optional
+    age: number
+}
+
+#type declare readonly
+let user:object;
+user = {
+    readonly name: string,
+    age: number
+}
+
+
+
+example: user = {
+    name:"hello",
+    age:10
+}
+
+let users:object[];
+users = [
+    {
+        name:"hello",
+        age:10
+    },
+    {
+        name:"hello",
+        age:10
+    }
+]
+
+--------------------------------------------------------
+---------------------------------------------------------
+
+# how to declare custome type in typescript
+----------------
+
+let users:object[];
+type User = {
+    name: string,
+    age: number
+}
+
+let user1:User ;
+
+user1 = {
+    name:"hello",
+    age:10
+}
+
+-----------------
+
+type User = {
+    name: string,
+    age: number
+}
+
+let users:User[]; // keep user type in array
+let user1:User ;
+
+user1 = {
+    name:"hello",
+    age:10
+}
+users.push(user1)
+
+-------------------
+
+type RequestType = "GET" | "POST";
+
+let getRequest:RequestType;
+
+getRequest = "GET" // we can use here "GET" or "POST"
+
+function requestHandler(request:RequestType){
+    clonsole.log(request)
+}
+
+requestHandler(getRequest)
+or 
+
+requestHandler("GET")
+
+------------------------
+# function type declare
+------------------------
+function add(a:number,b:number):number{
+    return a+b
+}
+add(1,2)
+
+---------------------------------- Type Script Configuration --------------------------------
+
+# create tsconfig.json file
+tsc --init
+
+#language and target
+"target": "es6",
+
+# rootDir and outDir
+"rootDir": "./src", //project root directory
+"outDir": "./dist", //output directory from after compilation by tsc . example: /src/index.ts => tsc index.ts => /dist/index.js
+
+#include and exclude
+"include": [
+    "src/*.ts" //include all .ts file in src directory
+]
+
+"exclude": [
+    "node_modules", //exclude node_modules directory
+]
+
+#files and references
+"files": [
+    "src/index.ts" //include must be index.ts file either getting error
+]
+
+"references": [
+    { "path": "./types" } //include only types directory
+]
+
+
+# unUsedParameters
+"noUnusedParameters": true, //check unused parameters and throw error
+
+
+#noUnsedLocals
+"noUnusedLocals": true, //check unused local variables and throw error
+
+# add "strict": true in tsconfig.json file
+
+
+--------------------------------------------------------------
+# Dom manipulation with ts: 
+---------------------------
+
+const form = document.getElementById("form") as HTMLFormElement; // 'HTMLFormElement' is a type of form in dom
+
+const input = document.getElementById("input") as HTMLInputElement; // 'HTMLInputElement' is a type of input in dom
+
+const button = document.getElementById("button") as HTMLButtonElement; // 'HTMLButtonElement' is a type of button in dom
+
+const ul = document.getElementById("ul") as HTMLUListElement; // 'HTMLUListElement' is a type of ul in dom
+
+const li = document.getElementById("li") as HTMLLIElement; // 'HTMLLIElement' is a type of li in dom
+
+const p = document.getElementById("p") as HTMLParagraphElement; // 'HTMLParagraphElement' is a type of p in dom
+
+const h1 = document.getElementById("h1") as HTMLHeadingElement; // 'HTMLHeadingElement' is a type of h1 in dom
+
+select element:
+
+const select = document.getElementById("select") as HTMLSelectElement; // 'HTMLSelectElement' is a type of select in dom
+
+text area:
+
+const textarea = document.getElementById("textarea") as HTMLTextAreaElement; // 'HTMLTextAreaElement' is a type of textarea in dom
+
+#event : 
+
+const form = document.getElementById("form") as HTMLFormElement; // 'HTMLFormElement' is a type of form in dom
+
+form.addEventListener("submit", (e:Event) => {  // 'Event' is a type of event in dom
+    e.preventDefault();
+})
+
+
+
+--------------------------------------------------------------
+Function Signatures:
+--------------------
+
+let functionName: (function_parameters) => return_type;
+
+let userInfo1: () => void;
+let userInfo2: (name: string) => void;
+
+
+userInfo1 = () => {
+    console.log("hello")
+}
+
+userInfo2 = (name: string) => {
+    console.log(`Hello ${name}`)
+}
+
+userInfo1()
+userInfo2("hello")
+
+--------------------------------------------------------------
+
+#interface tsc : 
+----------------------
+
+let users: {
+    id: number,
+    name: string,
+    age: number
+} [] = []; // keep user type in array and '= []' means initialize empty array
+
+
+let user: {
+    id: number,
+    name: string,
+    age: number
+} = {
+    id: 1,
+    name: "hello",
+    age: 10
+}
+
+users.push(user)
+
+const printUserInfo = (user:{id: number, name: string, age: number}) => {
+    console.log(`user id: ${user.id}, user name: ${user.name}, user age: ${user.age}`)
+}
+
+users.forEach((user) => {
+    printUserInfo(user)
+})
+
+
+#interface : 
+----------------------
+
+interface User {
+    id: number,
+    name: string,
+    age: number
+}
+
+let users : IUser[] = []; // keep user type in array and '= []' means initialize empty array
+
+let user : IUser = {
+    id: 1,
+    name: "hello",
+    age: 10
+}
+
+users.push(user)
+
+const printUserInfo = (user:IUser) => { // IUser is interface
+    console.log(`user id: ${user.id}, user name: ${user.name}, user age: ${user.age}`)
+
+}
+
+#-----------------------**** Generic Type ------------------------
+
+function printUserInfo<T>(user:T) {      // T is generic type that can be any type, firstly we can use any type then we can use generic type
+    
+    console.log(`user id: ${user.id}, user name: ${user.name}, user age: ${user.age}`)
+}
+
+function printUserInfo2<X,Y>(userId:X, userAge:Y) {      // T is generic type that can be any type, firstly we can use any type then we can use generic type
+
+    console.log(`user id: ${userId}, user age: ${userAge}`)
+}
+
+--------------------------- completeNote : class , object , super(),constructor, inheritance, abstruction, interface, generic type -------------------
+
+I'll complete the note in your concise, practical, command-focused style. Here's the continuation:
+
+#--------------------------------------------------------
+# Class, Object, Constructor, Inheritance
+#--------------------------------------------------------
+
+# Basic class
+class Person {
+  name: string;
+  age: number;
+  
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  greet(): void {
+    console.log(`Hello, I'm ${this.name}`);
+  }
+}
+
+# Create object
+const person1 = new Person("John", 25);
+person1.greet();
+
+#--------------------------------------------------------
+# Inheritance with super()
+#--------------------------------------------------------
+class Employee extends Person {
+  salary: number;
+  
+  constructor(name: string, age: number, salary: number) {
+    super(name, age);  // Call parent constructor
+    this.salary = salary;
+  }
+  
+  showSalary(): void {
+    console.log(`${this.name}'s salary: $${this.salary}`);
+  }
+}
+
+# Create employee object
+const emp1 = new Employee("Alice", 30, 50000);
+emp1.greet();
+emp1.showSalary();
+
+#--------------------------------------------------------
+# Access Modifiers
+#--------------------------------------------------------
+class BankAccount {
+  public accountNo: string;    // Accessible anywhere
+  private balance: number;     // Only within this class
+  protected bankName: string;  // Within class and subclasses
+  
+  constructor(accountNo: string, balance: number, bankName: string) {
+    this.accountNo = accountNo;
+    this.balance = balance;
+    this.bankName = bankName;
+  }
+  
+  getBalance(): number {
+    return this.balance;
+  }
+}
+
+#--------------------------------------------------------
+# Abstract Class
+#--------------------------------------------------------
+abstract class Animal {
+  abstract makeSound(): void;  // Must be implemented by child
+  
+  move(): void {
+    console.log("Moving...");
+  }
+}
+
+class Dog extends Animal {
+  makeSound(): void {
+    console.log("Bark!");
+  }
+}
+
+# Cannot create instance of abstract class
+# const animal = new Animal();  // Error!
+const dog = new Dog();
+dog.makeSound();
+dog.move();
+
+#--------------------------------------------------------
+# Interface Implementation
+#--------------------------------------------------------
+interface Vehicle {
+  start(): void;
+  stop(): void;
+}
+
+interface Electric {
+  charge(): void;
+}
+
+# Class implementing multiple interfaces
+class Tesla implements Vehicle, Electric {
+  start(): void {
+    console.log("Tesla starting silently");
+  }
+  
+  stop(): void {
+    console.log("Tesla stopping");
+  }
+  
+  charge(): void {
+    console.log("Charging...");
+  }
+}
+
+const myTesla = new Tesla();
+myTesla.start();
+myTesla.charge();
+
+#--------------------------------------------------------
+# Generic Class
+#--------------------------------------------------------
+class Container<T> {
+  private value: T;
+  
+  constructor(value: T) {
+    this.value = value;
+  }
+  
+  getValue(): T {
+    return this.value;
+  }
+  
+  setValue(newValue: T): void {
+    this.value = newValue;
+  }
+}
+
+# Use generic class
+const stringContainer = new Container<string>("Hello");
+console.log(stringContainer.getValue());
+
+const numberContainer = new Container<number>(42);
+console.log(numberContainer.getValue());
+
+#--------------------------------------------------------
+# Generic with Constraint
+#--------------------------------------------------------
+interface Identifiable {
+  id: number;
+}
+
+class Repository<T extends Identifiable> {
+  private items: T[] = [];
+  
+  add(item: T): void {
+    this.items.push(item);
+  }
+  
+  findById(id: number): T | undefined {
+    return this.items.find(item => item.id === id);
+  }
+}
+
+# Use constrained generic
+interface User extends Identifiable {
+  name: string;
+}
+
+const userRepo = new Repository<User>();
+userRepo.add({ id: 1, name: "John" });
+console.log(userRepo.findById(1));
+
+#--------------------------------------------------------
+# Generic Interface
+#--------------------------------------------------------
+interface KeyValuePair<K, V> {
+  key: K;
+  value: V;
+}
+
+const pair1: KeyValuePair<string, number> = { key: "age", value: 25 };
+const pair2: KeyValuePair<number, boolean> = { key: 1, value: true };
+
+#--------------------------------------------------------
+# Static Members
+#--------------------------------------------------------
+class Calculator {
+  static PI: number = 3.1416;
+  
+  static add(a: number, b: number): number {
+    return a + b;
+  }
+}
+
+# Access static members
+console.log(Calculator.PI);
+console.log(Calculator.add(5, 3));
+
+#--------------------------------------------------------
+# Getter and Setter
+#--------------------------------------------------------
+class Temperature {
+  private _celsius: number = 0;
+  
+  get celsius(): number {
+    return this._celsius;
+  }
+  
+  set celsius(value: number) {
+    if (value < -273.15) {
+      throw new Error("Temperature below absolute zero!");
+    }
+    this._celsius = value;
+  }
+  
+  get fahrenheit(): number {
+    return (this._celsius * 9/5) + 32;
+  }
+}
+
+const temp = new Temperature();
+temp.celsius = 25;  // Uses setter
+console.log(temp.fahrenheit);  // Uses getter
+
+#--------------------------------------------------------
+# Method Overriding
+#--------------------------------------------------------
+class Animal {
+  makeSound(): void {
+    console.log("Some sound");
+  }
+}
+
+class Cat extends Animal {
+  makeSound(): void {  // Override parent method
+    console.log("Meow!");
+  }
+}
+
+const cat = new Cat();
+cat.makeSound();  // Output: "Meow!"
+
+#--------------------------------------------------------
+# Complete Example: All Concepts Combined
+#--------------------------------------------------------
+abstract class Payment {
+  abstract processPayment(amount: number): boolean;
+}
+
+interface Refundable {
+  processRefund(): void;
+}
+
+class CreditCardPayment extends Payment implements Refundable {
+  constructor(private cardNumber: string) {
+    super();
+  }
+  
+  processPayment(amount: number): boolean {
+    console.log(`Processing $${amount} via credit card`);
+    return true;
+  }
+  
+  processRefund(): void {
+    console.log("Processing refund to credit card");
+  }
+}
+
+# Use all features
+const payment = new CreditCardPayment("1234-5678-9012-3456");
+payment.processPayment(100);
+payment.processRefund();
+
+#--------------------------------------------------------
+# Quick Reference Commands
+#--------------------------------------------------------
+# Compile TypeScript with all features
+tsc --target es6 --module commonjs --outDir dist src/*.ts
+
+# Run with all type checking
+tsc --strict --noImplicitAny --strictNullChecks
+
+# Watch mode for development
+tsc --watch
+
+# Run TypeScript directly
+ts-node src/index.ts
+
+#--------------------------------------------------------
+# TIP: Use interface for objects, type for unions/primitives
+#--------------------------------------------------------
+# Interface - for object shapes, extendable
+interface IUser {
+  name: string;
+  age: number;
+}
+
+# Type - for unions, primitives, tuples
+type ID = string | number;
+type Point = [number, number];
+
+# Both can be used almost interchangeably now
