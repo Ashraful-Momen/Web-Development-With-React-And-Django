@@ -45,7 +45,7 @@
 
 #list reverse printing----------------------------------------
 
-# print(num[-1:-11:-1]) #for reverse printing must be used step.
+# print(num[-1:-11:-1]) # [start : stop : step] ; for reverse printing must be used step.
 # print(num[-1::-1]) 
 
 # -------------------------------------list sorting : list.sort(), list.sort(reverse=True) , sorted(list),sorted(list,reverse=True) -------------------------------------------------
