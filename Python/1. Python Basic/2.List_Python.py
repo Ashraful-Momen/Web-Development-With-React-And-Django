@@ -2,6 +2,45 @@
 #2. List are used to store muliple variable in single variable.
 #3. List are ordered , changable/ mutable, and duplicate values allow.
 
+# ---------------------------------------------------------------------
+# PYTHON LIST METHODS - QUICK CHEAT SHEET
+# ---------------------------------------------------------------------
+
+# 1. list.append('item')
+# Adds an item to the very END of the list.
+# Example: [1, 2].append(3) -> [1, 2, 3]
+
+# 2. list.pop(index)
+# Removes and RETURNS an item by its position (default is the last item).
+# Example: [10, 20].pop() -> returns 20, list becomes [10]
+
+# 3. list.reverse()
+# Reverses the order of the list in place (permanently flips it).
+# Example: [1, 2, 3].reverse() -> [3, 2, 1]
+
+# 4. list.insert(index, 'item')
+# Inserts an item at a SPECIFIC position/index.
+# Example: ['a', 'c'].insert(1, 'b') -> ['a', 'b', 'c']
+
+# 5. list.count('item')
+# COUNTS how many times an item appears in the list.
+# Example: ['a', 'a', 'b'].count('a') -> returns 2
+
+# 6. list.remove('item')
+# Deletes the FIRST occurrence of a specific value.
+# Example: ['x', 'y', 'x'].remove('x') -> ['y', 'x']
+
+# 7. list.clear()
+# Empties the entire list, leaving it completely blank.
+# Example: [1, 2, 3].clear() -> []
+
+# 8. idx = list.index(value)
+# Finds and RETURNS the index/position number of the first matching value.
+# Example: [10, 20, 30].index(30) -> returns 2
+# ---------------------------------------------------------------------
+
+
+
 # -------------------------------------------List---------------------------------------------------
 # my_list = ["a","b","c", [1,3,4,],1.34,2.55]
 
