@@ -1,44 +1,91 @@
+# =====================================================================
+#                 PYTHON CONTROL STATEMENTS MASTER NOTE
+# =====================================================================
+
 # ---------------------------------------------------------------------
-# PART 2: CONTROL STATEMENTS & NESTED CONDITIONS
+# 1. THE IF-ELIF-ELSE CHAIN (Sequential Evaluation)
 # ---------------------------------------------------------------------
+# Use 'elif' (else if) to check multiple conditions sequentially. 
+# Python stops executing the chain as soon as ONE condition matches (True).
+
+marks = 85
+
+if marks >= 80:
+    print("Grade: A+")
+elif marks >= 70:          # Checked only if the first condition is False
+    print("Grade: A")
+elif marks >= 60:          # Checked only if previous conditions are False
+    print("Grade: B")
+else:                      # Executes only if ALL conditions above are False
+    print("Grade: F")
+
+
+# ---------------------------------------------------------------------
+# 2. NESTED CONDITIONS & MEMBERSHIP OPERATIONS
+# ---------------------------------------------------------------------
+# An 'if' block inside another 'if' block. Used for multi-layered logic.
 
 delivery_area = ['dhaka', 'mirpur', 'kafrul', 'kazipara']
 user_location = 'dhaka'
 price = 800
 
-# Membership check ('in') combined with Nested if-else blocks
+# Outer 'if' uses the 'in' operator to check membership inside the list
 if user_location in delivery_area:
+    # Inner 'if' runs only if the outer 'if' condition is passed
     if price >= 800:
         print('Delivery Available and shipping charge free')
     else:
         print('Delivery charge not free')
-
-# NOTE ON CONDITIONAL VARIABLE INITIALIZATION:
-# If you create a variable inside a conditional block (e.g., if num == 100: y = 10), 
-# make sure the condition executes! If it evaluates to False, the variable 'y' 
-# is never created, throwing a 'NameError: name y is not defined' when called.
+else:
+    print('Delivery not available in your area')
 
 
 # ---------------------------------------------------------------------
-# PART 3: TERNARY OPERATOR (Conditional Expressions)
+# 3. CRITICAL TRAP: CONDITIONAL VARIABLE SCOPE
+# ---------------------------------------------------------------------
+# Python variables created inside 'if' blocks are only defined if that block runs.
+
+num = 100
+
+if num == 100: 
+    y = 10                  # 'y' is safely created because num == 100 is True
+
+if num == 10:
+    z = 20                  # 'z' is NEVER created because num == 10 is False
+
+print(y)                    # Works perfectly (Output: 10)
+# print(z)                  # CRASHES! Throws -> NameError: name 'z' is not defined
+
+
+# ---------------------------------------------------------------------
+# 4. TERNARY OPERATOR (Conditional Expression Shortcut)
 # ---------------------------------------------------------------------
 # Syntax: [value_if_true] if [condition] else [value_if_false]
+# Great for assigning values to variables in a single line.
 
 a, b = 10, 10
-result = a if a > 7 else b  # One-liner shortcut for clean, readable code
-print(result)               # Output: 10
+max_val = a if a > 7 else b  # Reads as: give me 'a' if a > 7, otherwise give me 'b'
+print(max_val)               # Output: 10
 
 
 # ---------------------------------------------------------------------
-# PART 4: ASSERT STATEMENTS (Debugging Tool)
+# 5. ASSERT STATEMENTS (Guaranteed Truth Control)
 # ---------------------------------------------------------------------
 # Syntax: assert [condition], [ErrorMessage_if_False]
+# Used for debugging. It forces the program to halt if a core rule is broken.
 
 number = int(input("Enter any Number: "))
 
-# Checks if condition is True. If False, program crashes safely with AssertionError.
-assert number >= 0, "Number should be a positive integer"
-print(number)
+# If number < 0, the program stops immediately with your custom error message
+assert number >= 0, "AssertionError: Number must be zero or a positive integer"
+print(f"Validated Input: {number}")
+
+# =====================================================================
+
+
+
+
+
 
 
 
