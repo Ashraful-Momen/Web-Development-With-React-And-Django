@@ -5,6 +5,9 @@
 # ---------------------------------------------------------------------
 # PYTHON LIST METHODS - QUICK CHEAT SHEET
 # ---------------------------------------------------------------------
+  #my_list = [1,2,3,4,5,6]
+
+#0. find all list method => print(dir(my_list))
 
 # 1. list.append('item')
 # Adds an item to the very END of the list.
