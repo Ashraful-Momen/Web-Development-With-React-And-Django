@@ -17,11 +17,11 @@
 
 # vowel= ['a','e','i','o','u']
 
-# del vowel[0]
+# del vowel[0] // working with the index
 
 # print(vowel)
 
-# vowel.remove('e')
+# vowel.remove('e') // working with the value 
 
 # print(vowel)
 
