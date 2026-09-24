@@ -41,13 +41,41 @@
 # Code: import sys
 # sys.getsizeof(number) -> returns memory size in bytes
 
-# 7. Advanced Unpacking with the * Operator
-# Extracting elements into variables, using * to collect leftovers into a list.
-# Example: i1, *i2, i3 = number
-# - i1 -> Grabs the 1st element
-# - i3 -> Grabs the very last element
-# - *i2 -> Gathers all middle elements and turns them into a LIST
 # ---------------------------------------------------------------------
+# 7. TUPLE UNPACKING WITH THE * OPERATOR (স্টার অপারেটর দিয়ে আনপ্যাকিং)
+# ---------------------------------------------------------------------
+# What it does: 
+# It unpacks a tuple into variables. The '*' operator grabs all the 
+# leftover elements in the middle and packs them into a clean LIST.
+# ---------------------------------------------------------------------
+
+# --- EASY EXAMPLE & OUTPUT ---
+
+# Let's say we have a tuple of numbers:
+number = (10, 20, 30, 40, 50, 60)
+
+# Unpacking into variables:
+first, *middle, last = number
+
+# --- HOW IT WORKS & WHAT IT OUTPUTS ---
+
+print(first)  
+# 👉 Output: 10
+# (Grabs the very FIRST element of the tuple)
+
+print(last)   
+# 👉 Output: 60
+# (Grabs the very LAST element of the tuple)
+
+print(middle) 
+# 👉 Output: [20, 30, 40, 50]
+# (Notice the square brackets! All leftover middle elements become a LIST)
+
+# ---------------------------------------------------------------------
+
+
+
+
 
 
 
